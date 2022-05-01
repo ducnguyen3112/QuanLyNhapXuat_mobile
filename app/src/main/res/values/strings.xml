@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">QuanLyNhapXuat</string>
+    <string name="text_signin_signup">Don\'t have an account? <b>Sign up</b></string>
+</resources>
