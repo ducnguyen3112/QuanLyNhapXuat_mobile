@@ -9,15 +9,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quanlynhapxuat.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,52 +27,43 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
-public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
-    ImageView ivBack;
-    Button btnSignup;
-    TextView tvResendOTP;
-    TextInputEditText etEmail,etName,etPhoneSignup;
+public class ForgotPasswdActivity extends AppCompatActivity implements View.OnClickListener {
+    ImageButton ivBack;
+    Button btnSend;
+    EditText etPhone;
     ProgressBar progressBar;
-EditText etPassword,etPassword2;
 
     FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
-        initViews();
+        setContentView(R.layout.activity_forgot_passwd);
         mAuth=FirebaseAuth.getInstance();
+        initViews();
         ivBack.setOnClickListener(this);
-        btnSignup.setOnClickListener(this);
+        btnSend.setOnClickListener(this);
     }
     private void initViews(){
-        ivBack=findViewById(R.id.iv_backsignin);
-        btnSignup=findViewById(R.id.btn_signup);
-        tvResendOTP=findViewById(R.id.tv_resendotp);
-        etEmail=findViewById(R.id.et_email);
-        etName=findViewById(R.id.et_fullname);
-        etPhoneSignup=findViewById(R.id.et_phone_signup);
-        etPassword=findViewById(R.id.et_password);
-        etPassword2=findViewById(R.id.et_confirm_password);
-        progressBar=findViewById(R.id.progessSignup);
+        ivBack=findViewById(R.id.iv_backforgot);
+        btnSend=findViewById(R.id.btn_send);
+        etPhone=findViewById(R.id.et_phoneForgot);
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.btn_signup:
-                progressBar.setVisibility(View.VISIBLE);
-                btnSignup.setVisibility(View.INVISIBLE);
-                String phoneNumber=etPhoneSignup.getText().toString().trim();
-                verifyPhoneNumber(phoneNumber);
-                Log.e("TAG", "Phone: " );
-                break;
-            case R.id.iv_backsignin:
+        switch(view.getId()){
+            case R.id.iv_backforgot:
                 onBackPressed();
+                break;
+            case R.id.btn_send:
+                progressBar.setVisibility(View.VISIBLE);
+                btnSend.setVisibility(View.INVISIBLE);
+                String phoneNumber=etPhone.getText().toString().trim();
+                verifyPhoneNumber(phoneNumber);
+                Log.e("PhoneForgot", "Phone: "+phoneNumber );
                 break;
         }
     }
-
     private void verifyPhoneNumber(String phoneNumber){
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
@@ -85,31 +74,28 @@ EditText etPassword,etPassword2;
                             @Override
                             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
                                 progressBar.setVisibility(View.GONE);
-                                btnSignup.setVisibility(View.VISIBLE);
+                                btnSend.setVisibility(View.VISIBLE);
                                 signInWithPhoneAuthCredential(phoneAuthCredential);
                             }
 
                             @Override
                             public void onVerificationFailed(@NonNull FirebaseException e) {
                                 progressBar.setVisibility(View.GONE);
-                                btnSignup.setVisibility(View.VISIBLE);
-                                Toast.makeText(SignupActivity.this,"Xác thực không thành công",Toast.LENGTH_SHORT).show();
+                                btnSend.setVisibility(View.VISIBLE);
+                                Toast.makeText(ForgotPasswdActivity.this,"Xác thực không thành công",Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                                progressBar.setVisibility(View.GONE);
-                                btnSignup.setVisibility(View.VISIBLE);
                                 super.onCodeSent(s, forceResendingToken);
+                                progressBar.setVisibility(View.GONE);
+                                btnSend.setVisibility(View.VISIBLE);
                                 gotoEnterOTPActivity(phoneNumber,s);
                             }
                         })          // OnVerificationStateChangedCallbacks
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
-
-
-
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -124,22 +110,21 @@ EditText etPassword,etPassword2;
                             // Sign in failed, display a message and update the UI
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
-                                Toast.makeText(SignupActivity.this,"The verification" +
+                                Toast.makeText(ForgotPasswdActivity.this,"The verification" +
                                         "code entered was invalid",Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
                 });
     }
-
     private void gotoMainActivity(String phoneNumber) {
-        Intent intent=new Intent(SignupActivity.this,LoginActivity.class);
+        Intent intent=new Intent(this,LoginActivity.class);
         intent.putExtra("phone_num",phoneNumber);
         startActivity(intent);
     }
 
     private void gotoEnterOTPActivity(String phoneNumber, String s) {
-        Intent intent=new Intent(SignupActivity.this,VerifyOTPActivity.class);
+        Intent intent=new Intent(this,VerifyOTPActivity.class);
         intent.putExtra("phone_num",phoneNumber);
         intent.putExtra("verification_id",s);
         startActivity(intent);

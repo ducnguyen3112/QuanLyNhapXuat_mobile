@@ -40,6 +40,7 @@
             android:textSize="14sp"
             android:textColor="@color/subText"/>
         <TextView
+            android:id="@+id/tv_phoneverify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
@@ -105,6 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:background="@color/colorPrimary"
             android:text="VERIFY" />
     </LinearLayout>
 

@@ -5,16 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:navigationIcon="@drawable/ic_back"></androidx.appcompat.widget.Toolbar>
-
+    <ImageView
+        android:id="@+id/iv_backsignin"
+        style="@style/backArrow"
+       />
     <ScrollView
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/iv_backsignin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -138,7 +134,7 @@
                         android:gravity="center"
                         app:hintEnabled="false">
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_phone"
+                        android:id="@+id/et_phone_signup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -225,16 +221,24 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </androidx.cardview.widget.CardView>
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp">
                 <Button
                     android:id="@+id/btn_signup"
                     style="@style/Button1"
                     android:layout_width="342dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="16dp"
                     android:text="Sign Up" />
-
+                <ProgressBar
+                    android:id="@+id/progessSignup"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+</FrameLayout>
 
             </LinearLayout>
 

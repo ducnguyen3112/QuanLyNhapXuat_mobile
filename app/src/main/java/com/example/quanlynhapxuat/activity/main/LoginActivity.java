@@ -6,24 +6,46 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import com.example.quanlynhapxuat.R;
+import com.google.android.material.textfield.TextInputEditText;
 
-public class LoginActivity extends AppCompatActivity {
-    Button btn;
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    Button btnForgot,btnSignin,btnGoSignup;
+    TextInputEditText etPhoneLogin;
+    EditText etPasswordLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        btn=findViewById(R.id.btnGoSignup);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(LoginActivity.this,SignupActivity.class);
-                startActivity(intent);
+        initViews();
+        String str=getIntent().getStringExtra("phone_num");
+        btnGoSignup.setText(str);
+        btnGoSignup.setOnClickListener(this);
 
-            }
-        });
+    }
+    private void initViews(){
+        btnForgot=findViewById(R.id.btn_forgot_password);
+        btnSignin=findViewById(R.id.btn_signin);
+        btnGoSignup=findViewById(R.id.btn_go_signup);
+        etPhoneLogin=findViewById(R.id.et_phone_login);
+        etPasswordLogin=findViewById(R.id.et_password_login);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_forgot_password:
+                Intent intent=new Intent(LoginActivity.this,ForgotPasswdActivity.class);
+                startActivity(intent);
+            case R.id.btn_signin:
+                break;
+            case R.id.btn_go_signup:
+                intent=new Intent(LoginActivity.this,SignupActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }
