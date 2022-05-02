@@ -21,8 +21,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initViews();
-        String str=getIntent().getStringExtra("phone_num");
-        btnGoSignup.setText(str);
         btnGoSignup.setOnClickListener(this);
 
     }
