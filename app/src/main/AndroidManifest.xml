@@ -10,9 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuanLyNhapXuat">
         <activity
+            android:name=".activity.main.MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.main.ForgotPasswdActivity"
             android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.main.VerifyOTPActivity"
             android:exported="false"

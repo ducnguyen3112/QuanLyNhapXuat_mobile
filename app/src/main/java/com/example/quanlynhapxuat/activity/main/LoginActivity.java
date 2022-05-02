@@ -22,6 +22,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         initViews();
         btnGoSignup.setOnClickListener(this);
+        btnSignin.setOnClickListener(this);
 
     }
     private void initViews(){
@@ -39,6 +40,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent intent=new Intent(LoginActivity.this,ForgotPasswdActivity.class);
                 startActivity(intent);
             case R.id.btn_signin:
+                intent=new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
                 break;
             case R.id.btn_go_signup:
                 intent=new Intent(LoginActivity.this,SignupActivity.class);
