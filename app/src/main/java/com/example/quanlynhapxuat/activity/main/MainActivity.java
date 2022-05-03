@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import com.example.quanlynhapxuat.R;
 import com.example.quanlynhapxuat.fragment.ExportFragment;
 import com.example.quanlynhapxuat.fragment.HomeFragment;
+import com.example.quanlynhapxuat.fragment.ImportFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNav;
     HomeFragment homeFragment=new HomeFragment();
     ExportFragment exportFragment=new ExportFragment();
+    ImportFragment importFragment = new ImportFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.menu_export:
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_main,exportFragment).commit();
+                        return true;
+                    case R.id.menu_import:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_main,importFragment).commit();
                         return true;
                 }
                 return false;
