@@ -31,6 +31,8 @@ public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.Khac
         this.activity = activity;
         this.context = context;
         this.list = list;
+
+
     }
 
     @NonNull
@@ -47,9 +49,7 @@ public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.Khac
             return;
         }
 
-//        if (!(kh.getImage() == "") || !(kh.getImage() == null)) {
-//            Picasso.get().load(kh.getImage()).into(holder.iv_KH);
-//        }
+
         holder.tv_tenKH.setText(kh.getName());
         holder.tv_tongKH.setText(kh.getAddress());
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
