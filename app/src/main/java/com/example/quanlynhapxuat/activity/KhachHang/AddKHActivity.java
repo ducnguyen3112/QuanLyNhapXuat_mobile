@@ -1,5 +1,6 @@
 package com.example.quanlynhapxuat.activity.KhachHang;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -49,17 +50,11 @@ public class AddKHActivity extends AppCompatActivity {
 
 
     private void setEvent() {
-        btnAddKH.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
+        btnAddKH.setOnClickListener(view -> {
         });
-        btnCancelAddKH.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Intent intent = new Intent(AddKHActivity.this, MainActivity.class);
-                //startActivity(intent);
-            }
+        btnCancelAddKH.setOnClickListener(view -> {
+            //Intent intent = new Intent(AddKHActivity.this, MainActivity.class);
+            //startActivity(intent);
         });
 
     }
