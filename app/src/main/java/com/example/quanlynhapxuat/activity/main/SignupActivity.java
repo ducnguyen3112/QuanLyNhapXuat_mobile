@@ -15,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quanlynhapxuat.R;
+import com.example.quanlynhapxuat.model.Employee;
+import com.example.quanlynhapxuat.model.RestErrorResponse;
+import com.example.quanlynhapxuat.service.EmployeeService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -26,14 +29,21 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.util.concurrent.TimeUnit;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
     ImageView ivBack;
     Button btnSignup;
     TextView tvResendOTP;
-    TextInputEditText etEmail,etName,etPhoneSignup;
+    TextInputEditText etName,etPhoneSignup;
     ProgressBar progressBar;
 EditText etPassword,etPassword2;
 
@@ -51,7 +61,6 @@ EditText etPassword,etPassword2;
         ivBack=findViewById(R.id.iv_backsignin);
         btnSignup=findViewById(R.id.btn_signup);
         tvResendOTP=findViewById(R.id.tv_resendotp);
-        etEmail=findViewById(R.id.et_email);
         etName=findViewById(R.id.et_fullname);
         etPhoneSignup=findViewById(R.id.et_phone_signup);
         etPassword=findViewById(R.id.et_password);
@@ -63,11 +72,27 @@ EditText etPassword,etPassword2;
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_signup:
-                progressBar.setVisibility(View.VISIBLE);
-                btnSignup.setVisibility(View.INVISIBLE);
                 String phoneNumber=etPhoneSignup.getText().toString().trim();
-                verifyPhoneNumber(phoneNumber);
-                Log.e("TAG", "Phone: " );
+                String passwd1=etPassword.getText().toString();
+                String passwd2=etPassword2.getText().toString();
+                if (etName.getText().toString().isEmpty()){
+                    Toast.makeText(SignupActivity.this,"Không được để trống họ và tên!",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }else if(!phoneNumber.matches("^[0]{1}[0-9]{9}$")){
+                    Toast.makeText(SignupActivity.this,"Định dạng số điện thoại không đúng!",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }else if(passwd1.isEmpty()||passwd2.isEmpty()){
+                    Toast.makeText(SignupActivity.this,"Không để trống mật khẩu!",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }else if(!passwd1.equals(passwd2)){
+                    Toast.makeText(SignupActivity.this,"Mật khẩu phải trùng nhau!",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                registrationClick(phoneNumber);
                 break;
             case R.id.iv_backsignin:
                 onBackPressed();
@@ -143,5 +168,43 @@ EditText etPassword,etPassword2;
         intent.putExtra("phone_num",phoneNumber);
         intent.putExtra("verification_id",s);
         startActivity(intent);
+    }
+    private  void registrationClick(String phoneNumber){
+
+        Employee employee=new Employee();
+        employee.setFullName(etName.getText().toString().trim());
+        employee.setRole(1);
+        employee.setStatus(1);
+        employee.setPhoneNumber(etPhoneSignup.getText().toString());
+        employee.setPassword(etPassword.getText().toString());
+        EmployeeService.employeeService.registrationEmployee(employee)
+                .enqueue(new Callback<Employee>() {
+                    @Override
+                    public void onResponse(Call<Employee> call, Response<Employee> response) {
+//                        progressBar.setVisibility(View.VISIBLE);
+//                        btnSignup.setVisibility(View.INVISIBLE);
+                        if (response.isSuccessful()){
+                            Toast.makeText(SignupActivity.this,"Đăng ký tài khoản thành công!" ,
+                                    Toast.LENGTH_SHORT).show();
+                        }else{
+                            try {
+                                Gson g = new Gson();
+                                RestErrorResponse errorResponse = g.fromJson(response.errorBody().string(), RestErrorResponse.class);
+                                Toast.makeText(SignupActivity.this,errorResponse.getMessage(),
+                                        Toast.LENGTH_SHORT).show();
+                            } catch (Exception e) {
+                                Toast.makeText(SignupActivity.this,e.getMessage(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<Employee> call, Throwable t) {
+                        Toast.makeText(SignupActivity.this,"Lỗi! Không thể tạo tài khoản. Hãy" +
+                                        " thử lại.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
