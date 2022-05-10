@@ -19,6 +19,7 @@
     <color name="md_black_1000">#000000</color>
     <color name="subText">#7E7E7E</color>
 
+    <color name="blue">#0000FF</color>
     <color name="blueLight">#A8A8F7</color>
     <color name="gray">#817877</color>
 </resources>

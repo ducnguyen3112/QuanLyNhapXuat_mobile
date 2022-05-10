@@ -31,8 +31,10 @@ public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.Khac
         this.activity = activity;
         this.context = context;
         this.list = list;
+    }
 
-
+    public void setData(List<KhachHang> list) {
+        this.list = list;
     }
 
     @NonNull
