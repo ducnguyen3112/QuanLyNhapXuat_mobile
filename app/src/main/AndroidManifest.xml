@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.quanlynhapxuat">
+<<<<<<< HEAD
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+=======
     <uses-permission android:name="android.permission.INTERNET"/>
+>>>>>>> origin
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +16,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuanLyNhapXuat">
+        <activity
+            android:name=".activity.KhachHang.ProfileKHActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.KhachHang.UpdateKHActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.KhachHang.AddKHActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.KhachHang.ListKHActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.main.MainActivity"
             android:exported="false" />
