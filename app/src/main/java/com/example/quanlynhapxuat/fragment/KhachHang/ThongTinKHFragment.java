@@ -39,10 +39,10 @@ public class ThongTinKHFragment extends Fragment {
         Bundle args = getArguments();
         dto = (KhachHang) args.getSerializable("KH");
         setControl(view);
-        edtTTName.setText(dto.getName());
-        edtTTAdress.setText(dto.getName());
-        edtTTPhone.setText(dto.getPhone());
-        edtTTEmail.setText(dto.getEmail());
+//        edtTTName.setText(dto.getName());
+//        edtTTAdress.setText(dto.getName());
+//        edtTTPhone.setText(dto.getPhone());
+//        edtTTEmail.setText(dto.getEmail());
     }
 
     private void setControl(View view) {

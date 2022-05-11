@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,7 +29,6 @@ public class ListKHActivity extends AppCompatActivity {
     private FloatingActionButton fabAddKh;
     private RecyclerView rcvKH;
     private KhachHangAdapter khachHangAdapter;
-    List<KhachHang> list = new ArrayList<>();
 
 
     @Override
@@ -37,6 +37,7 @@ public class ListKHActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_khactivity);
         setControl();
         setEvent();
+        List<KhachHang> list2 = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rcvKH.setLayoutManager(linearLayoutManager);
         getAllKH();
@@ -50,33 +51,20 @@ public class ListKHActivity extends AppCompatActivity {
     }
 
     public void getAllKH() {
+      new ArrayList<>();
 
-        Call<JsonObject> call = ApiUtils.getKhachHangService().getAllKH();
-
-        call.enqueue(new Callback<JsonObject>() {
+        ApiUtils.getKhachHangService().getAllKH().enqueue(new Callback<List<KhachHang>>() {
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+            public void onResponse(Call<List<KhachHang>> call, Response<List<KhachHang>> response) {
                 if (response.isSuccessful()) {
-                    JsonArray jsonArray = response.body().getAsJsonObject("_embedded").getAsJsonArray("customers");
-                    for (int i = 0; i < jsonArray.size(); i++) {
-                        JsonObject rootObject = jsonArray.get(0).getAsJsonObject();
-                        list.add(new KhachHang(
-                                rootObject.get("fullName").getAsString(),
-                                rootObject.get("phoneNumber").getAsString(),
-                                rootObject.get("address").getAsString(),
-                                rootObject.get("email").getAsString(),
-                                rootObject.get("avatar").getAsString()
-                        ));
-                    }
-                    list.forEach(item ->
-                            Log.e("H", item.toString()));
-//                    khachHangAdapter = new KhachHangAdapter(ListKHActivity.this, ListKHActivity.this, listkH);
-//                    rcvKH.setAdapter(khachHangAdapter);
+                    List<KhachHang> list = response.body();
+                    khachHangAdapter = new KhachHangAdapter(ListKHActivity.this, ListKHActivity.this, list);
+                    rcvKH.setAdapter(khachHangAdapter);
                 }
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
+            public void onFailure(Call<List<KhachHang>> call, Throwable t) {
                 Log.e("failure", t.getLocalizedMessage());
             }
         });
@@ -86,8 +74,8 @@ public class ListKHActivity extends AppCompatActivity {
         fabAddKh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(MainActivity.this, AddKhachHangActivity.class);
-                //startActivity(intent);
+                Intent intent = new Intent(ListKHActivity.this, AddKHActivity.class);
+                startActivity(intent);
             }
         });
     }

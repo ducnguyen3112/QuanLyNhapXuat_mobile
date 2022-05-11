@@ -43,34 +43,34 @@
         android:layout_height="wrap_content"
         android:background="@drawable/custom_edit_text" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:text="Giới tính"
-        android:textSize="16sp" />
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="16dp"-->
+<!--        android:layout_marginRight="16dp"-->
+<!--        android:text="Giới tính"-->
+<!--        android:textSize="16sp" />-->
 
-    <RadioGroup
-        android:id="@+id/rdogAddGender"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:orientation="horizontal">
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
-            android:padding="0dp"
-            android:text="Nam" />
+<!--    <RadioGroup-->
+<!--        android:id="@+id/rdogAddGender"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="16dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:layout_marginRight="16dp"-->
+<!--        android:orientation="horizontal">-->
+<!--        <RadioButton-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginRight="16dp"-->
+<!--            android:padding="0dp"-->
+<!--            android:text="Nam" />-->
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nữ" />
-    </RadioGroup>
+<!--        <RadioButton-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Nữ" />-->
+<!--    </RadioGroup>-->
 
     <TextView
         android:layout_width="match_parent"

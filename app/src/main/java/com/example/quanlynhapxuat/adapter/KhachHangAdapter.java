@@ -3,6 +3,7 @@ package com.example.quanlynhapxuat.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,9 +51,9 @@ public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.Khac
         if (kh == null) {
             return;
         }
+        Log.e("h", kh.getFullName());
 
-
-        holder.tv_tenKH.setText(kh.getName());
+        holder.tv_tenKH.setText(kh.getFullName());
         holder.tv_tongKH.setText(kh.getAddress());
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
