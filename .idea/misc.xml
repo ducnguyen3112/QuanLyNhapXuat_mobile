@@ -12,23 +12,12 @@
         <entry key="..\:/Documents/DiDong/QuanLyNhapXuat_mobile/app/src/main/res/layout/fragment_export.xml" value="0.275" />
         <entry key="..\:/Documents/DiDong/QuanLyNhapXuat_mobile/app/src/main/res/layout/fragment_home.xml" value="0.275" />
         <entry key="..\:/Documents/DiDong/QuanLyNhapXuat_mobile/app/src/main/res/menu/menu_bottom_navigation.xml" value="0.19718309859154928" />
-<<<<<<< HEAD
-        <entry key="..\:/Users/PC/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/drawable/custom_button_3.xml" value="0.1565" />
-        <entry key="..\:/Users/PC/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/drawable/custom_edit_text.xml" value="0.121" />
-        <entry key="..\:/Users/PC/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/activity_add_khactivity.xml" value="0.25" />
-        <entry key="..\:/Users/PC/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/activity_list_khactivity.xml" value="0.25" />
-        <entry key="..\:/Users/PC/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/activity_login.xml" value="0.12158054711246201" />
-        <entry key="..\:/Users/PC/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/activity_profile_khactivity.xml" value="0.25" />
-        <entry key="..\:/Users/PC/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/activity_update_khactivity.xml" value="0.25" />
-        <entry key="..\:/Users/PC/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/fragment_export.xml" value="0.25" />
-        <entry key="..\:/Users/PC/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="..\:/Users/PC/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/fragment_lich_su_k_h.xml" value="0.25" />
-        <entry key="..\:/Users/PC/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/fragment_thong_tin_k_h.xml" value="0.25" />
-        <entry key="..\:/Users/PC/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/item_kh.xml" value="0.12158054711246201" />
-=======
+        <entry key="..\:/Projects/Android/app/src/main/res/drawable/custom_button_2.xml" value="0.1" />
+        <entry key="..\:/Projects/Android/app/src/main/res/drawable/rounded_corners_cardview.xml" value="0.1485" />
+        <entry key="..\:/Projects/Android/app/src/main/res/layout/activity_list_khactivity.xml" value="0.12360688956433637" />
         <entry key="..\:/Projects/Android/app/src/main/res/layout/activity_login.xml" value="0.12360688956433637" />
         <entry key="..\:/Projects/Android/app/src/main/res/layout/activity_signup.xml" value="0.264" />
->>>>>>> origin
+        <entry key="..\:/Projects/Android/app/src/main/res/layout/fragment_home.xml" value="0.4" />
         <entry key="..\:/duc/QuanLyNhapXuat/app/src/main/res/drawable/button1_bg.xml" value="0.1" />
         <entry key="..\:/duc/QuanLyNhapXuat/app/src/main/res/drawable/ic_back.xml" value="0.1125" />
         <entry key="..\:/duc/QuanLyNhapXuat/app/src/main/res/drawable/ic_lock.xml" value="0.1" />
