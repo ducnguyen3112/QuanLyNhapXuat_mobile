@@ -13,7 +13,10 @@ import com.example.quanlynhapxuat.adapter.KhachHangAdapter;
 import com.example.quanlynhapxuat.api.ApiUtils;
 import com.example.quanlynhapxuat.model.KhachHang;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -25,6 +28,7 @@ public class ListKHActivity extends AppCompatActivity {
     private FloatingActionButton fabAddKh;
     private RecyclerView rcvKH;
     private KhachHangAdapter khachHangAdapter;
+    List<KhachHang> list = new ArrayList<>();
 
 
     @Override
@@ -47,20 +51,32 @@ public class ListKHActivity extends AppCompatActivity {
 
     public void getAllKH() {
 
-        Call<List<KhachHang>> listKH = ApiUtils.getAPIService().getAllKH();
+        Call<JsonObject> call = ApiUtils.getKhachHangService().getAllKH();
 
-        listKH.enqueue(new Callback<List<KhachHang>>() {
+        call.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<List<KhachHang>> call, Response<List<KhachHang>> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-                    List<KhachHang> listkH = response.body();
-                    khachHangAdapter = new KhachHangAdapter(ListKHActivity.this, ListKHActivity.this, listkH);
-                    rcvKH.setAdapter(khachHangAdapter);
+                    JsonArray jsonArray = response.body().getAsJsonObject("_embedded").getAsJsonArray("customers");
+                    for (int i = 0; i < jsonArray.size(); i++) {
+                        JsonObject rootObject = jsonArray.get(0).getAsJsonObject();
+                        list.add(new KhachHang(
+                                rootObject.get("fullName").getAsString(),
+                                rootObject.get("phoneNumber").getAsString(),
+                                rootObject.get("address").getAsString(),
+                                rootObject.get("email").getAsString(),
+                                rootObject.get("avatar").getAsString()
+                        ));
+                    }
+                    list.forEach(item ->
+                            Log.e("H", item.toString()));
+//                    khachHangAdapter = new KhachHangAdapter(ListKHActivity.this, ListKHActivity.this, listkH);
+//                    rcvKH.setAdapter(khachHangAdapter);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<KhachHang>> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e("failure", t.getLocalizedMessage());
             }
         });
