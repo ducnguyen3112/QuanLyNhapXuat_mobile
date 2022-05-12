@@ -1,34 +1,54 @@
 package com.example.quanlynhapxuat.model;
 
+
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class KhachHang implements Serializable {
+    @SerializedName("id")
     private int id;
-    private String image;
-    private String name, address, phone, email;
-    private boolean gender;
+    @SerializedName("fullName")
+    private String fullName;
+    @SerializedName("phoneNumber")
+    private String phoneNumber;
+    @SerializedName("address")
+    private String address;
+    @SerializedName("email")
+    private String email;
+    @SerializedName("avatar")
+    private String avatar;
 
-    public KhachHang() {
+    public KhachHang(int id, String fullName, String phoneNumber, String address, String email) {
+        this.id = id;
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.email = email;
     }
 
-    public KhachHang(int id, String name, boolean gender, String address, String phone, String email) {
+    public KhachHang(int id, String fullName, String phoneNumber, String address, String email, String avatar) {
         this.id = id;
-        this.image = image;
-        this.gender = gender;
-        this.name = name;
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
         this.address = address;
-        this.phone = phone;
+        this.email = email;
+        this.avatar = avatar;
+    }
+
+    public KhachHang(String fullName, String phoneNumber, String address, String email) {
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
         this.email = email;
     }
 
-    public KhachHang(int id, String image, boolean gender, String name, String address, String phone, String email) {
-        this.id = id;
-        this.image = image;
-        this.gender = gender;
-        this.name = name;
+    public KhachHang(String fullName, String phoneNumber, String address, String email, String avatar) {
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
         this.address = address;
         this.email = email;
-        this.phone = phone;
+        this.avatar = avatar;
     }
 
     public int getId() {
@@ -39,28 +59,20 @@ public class KhachHang implements Serializable {
         this.id = id;
     }
 
-    public String getImage() {
-        return image;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public boolean isGender() {
-        return gender;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setGender(boolean gender) {
-        this.gender = gender;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getAddress() {
@@ -71,19 +83,31 @@ public class KhachHang implements Serializable {
         this.address = address;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    @Override
+    public String toString() {
+        return "KhachHang{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", avatar='" + avatar + '\'' +
+                '}';
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/mainLayout"
     app:cardCornerRadius="6dp">
 
     <RelativeLayout
@@ -30,16 +30,23 @@
             android:textColor="@color/black"
             android:textSize="16dp" />
 
-        <TextView
-            android:id="@+id/tv_tongKH"
+
+        <ImageView
+            android:id="@+id/ivEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="30dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_baseline_edit_24" />
+
+        <ImageView
+            android:id="@+id/ivDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:text="100 UST"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:layout_marginRight="10dp"/>
+            android:src="@drawable/ic_baseline_delete_24" />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

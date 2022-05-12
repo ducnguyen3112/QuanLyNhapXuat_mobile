@@ -1,11 +1,13 @@
 package com.example.quanlynhapxuat.fragment.KhachHang;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,10 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 
 import com.example.quanlynhapxuat.R;
+import com.example.quanlynhapxuat.activity.KhachHang.AddKHActivity;
+import com.example.quanlynhapxuat.activity.KhachHang.ListKHActivity;
+import com.example.quanlynhapxuat.activity.KhachHang.ProfileKHActivity;
+import com.example.quanlynhapxuat.activity.KhachHang.UpdateKHActivity;
 import com.example.quanlynhapxuat.model.KhachHang;
 
 
@@ -34,26 +40,42 @@ public class ThongTinKHFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle("Thông Tin Khách Hàng");
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle args = getArguments();
         dto = (KhachHang) args.getSerializable("KH");
         setControl(view);
-        edtTTName.setText(dto.getName());
-        edtTTAdress.setText(dto.getName());
-        edtTTPhone.setText(dto.getPhone());
+        edtTTName.setText(dto.getFullName());
+        edtTTAdress.setText(dto.getAddress());
+        edtTTPhone.setText(dto.getPhoneNumber());
         edtTTEmail.setText(dto.getEmail());
+        setEvent();
     }
 
     private void setControl(View view) {
         ivTTAvatar = view.findViewById(R.id.ivTTAvatar);
-        rdoTTMale = view.findViewById(R.id.rdoTTMale);
-        rdoTTFemale = view.findViewById(R.id.rdoTTFemale);
         edtTTName = view.findViewById(R.id.edtTTName);
         edtTTAdress = view.findViewById(R.id.edtTTAdress);
         edtTTPhone = view.findViewById(R.id.edtTTPhone);
         edtTTEmail = view.findViewById(R.id.edtTTEmail);
         btnEditKH = view.findViewById(R.id.btnEditKH);
         btnDeleteKH = view.findViewById(R.id.btnDeleteKH);
+    }
+
+    private void  setEvent() {
+        btnEditKH.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), UpdateKHActivity.class);
+                intent.putExtra("KH", dto);
+                getActivity().startActivityForResult(intent, 1);
+            }
+        });
     }
 }
