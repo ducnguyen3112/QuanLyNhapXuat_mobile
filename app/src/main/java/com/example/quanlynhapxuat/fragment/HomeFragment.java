@@ -78,6 +78,4 @@ public class HomeFragment extends Fragment {
 
         chartView.setChart(cartesian);
     }
-
-
 }
