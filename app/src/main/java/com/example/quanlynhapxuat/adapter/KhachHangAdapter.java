@@ -1,11 +1,16 @@
 package com.example.quanlynhapxuat.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,10 +20,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quanlynhapxuat.R;
 
+import com.example.quanlynhapxuat.activity.KhachHang.AddKHActivity;
+import com.example.quanlynhapxuat.activity.KhachHang.ListKHActivity;
 import com.example.quanlynhapxuat.activity.KhachHang.ProfileKHActivity;
+import com.example.quanlynhapxuat.activity.KhachHang.UpdateKHActivity;
+import com.example.quanlynhapxuat.api.ApiUtils;
 import com.example.quanlynhapxuat.model.KhachHang;
+import com.example.quanlynhapxuat.utils.CustomAlertDialog;
+import com.example.quanlynhapxuat.utils.CustomToast;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.KhachHangViewHolder> {
@@ -27,12 +42,14 @@ public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.Khac
     private Context context;
     private List<KhachHang> list;
 
-    public KhachHangAdapter(Activity activity, Context context, List<KhachHang> list) {
+    public KhachHangAdapter(Activity activity, Context context) {
         this.activity = activity;
         this.context = context;
+    }
+
+    public void setDate(List<KhachHang> list) {
         this.list = list;
-
-
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -49,9 +66,7 @@ public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.Khac
             return;
         }
 
-
-        holder.tv_tenKH.setText(kh.getName());
-        holder.tv_tongKH.setText(kh.getAddress());
+        holder.tv_tenKH.setText(kh.getFullName());
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,6 +75,76 @@ public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.Khac
                 activity.startActivityForResult(intent, 1);
             }
         });
+
+        holder.ivEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, UpdateKHActivity.class);
+                intent.putExtra("KH", kh);
+                activity.startActivityForResult(intent, 1);
+            }
+        });
+
+        holder.ivDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmDialog(kh.getId());
+            }
+        });
+    }
+
+    void confirmDialog(int id) {
+        CustomAlertDialog alertDialog = new CustomAlertDialog(context);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.getWindow().setLayout((7 * ListKHActivity.width) / 8, WindowManager.LayoutParams.WRAP_CONTENT);
+        alertDialog.show();
+        alertDialog.btnPositive.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onClick(View view) {
+                ApiUtils.getKhachHangService().deleteKHById(id).enqueue(new Callback<KhachHang>() {
+                    @Override
+                    public void onResponse(Call<KhachHang> call, Response<KhachHang> response) {
+                        Log.e("message", response.code() + "");
+                        CustomToast.makeText(context, "Xoá thành công",
+                                CustomToast.LENGTH_SHORT, CustomToast.SUCCESS).show();
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<KhachHang> call, Throwable t) {
+                        CustomToast.makeText(context, "Xoá thất bại",
+                                CustomToast.LENGTH_SHORT, CustomToast.ERROR).show();
+                        Log.e("error", t.getMessage());
+                    }
+                });
+
+                ApiUtils.getKhachHangService().getAllKH().enqueue(new Callback<List<KhachHang>>() {
+                    @Override
+                    public void onResponse(Call<List<KhachHang>> call, Response<List<KhachHang>> response) {
+                        Log.e("H", response.body().toString());
+                        setDate(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<KhachHang>> call, Throwable t) {
+
+                    }
+                });
+                alertDialog.cancel();
+
+            }
+        });
+        alertDialog.btnNegative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.cancel();
+            }
+        });
+        alertDialog.setMessage("Bạn muốn xóa khách hàng: " + id + " ?");
+        alertDialog.setBtnPositive("Xóa");
+        alertDialog.setBtnNegative("Hủy");
     }
 
     @Override
@@ -71,16 +156,19 @@ public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.Khac
     }
 
     public class KhachHangViewHolder extends RecyclerView.ViewHolder {
-        private TextView tv_tenKH, tv_tongKH;
+        private TextView tv_tenKH;
         private ImageView iv_KH;
         private CardView mainLayout;
+        private ImageView ivEdit, ivDelete;
+
 
         public KhachHangViewHolder(@NonNull View itemView) {
             super(itemView);
             iv_KH = (ImageView) itemView.findViewById(R.id.iv_KH);
             tv_tenKH = itemView.findViewById(R.id.tv_tenKH);
-            tv_tongKH = itemView.findViewById(R.id.tv_tongKH);
             mainLayout = itemView.findViewById(R.id.mainLayout);
+            ivEdit = itemView.findViewById(R.id.ivEdit);
+            ivDelete = itemView.findViewById(R.id.ivDelete);
         }
     }
 }
