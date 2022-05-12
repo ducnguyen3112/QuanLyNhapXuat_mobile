@@ -44,38 +44,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:text="Giới tính"
-        android:textSize="16sp" />
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/rdoTTMale"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
-            android:text="Nam" />
-
-        <RadioButton
-            android:id="@+id/rdoTTFemale"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nữ" />
-    </RadioGroup>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:text="Địa chỉ"
         android:textSize="16sp" />
+
     <EditText
         android:id="@+id/edtTTAdress"
         android:layout_width="match_parent"
