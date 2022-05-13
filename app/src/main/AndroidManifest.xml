@@ -4,7 +4,6 @@
     package="com.example.quanlynhapxuat">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -17,7 +16,8 @@
         tools:targetApi="m">
         <activity
             android:name=".activity.ReceivedDocket.ReceivedDocketDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="PHIẾU NHẬP" />
         <activity
             android:name=".activity.KhachHang.ProfileKHActivity"
             android:exported="false"
@@ -37,6 +37,7 @@
             android:parentActivityName=".activity.main.MainActivity" />
         <activity
             android:name=".activity.main.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".activity.main.ForgotPasswdActivity"

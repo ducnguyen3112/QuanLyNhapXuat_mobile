@@ -5,6 +5,7 @@ buildscript {
         // Check that you have the following line (if not, add it):
         jcenter()
         google()  // Google's Maven repository
+        maven { url "https://jitpack.io" }
     }
     dependencies {
         // Add this line
@@ -23,6 +24,8 @@ allprojects {
         // Check that you have the following line (if not, add it):
         jcenter()
         google()  // Google's Maven repository
+        //chart
+        maven { url 'https://jitpack.io' }
         // ...
     }
 }

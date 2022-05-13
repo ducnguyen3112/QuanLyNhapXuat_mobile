@@ -181,8 +181,8 @@ EditText etPassword,etPassword2;
                 .enqueue(new Callback<Employee>() {
                     @Override
                     public void onResponse(Call<Employee> call, Response<Employee> response) {
-//                        progressBar.setVisibility(View.VISIBLE);
-//                        btnSignup.setVisibility(View.INVISIBLE);
+                        progressBar.setVisibility(View.VISIBLE);
+                       btnSignup.setVisibility(View.INVISIBLE);
                         if (response.isSuccessful()){
                             Toast.makeText(SignupActivity.this,"Đăng ký tài khoản thành công!" ,
                                     Toast.LENGTH_SHORT).show();

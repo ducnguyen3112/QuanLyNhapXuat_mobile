@@ -1,7 +1,5 @@
 package com.example.quanlynhapxuat.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 
 public class ReceivedDocket {
@@ -74,5 +72,13 @@ public class ReceivedDocket {
 
     public void setSupplier_name(String supplier_name) {
         this.supplierName = supplier_name;
+    }
+
+    public ArrayList<ReceivedDocketDetail> getReceivedDocketDetails() {
+        return receivedDocketDetails;
+    }
+
+    public void setReceivedDocketDetails(ArrayList<ReceivedDocketDetail> receivedDocketDetails) {
+        this.receivedDocketDetails = receivedDocketDetails;
     }
 }

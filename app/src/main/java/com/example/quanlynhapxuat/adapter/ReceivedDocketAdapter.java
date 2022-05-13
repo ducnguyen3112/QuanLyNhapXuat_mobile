@@ -22,6 +22,12 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
     public ReceivedDocketAdapter(Context context, ArrayList<ReceivedDocket> receivedDocketList) {
         this.context = context;
         this.receivedDocketList = receivedDocketList;
+        notifyDataSetChanged();
+    }
+
+    public void setReceivedDocketList(ArrayList<ReceivedDocket> receivedDocketList) {
+        this.receivedDocketList = receivedDocketList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -46,10 +52,7 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
 
     @Override
     public int getItemCount() {
-        if(receivedDocketList==null) {
-            return 0;
-        }
-        return receivedDocketList.size();
+        return receivedDocketList==null ? 0 : receivedDocketList.size();
     }
 
     public class ReceivedDocketViewHolder extends RecyclerView.ViewHolder {

@@ -1,5 +1,6 @@
 package com.example.quanlynhapxuat.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,12 +17,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quanlynhapxuat.R;
+import com.example.quanlynhapxuat.activity.ReceivedDocket.ReceivedDocketDetailActivity;
+import com.example.quanlynhapxuat.activity.main.MainActivity;
 import com.example.quanlynhapxuat.adapter.ReceivedDocketAdapter;
 import com.example.quanlynhapxuat.api.ApiUtils;
 import com.example.quanlynhapxuat.model.ReceivedDocket;
 import com.example.quanlynhapxuat.model.ReceivedDocketDetail;
 import com.example.quanlynhapxuat.model.RestErrorResponse;
-import com.example.quanlynhapxuat.service.ReceivedDocketService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
@@ -32,12 +34,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ImportFragment extends Fragment {
-    //
+    private final MainActivity mainActivity = (MainActivity) getActivity();;
     private ReceivedDocketAdapter receivedDocketAdapter;
     private ArrayList<ReceivedDocket> receivedDocketList;
     private ArrayList<ReceivedDocketDetail> receivedDocketDetailList;
 
-    //
     private RecyclerView rcvListPhieuNhap;
     private TextView tvSLPhieuNhap;
     private TextView tvTotal;
@@ -52,40 +53,41 @@ public class ImportFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_import, container, false);
         setControl(view);
-
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         capNhatDuLieu();
+
+        flbThemPhieuNhap.setOnClickListener(view1 -> {
+            Log.e("where am i?","flbThemPhieuNhap");
+            Intent intent = new Intent(getActivity(),ReceivedDocketDetailActivity.class);
+            intent.putExtra("maPN", 0); //mã phiếu nhập 0 là thêm mới
+            startActivity(intent);
+        });
     }
 
     private void setControl(View view) {
-        rcvListPhieuNhap = view.findViewById(R.id.rcvListPhieuNhap_fragmentImport);
-        rcvListPhieuNhap.setLayoutManager(new LinearLayoutManager(getContext()));
-
         tvSLPhieuNhap = view.findViewById(R.id.tvSLPhieuNhap_fragmentImport);
         tvTotal = view.findViewById(R.id.tvTotal_fragmentImport );
         flbThemPhieuNhap = view.findViewById(R.id.flbThemPhieuNhap_fragmentImport);
+
+        getReceivedDocketList();
+        receivedDocketAdapter = new ReceivedDocketAdapter(mainActivity,receivedDocketList);
+        rcvListPhieuNhap = view.findViewById(R.id.rcvListPhieuNhap_fragmentImport);
+        rcvListPhieuNhap.setLayoutManager(new LinearLayoutManager(mainActivity));
+        rcvListPhieuNhap.setAdapter(receivedDocketAdapter);
     }
 
     private void capNhatDuLieu() {
         getReceivedDocketList();
-        //getReceivedDocketDetailList();
-        receivedDocketAdapter = new ReceivedDocketAdapter(getContext(),receivedDocketList);
-        rcvListPhieuNhap.setAdapter(receivedDocketAdapter);
-        //
+        receivedDocketAdapter.setReceivedDocketList(receivedDocketList);
+
         tvSLPhieuNhap.setText(receivedDocketAdapter.getItemCount()+"");
         tvTotal.setText(receivedDocketAdapter.getTotalList()+"");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getActivity().setTitle("   QUẢN LÝ PHIẾU NHẬP");
-        capNhatDuLieu();
     }
 
     private void getReceivedDocketList() {
@@ -95,7 +97,7 @@ public class ImportFragment extends Fragment {
                 if(response.isSuccessful()) {
                     //Toast.makeText(getContext(),"Call API Success!!!",Toast.LENGTH_SHORT).show();
                     receivedDocketList = response.body();
-                    Log.e("receivedDocketList",receivedDocketList.get(0).toString());
+                    Log.e("receivedDocketList.size",receivedDocketList.size()+"");
                 }
                 else {
                     try {

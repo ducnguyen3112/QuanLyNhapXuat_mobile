@@ -53,7 +53,6 @@ public class ListKHActivity extends AppCompatActivity {
     }
 
     public void getAllKH() {
-
         ApiUtils.getKhachHangService().getAllKH().enqueue(new Callback<List<KhachHang>>() {
             @Override
             public void onResponse(Call<List<KhachHang>> call, Response<List<KhachHang>> response) {

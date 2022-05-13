@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,49 +50,51 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent intent=new Intent(LoginActivity.this,ForgotPasswdActivity.class);
                 startActivity(intent);
             case R.id.btn_signin:
-                signinClick();
+                //signinClick();
+                Log.e("login activity","login activity");
+                Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent1);
                 break;
             case R.id.btn_go_signup:
                 intent=new Intent(LoginActivity.this,SignupActivity.class);
                 startActivity(intent);
                 break;
+
         }
     }
     public void signinClick(){
         String phone=etPhoneLogin.getText().toString().trim();
         String password=etPasswordLogin.getText().toString();
-        //Mở login
-        Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent1);
-//        EmployeeService.employeeService.authenticationEmployee(phone,password).enqueue(new Callback<Employee>() {
-//            @Override
-//            public void onResponse(Call<Employee> call, Response<Employee> response) {
-//                if (response.isSuccessful()){
-//                    Employee employee=response.body();
-//                    Toast.makeText(LoginActivity.this,"Đăng nhập thành công!",
-//                            Toast.LENGTH_SHORT).show();
-//                    Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
-//                    startActivity(intent1);
-//                }
-//                else {
-//                    try {
-//                        Gson g = new Gson();
-//                        RestErrorResponse errorResponse = g.fromJson(response.errorBody().string(), RestErrorResponse.class);
-//                        Toast.makeText(LoginActivity.this, errorResponse.getMessage(),
-//                                Toast.LENGTH_SHORT).show();
-//                    } catch (Exception e) {
-//                        Toast.makeText(LoginActivity.this, e.getMessage(),
-//                                Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Employee> call, Throwable t) {
-//                Toast.makeText(LoginActivity.this,"Sai số điện thoại hoặc mật khẩu!",
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        EmployeeService.employeeService.authenticationEmployee(phone,password).enqueue(new Callback<Employee>() {
+            @Override
+            public void onResponse(Call<Employee> call, Response<Employee> response) {
+                if (response.isSuccessful()){
+                    Employee employee=response.body();
+                    Toast.makeText(LoginActivity.this,"Đăng nhập thành công!",
+                            Toast.LENGTH_SHORT).show();
+                    Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
+                    startActivity(intent1);
+                }
+                else {
+                    try {
+                        Gson g = new Gson();
+                        RestErrorResponse errorResponse = g.fromJson(response.errorBody().string(), RestErrorResponse.class);
+                        Toast.makeText(LoginActivity.this, errorResponse.getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(LoginActivity.this, e.getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Employee> call, Throwable t) {
+                Toast.makeText(LoginActivity.this,"Sai số điện thoại hoặc mật khẩu!",
+                        Toast.LENGTH_SHORT).show();
+                Log.e("login", t.getMessage() );
+            }
+        });
     }
 
 }

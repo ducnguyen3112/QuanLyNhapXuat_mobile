@@ -26,7 +26,7 @@ public interface EmployeeService {
    @POST("registration")
     Call<Employee> registrationEmployee(@Body Employee employee);
 
-   @GET("authentication")
-    Call<Employee> authenticationEmployee(@Query("phone") String phone,@Query("password") String password);
+   @GET("login")
+    Call<Employee> authenticationEmployee(@Query("phoneNumber") String phoneNumber,@Query("password") String password);
 
 }

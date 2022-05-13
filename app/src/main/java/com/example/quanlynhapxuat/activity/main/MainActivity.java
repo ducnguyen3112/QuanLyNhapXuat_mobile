@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.quanlynhapxuat.R;
@@ -35,12 +37,15 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.menu_home:
+                        Log.e("where am i?","menu home");
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_main,homeFragment).commit();
                         return true;
                     case R.id.menu_export:
+                        Log.e("where am i?","menu export");
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_main,exportFragment).commit();
                         return true;
                     case R.id.menu_import:
+                        Log.e("where am i?","menu import");
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_main,importFragment).commit();
                         return true;
                     case R.id.menu_more:
@@ -51,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
     private void initViews(){
         bottomNav=findViewById(R.id.bottom_navigation);
     }

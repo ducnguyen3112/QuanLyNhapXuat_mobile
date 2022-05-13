@@ -25,4 +25,5 @@
 
     <color name="dialogBackColor">#0091C2</color>
 
+    <color name="fragmentBackColor">#E4E4E4</color>
 </resources>
