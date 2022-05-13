@@ -1,6 +1,7 @@
 package com.example.quanlynhapxuat.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Employee {
     private int id;
@@ -12,6 +13,7 @@ public class Employee {
     private String password;
     private int status;
     private String avatar;
+
 
     public Employee() {
     }
