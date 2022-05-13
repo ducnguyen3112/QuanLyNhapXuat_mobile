@@ -22,9 +22,9 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:orientation="horizontal">
 
                 <TextView
@@ -39,26 +39,26 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center|end"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    app:tint="@color/black"
-                    tools:srcCompat="@android:drawable/ic_menu_recent_history"/>
-
                 <TextView
                     android:id="@+id/tvCreatedAt_itemReceivedDocket"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="15dp"
                     android:text="12/12/2022 12:12"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="15dp"
+                    app:tint="@color/black"
+                    tools:srcCompat="@android:drawable/ic_menu_recent_history"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -69,9 +69,9 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center|start"
                 android:orientation="horizontal">
 
@@ -80,7 +80,7 @@
                     android:layout_height="35dp"
                     android:layout_marginStart="15dp"
                     app:srcCompat="@drawable/icon_supplier"
-                    app:tint="@color/gray"/>
+                    app:tint="@color/black"/>
 
                 <TextView
                     android:id="@+id/tvSupplierName_itemReceivedDocket"
@@ -93,26 +93,26 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center|end"
                 android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvTotalDocket_itemReceivedDocket"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1345 USD"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
 
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    app:tint="@color/gray"
-                    tools:srcCompat="@drawable/icon_money"/>
-
-                <TextView
-                    android:id="@+id/tvTotalDocket"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_marginEnd="15dp"
-                    android:text="1345 USD"
-                    android:textSize="18sp"
-                    android:textStyle="bold"/>
+                    app:tint="@color/black"
+                    tools:srcCompat="@drawable/icon_money"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

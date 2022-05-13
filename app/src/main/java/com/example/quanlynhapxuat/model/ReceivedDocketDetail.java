@@ -2,8 +2,8 @@ package com.example.quanlynhapxuat.model;
 
 public class ReceivedDocketDetail {
     private int id;
-    private int received_docket_id;
-    private int product_id;
+    private int receivedDocketId;
+    private int productId;
     private int quantity;
     private int price;
 
@@ -12,8 +12,8 @@ public class ReceivedDocketDetail {
 
     public ReceivedDocketDetail(int id, int received_docket_id, int product_id, int quantity, int price) {
         this.id = id;
-        this.received_docket_id = received_docket_id;
-        this.product_id = product_id;
+        this.receivedDocketId = received_docket_id;
+        this.productId = product_id;
         this.quantity = quantity;
         this.price = price;
     }
@@ -26,20 +26,20 @@ public class ReceivedDocketDetail {
         this.id = id;
     }
 
-    public int getReceived_docket_id() {
-        return received_docket_id;
+    public int getReceivedDocketId() {
+        return receivedDocketId;
     }
 
-    public void setReceived_docket_id(int received_docket_id) {
-        this.received_docket_id = received_docket_id;
+    public void setReceivedDocketId(int receivedDocketId) {
+        this.receivedDocketId = receivedDocketId;
     }
 
-    public int getProduct_id() {
-        return product_id;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
+    public void setProductId(int product_id) {
+        this.productId = product_id;
     }
 
     public int getQuantity() {

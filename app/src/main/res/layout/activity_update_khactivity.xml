@@ -42,36 +42,11 @@
         style="@style/custom_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/custom_edit_text" />
+        android:background="@drawable/custom_edit_text"
+        android:drawableStart="@drawable/custom_person_icon"
+        android:drawablePadding="8dp"
+        android:hint="Nhập Khách Hàng" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:text="Giới tính"
-        android:textSize="16sp" />
-
-    <RadioGroup
-        android:id="@+id/rdogEditGender"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:orientation="horizontal">
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
-            android:padding="0dp"
-            android:text="Nam" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nữ" />
-    </RadioGroup>
 
     <TextView
         android:layout_width="match_parent"
@@ -86,7 +61,10 @@
         style="@style/custom_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/custom_edit_text" />
+        android:background="@drawable/custom_edit_text"
+        android:drawableStart="@drawable/custom_location_on_icon"
+        android:drawablePadding="8dp"
+        android:hint="Nhập Địa Chỉ" />
 
     <TextView
         android:layout_width="match_parent"
@@ -101,7 +79,10 @@
         style="@style/custom_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/custom_edit_text" />
+        android:background="@drawable/custom_edit_text"
+        android:drawableStart="@drawable/custom_local_phone_icon"
+        android:drawablePadding="8dp"
+        android:hint="Nhập Điện Thoại" />
 
     <TextView
         android:layout_width="match_parent"
@@ -116,7 +97,10 @@
         style="@style/custom_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/custom_edit_text" />
+        android:background="@drawable/custom_edit_text"
+        android:drawableStart="@drawable/custom_email_icon"
+        android:drawablePadding="8dp"
+        android:hint="Nhập Email" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -129,7 +113,7 @@
             android:id="@+id/btnEditKH"
             style="@style/custom_button_2"
             android:background="@drawable/custom_button_2"
-            android:text="Them"
+            android:text="Cập Nhật"
             android:textColor="@drawable/custom_button_2"
             android:textSize="16sp" />
 
@@ -137,7 +121,7 @@
             android:id="@+id/btnCancelEditKH"
             style="@style/custom_button_2"
             android:background="@drawable/custom_button_3"
-            android:text="Huy"
+            android:text="Huỷ"
             android:textColor="@drawable/custom_button_3"
             android:textSize="16sp" />
 

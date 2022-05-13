@@ -1,21 +1,39 @@
 package com.example.quanlynhapxuat.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+
 public class ReceivedDocket {
     private int id;
-    private String created_at;
-    private int employee_id;
+    private String createdAt;
+    private int employeeId;
     private int status;
-    private String supplier_name;
+    private String supplierName;
+    public ArrayList<ReceivedDocketDetail> receivedDocketDetails;
 
     public ReceivedDocket() {
     }
 
-    public ReceivedDocket(int id, String created_at, int employee_id, int status, String supplier_name) {
+    public ReceivedDocket(int id, String created_at, int employee_id, int status, String supplier_name, ArrayList<ReceivedDocketDetail> receivedDocketDetails) {
         this.id = id;
-        this.created_at = created_at;
-        this.employee_id = employee_id;
+        this.createdAt = created_at;
+        this.employeeId = employee_id;
         this.status = status;
-        this.supplier_name = supplier_name;
+        this.supplierName = supplier_name;
+        this.receivedDocketDetails = receivedDocketDetails;
+    }
+
+    @Override
+    public String toString() {
+        return "ReceivedDocket{" +
+                "id=" + id +
+                ", createdAt='" + createdAt + '\'' +
+                ", employeeId=" + employeeId +
+                ", status=" + status +
+                ", supplierName='" + supplierName + '\'' +
+                ", receivedDocketDetails=" + receivedDocketDetails +
+                '}';
     }
 
     public int getId() {
@@ -26,20 +44,20 @@ public class ReceivedDocket {
         this.id = id;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
     public int getEmployee_id() {
-        return employee_id;
+        return employeeId;
     }
 
     public void setEmployee_id(int employee_id) {
-        this.employee_id = employee_id;
+        this.employeeId = employee_id;
     }
 
     public int getStatus() {
@@ -51,10 +69,10 @@ public class ReceivedDocket {
     }
 
     public String getSupplier_name() {
-        return supplier_name;
+        return supplierName;
     }
 
     public void setSupplier_name(String supplier_name) {
-        this.supplier_name = supplier_name;
+        this.supplierName = supplier_name;
     }
 }

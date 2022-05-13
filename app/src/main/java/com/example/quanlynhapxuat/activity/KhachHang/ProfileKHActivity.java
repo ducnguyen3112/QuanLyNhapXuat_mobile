@@ -1,5 +1,8 @@
 package com.example.quanlynhapxuat.activity.KhachHang;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -7,8 +10,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.Intent;
-import android.os.Bundle;
 import com.example.quanlynhapxuat.R;
 import com.example.quanlynhapxuat.fragment.KhachHang.LichSuKHFragment;
 import com.example.quanlynhapxuat.fragment.KhachHang.ThongTinKHFragment;
@@ -22,13 +23,14 @@ public class ProfileKHActivity extends AppCompatActivity {
     private TabLayout mTableLayout;
     private ViewPager2 mViewPager;
     private KHViewPagerAdapter khViewPagerAdapter;
+    KhachHang dto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_khactivity);
         Intent intent = getIntent();
-        KhachHang dto = (KhachHang) intent.getSerializableExtra("KH");
+        dto = (KhachHang) intent.getSerializableExtra("KH");
         mTableLayout = findViewById(R.id.tab_layout);
         mViewPager = findViewById(R.id.view_pager);
 
@@ -81,5 +83,12 @@ public class ProfileKHActivity extends AppCompatActivity {
         public int getItemCount() {
             return 2;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(ProfileKHActivity.this, ListKHActivity.class);
+        startActivity(intent);
     }
 }

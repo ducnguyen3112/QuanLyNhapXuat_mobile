@@ -19,4 +19,10 @@ public class LichSuKHFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_lich_su_k_h, container, false);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle("Lịch Sử");
+    }
 }
