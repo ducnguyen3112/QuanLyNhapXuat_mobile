@@ -68,8 +68,7 @@ public class PhieuXuatAdapter extends RecyclerView.Adapter<PhieuXuatAdapter.PXVi
         }else{
             holder.tvStatus.setText("Chưa hoàn thành");
         }
-       holder.tvTenKH.setText(String.valueOf(deliveryDocket.getId()));
-        holder.tvNgay.setText("31/12/2000 31:12");
+        holder.tvNgay.setText(deliveryDocket.getCreatedAt());
         int tong=0;
         if (deliveryDockets.get(position).getDeliveryDocketDetails()!=null){
             for (DeliveryDocketDetail item: deliveryDockets.get(position).getDeliveryDocketDetails()) {
@@ -77,6 +76,18 @@ public class PhieuXuatAdapter extends RecyclerView.Adapter<PhieuXuatAdapter.PXVi
             }
             holder.tvGiaPX.setText(String.valueOf(tong));
         }
+        ApiUtils.getKhachHangService().getKHById(deliveryDocket.getCustomerId()).enqueue(new Callback<KhachHang>() {
+            @Override
+            public void onResponse(Call<KhachHang> call, Response<KhachHang> response) {
+                KhachHang khachHang=response.body();
+                holder.tvTenKH.setText(khachHang.getFullName());
+            }
+
+            @Override
+            public void onFailure(Call<KhachHang> call, Throwable t) {
+
+            }
+        });
 
     }
 

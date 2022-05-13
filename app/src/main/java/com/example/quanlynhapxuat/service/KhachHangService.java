@@ -16,6 +16,9 @@ public interface KhachHangService {
     @GET("customers")
     Call<List<KhachHang>> getAllKH();
 
+    @GET("customers/{id}")
+    Call<KhachHang> getKHById(@Path("id") int i);
+
     @POST("customers")
     Call<KhachHang> createKH(@Body KhachHang kh);
 
