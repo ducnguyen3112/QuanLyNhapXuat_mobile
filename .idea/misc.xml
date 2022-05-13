@@ -13,11 +13,26 @@
         <entry key="..\:/Documents/DiDong/QuanLyNhapXuat_mobile/app/src/main/res/layout/fragment_home.xml" value="0.275" />
         <entry key="..\:/Documents/DiDong/QuanLyNhapXuat_mobile/app/src/main/res/menu/menu_bottom_navigation.xml" value="0.19718309859154928" />
         <entry key="..\:/Projects/Android/app/src/main/res/drawable/custom_button_2.xml" value="0.1" />
+        <entry key="..\:/Projects/Android/app/src/main/res/drawable/custom_person_icon.xml" value="0.125" />
+        <entry key="..\:/Projects/Android/app/src/main/res/drawable/ic_baseline_arrow_forward_ios_24.xml" value="0.125" />
+        <entry key="..\:/Projects/Android/app/src/main/res/drawable/ic_baseline_delete_forever_24.xml" value="0.125" />
+        <entry key="..\:/Projects/Android/app/src/main/res/drawable/ic_baseline_more_horiz_24.xml" value="0.125" />
+        <entry key="..\:/Projects/Android/app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.2025" />
+        <entry key="..\:/Projects/Android/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.195" />
+        <entry key="..\:/Projects/Android/app/src/main/res/drawable/ic_baseline_sort_24.xml" value="0.195" />
+        <entry key="..\:/Projects/Android/app/src/main/res/drawable/ic_baseline_warning_24.xml" value="0.125" />
+        <entry key="..\:/Projects/Android/app/src/main/res/drawable/ic_cash.xml" value="0.153" />
+        <entry key="..\:/Projects/Android/app/src/main/res/drawable/ic_import_nav.xml" value="0.125" />
         <entry key="..\:/Projects/Android/app/src/main/res/drawable/rounded_corners_cardview.xml" value="0.1485" />
         <entry key="..\:/Projects/Android/app/src/main/res/layout/activity_list_khactivity.xml" value="0.12360688956433637" />
         <entry key="..\:/Projects/Android/app/src/main/res/layout/activity_login.xml" value="0.12360688956433637" />
+        <entry key="..\:/Projects/Android/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Projects/Android/app/src/main/res/layout/activity_signup.xml" value="0.264" />
-        <entry key="..\:/Projects/Android/app/src/main/res/layout/fragment_home.xml" value="0.4" />
+        <entry key="..\:/Projects/Android/app/src/main/res/layout/fragment_export.xml" value="0.24139492753623187" />
+        <entry key="..\:/Projects/Android/app/src/main/res/layout/fragment_home.xml" value="0.264" />
+        <entry key="..\:/Projects/Android/app/src/main/res/layout/item_phieuxuat.xml" value="0.4" />
+        <entry key="..\:/Projects/Android/app/src/main/res/menu/home_menu.xml" value="0.264" />
+        <entry key="..\:/Projects/Android/app/src/main/res/menu/menu_bottom_navigation.xml" value="0.1" />
         <entry key="..\:/duc/QuanLyNhapXuat/app/src/main/res/drawable/button1_bg.xml" value="0.1" />
         <entry key="..\:/duc/QuanLyNhapXuat/app/src/main/res/drawable/ic_back.xml" value="0.1125" />
         <entry key="..\:/duc/QuanLyNhapXuat/app/src/main/res/drawable/ic_lock.xml" value="0.1" />

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.quanlynhapxuat.R;
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
     private void initViews(){
         bottomNav=findViewById(R.id.bottom_navigation);
     }
