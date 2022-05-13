@@ -1,70 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:foregroundTint="#F44336"
     android:orientation="vertical"
-    tools:context=".fragment.ImportFragment"
-    >
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Phiếu Nhập Fragment"
-        />
+    tools:context=".fragment.ImportFragment">
 
     <LinearLayout
+        android:id="@+id/llMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center"
-        >
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            >
+            android:layout_margin="10dp"
+            android:gravity="start|center">
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                app:srcCompat="@drawable/icon_calendar"
-                />
+                app:srcCompat="@drawable/icon_calendar" />
 
             <TextView
+                android:id="@+id/tvLocPhieuNhap_fragmentImport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tất cả"
-                />
+                android:text="Toàn thời gian"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="end"
-            >
+            android:layout_margin="10dp"
+            android:gravity="end|center">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tổng phiếu nhập: "
-                />
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
             <TextView
+                android:id="@+id/tvSLPhieuNhap_fragmentImport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="23"
-                />
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/blueLight"/>
         </LinearLayout>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvListPhieuNhap_fragmentImport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/llMain" />
 
-</LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/flbThemPhieuNhap_fragmentImport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
+        android:src="@drawable/ic_baseline_add"
+        app:backgroundTint="#00BCD4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
