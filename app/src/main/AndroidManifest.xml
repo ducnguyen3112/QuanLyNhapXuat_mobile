@@ -9,28 +9,31 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.QuanLyNhapXuat"
+        android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
-            android:parentActivityName=".activity.KhachHang.ListKHActivity"
+            android:name=".activity.ReceivedDocket.ReceivedDocketDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.KhachHang.ProfileKHActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".activity.KhachHang.ListKHActivity" />
         <activity
-            android:parentActivityName=".activity.KhachHang.ListKHActivity"
             android:name=".activity.KhachHang.UpdateKHActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".activity.KhachHang.ListKHActivity" />
         <activity
-            android:label="Thêm Khách Hàng"
-            android:parentActivityName=".activity.KhachHang.ListKHActivity"
             android:name=".activity.KhachHang.AddKHActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Thêm Khách Hàng"
+            android:parentActivityName=".activity.KhachHang.ListKHActivity" />
         <activity
-            android:parentActivityName=".activity.main.MainActivity"
             android:name=".activity.KhachHang.ListKHActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".activity.main.MainActivity" />
         <activity
             android:name=".activity.main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -53,6 +56,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

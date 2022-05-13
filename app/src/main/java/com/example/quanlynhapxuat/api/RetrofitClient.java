@@ -10,9 +10,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-
     private static Retrofit retrofit = null;
-
 
     public static Retrofit getClient(String baseURL) {
         OkHttpClient builder = new OkHttpClient.Builder()
@@ -21,7 +19,9 @@ public class RetrofitClient {
                 .connectTimeout(5000, TimeUnit.MILLISECONDS)
                 .retryOnConnectionFailure(true).build();
 
-        Gson gson = new GsonBuilder().setLenient().create();
+        Gson gson = new GsonBuilder().setLenient()
+                .setDateFormat("dd-MM-yyyy HH:mm:ss")
+                .create();
 
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
