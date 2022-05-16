@@ -4,6 +4,9 @@
     package="com.example.quanlynhapxuat">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".activity.KhachHang.ChiTietActivity"
+            android:parentActivityName=".activity.KhachHang.ProfileKHActivity" />
+        <activity
             android:name=".activity.ReceivedDocket.ReceivedDocketDetailActivity"
             android:exported="false" />
         <activity
@@ -24,6 +30,7 @@
         <activity
             android:name=".activity.KhachHang.UpdateKHActivity"
             android:exported="false"
+            android:label="Cập nhật Khách Hàng"
             android:parentActivityName=".activity.KhachHang.ListKHActivity" />
         <activity
             android:name=".activity.KhachHang.AddKHActivity"
@@ -33,6 +40,7 @@
         <activity
             android:name=".activity.KhachHang.ListKHActivity"
             android:exported="false"
+            android:label="Quản Lý Khách Hàng"
             android:parentActivityName=".activity.main.MainActivity" />
         <activity
             android:name=".activity.main.MainActivity"

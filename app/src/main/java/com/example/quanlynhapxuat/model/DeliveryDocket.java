@@ -1,23 +1,26 @@
 package com.example.quanlynhapxuat.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DeliveryDocket {
+public class DeliveryDocket implements Serializable {
     private int id;
     private int employeeId;
     private int customerId;
     private int status;
     private String createdAt;
-    List<DeliveryDocketDetail> deliveryDocketDetails=new ArrayList<>();
+    @SerializedName("deliveryDocketDetails")
+    List<DeliveryDocketDetail> deliveryDocketDetails;
 
     public DeliveryDocket(int id, int employeeId, int customerId, int status, String createdAt) {
         this.id = id;
         this.employeeId = employeeId;
         this.customerId = customerId;
         this.status = status;
-        createdAt = createdAt;
     }
 
     public DeliveryDocket() {
@@ -60,6 +63,14 @@ public class DeliveryDocket {
 
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
+    }
+
+    public float getTotal() {
+        float sum = 0;
+        for (DeliveryDocketDetail item : deliveryDocketDetails) {
+            sum += item.getPrice();
+        }
+        return sum;
     }
 
     public List<DeliveryDocketDetail> getDeliveryDocketDetails() {

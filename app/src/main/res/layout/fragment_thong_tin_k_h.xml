@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     tools:context=".fragment.KhachHang.ThongTinKHFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:orientation="vertical">
@@ -34,8 +34,7 @@
         android:id="@+id/edtTTName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_margin="16dp"
         android:textSize="16dp" />
 
 
@@ -51,8 +50,7 @@
         android:id="@+id/edtTTAdress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_margin="16dp"
         android:textSize="16dp" />
 
     <TextView
@@ -67,8 +65,7 @@
         android:id="@+id/edtTTPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_margin="16dp"
         android:textSize="16dp" />
 
 
@@ -88,29 +85,12 @@
         android:layout_marginRight="16dp"
         android:textSize="16dp" />
 
-    <LinearLayout
+    <Button
+        android:id="@+id/btnCancelTT"
+        style="@style/custom_button_2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btnEditKH"
-            style="@style/custom_button_2"
-            android:background="@drawable/custom_button_2"
-            android:text="Sửa"
-            android:textColor="@drawable/custom_button_2"
-            android:textSize="16sp" />
-
-        <Button
-            android:id="@+id/btnDeleteKH"
-            style="@style/custom_button_2"
-            android:background="@drawable/custom_button_2"
-            android:text="Xoá"
-            android:textColor="@drawable/custom_button_2"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-
+        android:background="@drawable/custom_button_2"
+        android:text="Trở lại"
+        android:textColor="@drawable/custom_button_2"
+        android:textSize="16sp" />
 </LinearLayout>

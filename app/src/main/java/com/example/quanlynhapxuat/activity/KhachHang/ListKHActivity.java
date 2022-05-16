@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,13 +51,13 @@ public class ListKHActivity extends AppCompatActivity {
     private void setControl() {
         rcvKH = findViewById(R.id.rcv_kh);
         fabAddKh = findViewById(R.id.fabAddKh);
-
     }
 
     public void getAllKH() {
         ApiUtils.getKhachHangService().getAllKH().enqueue(new Callback<List<KhachHang>>() {
             @Override
             public void onResponse(Call<List<KhachHang>> call, Response<List<KhachHang>> response) {
+                Log.e("list", response.body().toString());
                 if (response.isSuccessful()) {
                     List<KhachHang> list = response.body();
                     khachHangAdapter.setDate(list);
@@ -80,9 +82,12 @@ public class ListKHActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(ListKHActivity.this, MainActivity.class);
-        startActivity(intent);
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

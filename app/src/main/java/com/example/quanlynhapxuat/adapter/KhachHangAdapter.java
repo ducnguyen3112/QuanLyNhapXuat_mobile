@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
@@ -18,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.quanlynhapxuat.R;
 
 import com.example.quanlynhapxuat.activity.KhachHang.AddKHActivity;
@@ -66,6 +69,12 @@ public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.Khac
             return;
         }
 
+        if (kh.getAvatar() != null) {
+            Glide.with(context)
+                    .load(kh.getAvatar())
+                    .circleCrop()
+                    .into(holder.iv_KH);
+        }
         holder.tv_tenKH.setText(kh.getFullName());
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override

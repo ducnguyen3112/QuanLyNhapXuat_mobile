@@ -14,6 +14,7 @@
         android:gravity="center">
 
         <ImageView
+            android:layout_marginStart="10dp"
             android:id="@+id/iv_KH"
             android:layout_width="50dp"
             android:layout_height="50dp"
