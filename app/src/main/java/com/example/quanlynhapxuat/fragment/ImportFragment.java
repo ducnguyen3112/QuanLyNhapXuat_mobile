@@ -43,6 +43,9 @@ public class ImportFragment extends Fragment {
     private TextView tvTotal;
     private FloatingActionButton flbThemPhieuNhap;
 
+    public ImportFragment() {
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
