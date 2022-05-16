@@ -1,15 +1,21 @@
 package com.example.quanlynhapxuat.fragment.phieuxuat;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -18,6 +24,7 @@ import android.widget.TextView;
 import com.example.quanlynhapxuat.R;
 import com.example.quanlynhapxuat.activity.main.LoginActivity;
 import com.example.quanlynhapxuat.activity.main.MainActivity;
+import com.example.quanlynhapxuat.adapter.ChiTietPXAdapter;
 import com.example.quanlynhapxuat.adapter.KHSpinnerAdapter;
 import com.example.quanlynhapxuat.api.ApiUtils;
 import com.example.quanlynhapxuat.model.DeliveryDocket;
@@ -40,14 +47,12 @@ public class AddExportFragment extends Fragment {
 
     private ImageButton btnThoat,btnLuu,btnThemSP;
     private Spinner spKhangHang;
-    private EditText etNgayTao;
     private View mView;
     private MainActivity mainActivity;
     private RecyclerView recyclerView;
     private TextView tvTenNV;
     private List<KhachHang> khachHangList=new ArrayList<>();
     private int maSKH;
-
     public static final String TAG = AddExportFragment.class.getName();
 
     @Override
@@ -87,7 +92,6 @@ public class AddExportFragment extends Fragment {
         btnLuu=mView.findViewById(R.id.btn_luuaddpx);
         btnThemSP=mView.findViewById(R.id.btn_themsppx);
         spKhangHang=mView.findViewById(R.id.sp_khpx);
-        etNgayTao=mView.findViewById(R.id.et_ngaytaopx);
         tvTenNV=mView.findViewById(R.id.tv_name_employee_px);
         tvTenNV.setText(LoginActivity.nameLogin);
         btnThoat.setOnClickListener(new View.OnClickListener() {
@@ -104,18 +108,58 @@ public class AddExportFragment extends Fragment {
                     @Override
                     public void onResponse(Call<DeliveryDocket> call, Response<DeliveryDocket> response) {
                         if (response.isSuccessful()){
-                            Log.e("addpx", "Tạo phiếu xuất thành công!" );
+                            Log.e("addpx", "thêm thành công"+maSKH );
+                        }else{
+                            Log.e("addpx", "không thành công!!!!");
                         }
                     }
 
                     @Override
                     public void onFailure(Call<DeliveryDocket> call, Throwable t) {
-                        Log.e("addpx","Lỗi trên server"+t.getMessage()  );
                     }
                 });
             }
         });
-
+        btnThemSP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog=getDialogDDH(mainActivity);
+                dialog.show();
+                dialog.getWindow().setLayout((6*MainActivity.width)/7, WindowManager.LayoutParams.WRAP_CONTENT);
+            }
+        });
+        List<DeliveryDocketDetail> deliveryDocketDetails=new ArrayList<>();
+        deliveryDocketDetails.add(new DeliveryDocketDetail(10,1000,1,1));
+        deliveryDocketDetails.add(new DeliveryDocketDetail(10,1000,4,1));
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(mainActivity);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        RecyclerView.ItemDecoration itemDecoration=new DividerItemDecoration(mainActivity,DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(itemDecoration);
+        ChiTietPXAdapter chiTietPXAdapter=new ChiTietPXAdapter();
+        chiTietPXAdapter.setData(deliveryDocketDetails,mainActivity);
+        recyclerView.setAdapter(chiTietPXAdapter);
         return mView;
+    }
+    public Dialog getDialogDDH(Context context){
+        Dialog dialog=new Dialog(context);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.dialog_them_product_ctpx);
+        Spinner spSP=dialog.findViewById(R.id.sp_sppx);
+        EditText etSLSP=dialog.findViewById(R.id.et_slsanphampx);
+        Button btnThem=dialog.findViewById(R.id.btn_dialogthem);
+        Button btnHuy=dialog.findViewById(R.id.btn_dialoghuy);
+        btnHuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+        btnThem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+        return dialog;
     }
 }

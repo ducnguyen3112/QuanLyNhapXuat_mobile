@@ -1,5 +1,7 @@
 package com.example.quanlynhapxuat.fragment.phieuxuat;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,10 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.quanlynhapxuat.R;
 import com.example.quanlynhapxuat.activity.main.MainActivity;
@@ -21,6 +27,7 @@ import com.example.quanlynhapxuat.model.DeliveryDocket;
 import com.example.quanlynhapxuat.model.DeliveryDocketDetail;
 import com.example.quanlynhapxuat.model.KhachHang;
 import com.example.quanlynhapxuat.utils.Convert;
+import com.example.quanlynhapxuat.utils.CustomAlertDialog;
 
 import java.util.List;
 
@@ -37,8 +44,8 @@ public class ExportDetailFragment extends Fragment {
     private View mView;
     private MainActivity mainActivity;
     private TextView tvIdPX,tvTenKH,tvNgay,tvStatus,tvTongTien,tvGiamGia,tvCanTra;
-    private ImageButton btnBack;
-
+    private ImageButton btnBack,btnMenu;
+    private PopupMenu popupMenu;
 
 
     public ExportDetailFragment() {
@@ -58,6 +65,7 @@ public class ExportDetailFragment extends Fragment {
         tvTongTien=mView.findViewById(R.id.tv_tongtienpx);
         tvGiamGia=mView.findViewById(R.id.tv_giamgiapx);
         tvCanTra=mView.findViewById(R.id.tv_khachcantrapx);
+        btnMenu=mView.findViewById(R.id.btn_morectpx);
 
         Bundle bundleReceive=getArguments();
 
@@ -101,7 +109,7 @@ public class ExportDetailFragment extends Fragment {
         RecyclerView.ItemDecoration itemDecoration=new DividerItemDecoration(mainActivity,DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
         ChiTietPXAdapter chiTietPXAdapter=new ChiTietPXAdapter();
-        chiTietPXAdapter.setData(deliveryDocketDetails);
+        chiTietPXAdapter.setData(deliveryDocketDetails,mainActivity);
         recyclerView.setAdapter(chiTietPXAdapter);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +117,55 @@ public class ExportDetailFragment extends Fragment {
                 getParentFragmentManager().popBackStack();
             }
         });
+        showPopUpMenu();
         return mView;
+    }
+    public void showPopUpMenu(){
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupMenu=new PopupMenu(mainActivity,v);
+                popupMenu.inflate(R.menu.popup_menu_ctpx);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.menupx_sua:
+                                Toast.makeText(mainActivity,"Sử",
+                                        Toast.LENGTH_SHORT).show();
+                                return true;
+                            case R.id.menupx_xuatfile:
+                                Toast.makeText(mainActivity,"Xuất file",
+                                        Toast.LENGTH_SHORT).show();
+                                return true;
+                            case R.id.menupx_hoanthanh:
+                                Toast.makeText(mainActivity,"Hoàn thành",
+                                        Toast.LENGTH_SHORT).show();
+                                return true;
+                            case R.id.menupx_huy:
+                                Toast.makeText(mainActivity,"Hủy",
+                                        Toast.LENGTH_SHORT).show();
+                                return true;
+                            default:return false;
+                        }
+
+                    }
+                });
+                popupMenu.show();
+            }
+
+        });
+
+    }
+    public void hoanThanhDonHang(){
+        CustomAlertDialog alertDialog= new CustomAlertDialog(mainActivity);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.getWindow().setLayout((7* MainActivity.width)/8, WindowManager.LayoutParams.WRAP_CONTENT);
+        alertDialog.show();
+        alertDialog.btnPositive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
 }

@@ -14,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -33,4 +34,6 @@ public interface DeliveryDocketService {
     Call<List<DeliveryDocketDetail>> getAllDeliveryDetailsInDelivery(@Path("id") int id);
     @POST("deliveryDockets")
     Call<DeliveryDocket> addDeliveryDocket(@Body DeliveryDocket deliveryDocket);
+    @PUT("deliveryDockets/{id}")
+    Call<DeliveryDocket> upDateDeliveryDocket(@Body DeliveryDocket deliveryDocket,@Path("id") int id);
 }
