@@ -1,6 +1,8 @@
 package com.example.quanlynhapxuat.api;
 
+import com.example.quanlynhapxuat.service.EmployeeRetrofit;
 import com.example.quanlynhapxuat.service.KhachHangService;
+import com.example.quanlynhapxuat.service.ProductRetrofit;
 import com.example.quanlynhapxuat.service.ReceivedDocketService;
 
 public class ApiUtils {
@@ -13,5 +15,13 @@ public class ApiUtils {
 
     public static ReceivedDocketService getReceivedDocketService() {
         return RetrofitClient.getClient(baseURL).create(ReceivedDocketService.class);
+    }
+
+    public static ProductRetrofit productRetrofit() {
+        return RetrofitClient.getClient(baseURL).create(ProductRetrofit.class);
+    }
+
+    public static EmployeeRetrofit employeeRetrofit() {
+        return RetrofitClient.getClient(baseURL).create(EmployeeRetrofit.class);
     }
 }

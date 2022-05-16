@@ -74,4 +74,16 @@
         <item name="android:layout_marginBottom">25dp</item>
         <item name="android:src">@drawable/ic_baseline_add</item>
     </style>
+
+    <style name="style_textview">
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">20dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>
