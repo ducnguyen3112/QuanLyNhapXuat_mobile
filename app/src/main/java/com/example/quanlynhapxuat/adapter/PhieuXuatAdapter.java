@@ -1,10 +1,10 @@
 package com.example.quanlynhapxuat.adapter;
 
-import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,22 +17,36 @@ import com.example.quanlynhapxuat.model.DeliveryDocketDetail;
 import com.example.quanlynhapxuat.model.KhachHang;
 import com.example.quanlynhapxuat.utils.Convert;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PhieuXuatAdapter extends RecyclerView.Adapter<PhieuXuatAdapter.PXViewHolder>{
+public class PhieuXuatAdapter extends RecyclerView.Adapter<PhieuXuatAdapter.PXViewHolder>
+implements Filterable {
 
 
     private List<DeliveryDocket> deliveryDockets;
-    private List<DeliveryDocket> deliveryDocketsOld;
+    private List<DeliveryDocket> deliveryDocketOlds;
+    private IclickItemListener itemListener;
+    private Map<Integer,String> khachHangMap;
+
+    public PhieuXuatAdapter() {
+    }
+    public interface IclickItemListener{
+        void onclickItem(DeliveryDocket deliveryDocket);
+    }
 
 
-    public void setData(List<DeliveryDocket> list) {
+    public void setData(List<DeliveryDocket> list,IclickItemListener listener ) {
+        this.deliveryDocketOlds = list;
         this.deliveryDockets = list;
-        notifyDataSetChanged();
+        this.itemListener=listener;
+        this.khachHangMap=Convert.customerMap();
+
     }
     public class PXViewHolder extends RecyclerView.ViewHolder{
         private TextView tvGiaPX,tvMaPX,tvTenKH,tvNgay,tvStatus;
@@ -64,19 +78,38 @@ public class PhieuXuatAdapter extends RecyclerView.Adapter<PhieuXuatAdapter.PXVi
         holder.tvMaPX.setText(String.valueOf(id));
         holder.tvNgay.setText(deliveryDocket.getCreatedAt());
         if(deliveryDocket.getStatus()==1){
+            holder.tvStatus.setText("Đang xử lí");
+        }else if(deliveryDocket.getStatus()==2){
             holder.tvStatus.setText("Hoàn thành");
-        }else{
-            holder.tvStatus.setText("Chưa hoàn thành");
+        }else if(deliveryDocket.getStatus()==0) {
+            holder.tvStatus.setText("Đã hủy");
         }
-       holder.tvTenKH.setText(String.valueOf(deliveryDocket.getId()));
-        holder.tvNgay.setText("31/12/2000 31:12");
+        holder.tvNgay.setText(deliveryDocket.getCreatedAt());
         int tong=0;
-        if (deliveryDockets.get(position).getDeliveryDocketDetails()!=null){
-            for (DeliveryDocketDetail item: deliveryDockets.get(position).getDeliveryDocketDetails()) {
-                tong+=item.getPrice();
+        if (deliveryDockets.get(position).getDeliveryDocketDetails()!=null) {
+            for (DeliveryDocketDetail item : deliveryDockets.get(position).getDeliveryDocketDetails()) {
+                tong += item.getPrice()*item.getQuantity();
             }
-            holder.tvGiaPX.setText(String.valueOf(tong));
         }
+        holder.tvGiaPX.setText(Convert.currencyFormat(tong));
+        ApiUtils.getKhachHangService().getKHById(deliveryDocket.getCustomerId()).enqueue(new Callback<KhachHang>() {
+            @Override
+            public void onResponse(Call<KhachHang> call, Response<KhachHang> response) {
+                KhachHang khachHang=response.body();
+                holder.tvTenKH.setText(khachHang.getFullName());
+            }
+
+            @Override
+            public void onFailure(Call<KhachHang> call, Throwable t) {
+
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemListener.onclickItem(deliveryDocket);
+            }
+        });
 
     }
 
@@ -86,6 +119,48 @@ public class PhieuXuatAdapter extends RecyclerView.Adapter<PhieuXuatAdapter.PXVi
             return deliveryDockets.size();
         }
         return 0;
+    }
+
+    public int getGiatriTatCaPX(List<DeliveryDocket> deliveryDockets){
+        int tongList=0;
+        int tong;
+        for (int i = 0; i <deliveryDockets.size(); i++) {
+            tong=0;
+            for (int j = 0; j < deliveryDockets.get(i).getDeliveryDocketDetails().size(); j++) {
+                tong+=deliveryDockets.get(i).getDeliveryDocketDetails().get(j).getPrice();
+            }
+            tongList+=tong;
+        }
+        return tongList;
+    }
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String strSeach=constraint.toString();
+                if (strSeach.isEmpty()){
+                    deliveryDockets=deliveryDocketOlds;
+                }else{
+                    List<DeliveryDocket> list=new ArrayList<>();
+                    for (DeliveryDocket item: deliveryDocketOlds){
+                        if (khachHangMap.get(item.getCustomerId()).toLowerCase().contains(strSeach.toLowerCase())){
+                            list.add(item);
+                        }
+                    }
+                    deliveryDockets=list;
+                }
+                FilterResults filterResults=new FilterResults();
+                filterResults.values=deliveryDockets;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                deliveryDockets= (List<DeliveryDocket>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
 }

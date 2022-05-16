@@ -1,10 +1,11 @@
 package com.example.quanlynhapxuat.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DeliveryDocket {
+public class DeliveryDocket implements Serializable {
     private int id;
     private int employeeId;
     private int customerId;
@@ -12,12 +13,11 @@ public class DeliveryDocket {
     private String createdAt;
     List<DeliveryDocketDetail> deliveryDocketDetails=new ArrayList<>();
 
-    public DeliveryDocket(int id, int employeeId, int customerId, int status, String createdAt) {
-        this.id = id;
+    public DeliveryDocket( int employeeId, int customerId, int status, String createdAt) {
         this.employeeId = employeeId;
         this.customerId = customerId;
         this.status = status;
-        createdAt = createdAt;
+        this.createdAt = createdAt;
     }
 
     public DeliveryDocket() {

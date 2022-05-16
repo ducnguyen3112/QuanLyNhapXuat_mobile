@@ -48,5 +48,8 @@ dependencies {
     //chart
     implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
     implementation "androidx.recyclerview:recyclerview:1.2.1"
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.13.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
 
 }
