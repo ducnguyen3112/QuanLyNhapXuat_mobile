@@ -1,24 +1,32 @@
 package com.example.quanlynhapxuat.model;
 
-import java.util.Date;
-import java.util.List;
-
-public class Employee {
+public class Employee{
     private int id;
     private String fullName;
     private String address;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String phoneNumber;
     private int role;
     private String password;
     private int status;
     private String avatar;
 
-
     public Employee() {
     }
 
-    public Employee(String fullName, String address, Date dateOfBirth, String phoneNumber, int role, String password, int status, String avatar) {
+    public Employee(String fullName, String address, String dateOfBirth, String phoneNumber, int role, String password, int status, String avatar) {
+        this.fullName = fullName;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+        this.password = password;
+        this.status = status;
+        this.avatar = avatar;
+    }
+
+    public Employee(int id, String fullName, String address, String dateOfBirth, String phoneNumber, int role, String password, int status, String avatar) {
+        this.id = id;
         this.fullName = fullName;
         this.address = address;
         this.dateOfBirth = dateOfBirth;
@@ -53,11 +61,11 @@ public class Employee {
         this.address = address;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

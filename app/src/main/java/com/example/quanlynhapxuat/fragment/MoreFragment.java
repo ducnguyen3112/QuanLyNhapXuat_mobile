@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.quanlynhapxuat.R;
+import com.example.quanlynhapxuat.activity.EmployeesActivity;
 import com.example.quanlynhapxuat.activity.KhachHang.ListKHActivity;
 
 public class MoreFragment extends Fragment {
@@ -48,6 +49,8 @@ public class MoreFragment extends Fragment {
         btn_nv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), EmployeesActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -9,11 +9,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.quanlynhapxuat.R;
+import com.example.quanlynhapxuat.fragment.HomeFragment;
+import com.example.quanlynhapxuat.fragment.ImportFragment;
+import com.example.quanlynhapxuat.fragment.ProductFragment;
 import com.example.quanlynhapxuat.fragment.phieuxuat.AddExportFragment;
 import com.example.quanlynhapxuat.fragment.phieuxuat.ExportDetailFragment;
 import com.example.quanlynhapxuat.fragment.phieuxuat.ExportFragment;
-import com.example.quanlynhapxuat.fragment.HomeFragment;
-import com.example.quanlynhapxuat.fragment.ImportFragment;
+
 import com.example.quanlynhapxuat.fragment.MoreFragment;
 import com.example.quanlynhapxuat.model.DeliveryDocket;
 import com.example.quanlynhapxuat.model.DeliveryDocketDetail;
@@ -31,7 +33,8 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNav;
-    HomeFragment homeFragment=new HomeFragment();
+    HomeFragment homeFragment = new HomeFragment();
+    ProductFragment productFragment=new ProductFragment();
     ExportFragment exportFragment=new ExportFragment();
     ImportFragment importFragment = new ImportFragment();
     MoreFragment moreFragment = new MoreFragment();
@@ -65,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.menu_import:
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_main,importFragment).commit();
+                        return true;
+                    case R.id.menu_products:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frame_main,productFragment).commit();
                         return true;
                     case R.id.menu_more:
                         getSupportFragmentManager().beginTransaction().replace(R.id.frame_main, moreFragment).commit();
