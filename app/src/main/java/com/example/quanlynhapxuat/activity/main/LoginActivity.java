@@ -25,6 +25,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button btnForgot,btnSignin,btnGoSignup;
     TextInputEditText etPhoneLogin;
     EditText etPasswordLogin;
+    public static int idLogin;
+    public static String nameLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +52,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent intent=new Intent(LoginActivity.this,ForgotPasswdActivity.class);
                 startActivity(intent);
             case R.id.btn_signin:
-                //signinClick();
-                Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent1);
+                signinClick();
+                //Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
+                //startActivity(intent1);
                 break;
             case R.id.btn_go_signup:
                 intent=new Intent(LoginActivity.this,SignupActivity.class);
@@ -69,6 +71,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onResponse(Call<Employee> call, Response<Employee> response) {
                 if (response.isSuccessful()){
                     Employee employee=response.body();
+                    idLogin=employee.getId();
+                    nameLogin=employee.getFullName();
                     Toast.makeText(LoginActivity.this,"Đăng nhập thành công!",
                             Toast.LENGTH_SHORT).show();
                     Intent intent1=new Intent(LoginActivity.this,MainActivity.class);

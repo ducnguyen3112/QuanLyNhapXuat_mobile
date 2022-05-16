@@ -1,6 +1,11 @@
 package com.example.quanlynhapxuat.model;
 
-public class DeliveryDocketDetail {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+public class DeliveryDocketDetail  implements Serializable {
 
     private int id;
     private int quantity;
@@ -9,6 +14,13 @@ public class DeliveryDocketDetail {
     private int productId;
 
     public DeliveryDocketDetail() {
+    }
+
+    public DeliveryDocketDetail(int quantity, int price, int deliveryDocketId, int productId) {
+        this.quantity = quantity;
+        this.price = price;
+        this.deliveryDocketId = deliveryDocketId;
+        this.productId = productId;
     }
 
     public int getId() {
@@ -50,4 +62,9 @@ public class DeliveryDocketDetail {
     public void setProductId(int productId) {
         this.productId = productId;
     }
+
+
+
+
+
 }
