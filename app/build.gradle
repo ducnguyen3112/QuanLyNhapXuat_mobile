@@ -65,4 +65,7 @@ dependencies {
     implementation 'com.itextpdf:io:7.1.8'
     implementation 'com.itextpdf:kernel:7.1.8'
     implementation 'com.itextpdf:layout:7.1.8'
+    //lib send mail - linh
+    implementation 'com.sun.mail:android-mail:1.6.6'
+    implementation 'com.sun.mail:android-activation:1.6.6'
 }

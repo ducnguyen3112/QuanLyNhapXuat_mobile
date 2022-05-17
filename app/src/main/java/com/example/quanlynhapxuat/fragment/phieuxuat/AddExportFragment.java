@@ -56,7 +56,7 @@ public class AddExportFragment extends Fragment {
     private RecyclerView recyclerView;
     private TextView tvTenNV;
     private List<KhachHang> khachHangList=new ArrayList<>();
-    private List<Product> productList;
+    private ArrayList<Product> productList;
     private int maSKH;
     private int maSP;
     private int maPX;

@@ -1,17 +1,23 @@
 package com.example.quanlynhapxuat.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +30,7 @@ import com.example.quanlynhapxuat.model.Product;
 import com.example.quanlynhapxuat.model.ReceivedDocket;
 import com.example.quanlynhapxuat.model.ReceivedDocketDetail;
 import com.example.quanlynhapxuat.model.RestErrorResponse;
+import com.example.quanlynhapxuat.utils.Constants;
 import com.example.quanlynhapxuat.utils.CustomToast;
 import com.google.gson.Gson;
 import com.itextpdf.io.image.ImageData;
@@ -42,8 +49,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Properties;
+
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,7 +67,10 @@ import retrofit2.Response;
 public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAdapter.ReceivedDocketViewHolder> {
     private Context context;
     private ArrayList<ReceivedDocket> receivedDocketList;
-    private String mPDFPath;
+    private String mPDFPath = "";
+
+    private EditText etMail_dialogSendMail;
+    private Button btnHuy_dialogSendMail, btnOK_dialogSendMail;
 
     public ReceivedDocketAdapter(Context context) {
         this.context = context;
@@ -94,7 +112,7 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
             @Override
             public boolean onLongClick(View view) {
                 getReceivedDocketForDPF(receivedDocket.getId());
-
+                sendMail(receivedDocket);
                 return true;
             }
         });
@@ -190,7 +208,6 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
 
         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
         Log.e("pdfPath: ", pdfPath);
-        String pdfPath1 = "";
         String child = "ChiTietPhieuXuat-" + receivedDocket.getId() + ".pdf";
         File file = new File(pdfPath,child);
         OutputStream outputStream = new FileOutputStream(file);
@@ -220,11 +237,6 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
         //4
         tableRD.addCell(new Cell().add(new Paragraph("NHA CUNG CAP").setTextAlignment(TextAlignment.LEFT)));
         tableRD.addCell(new Cell().add(new Paragraph(receivedDocket.getSupplier_name()+"").setTextAlignment(TextAlignment.RIGHT)));
-        //5
-        Text t1 = new Text("Tong: ").setItalic();
-        Text t2 = new Text(getTotalList()+"").setBold();
-        tableRD.addCell(new Cell(1,2).add(new Paragraph().add(t1).add(t2).setTextAlignment(TextAlignment.RIGHT)));
-        //tableRD.addCell(new Cell().add(new Paragraph()));
         //
         document.add(tableRD);
 
@@ -240,40 +252,42 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
         tableListProducts.addCell(new Cell().add(new Paragraph("Don gia")).setTextAlignment(TextAlignment.CENTER));
         tableListProducts.addCell(new Cell().add(new Paragraph("So luong")).setTextAlignment(TextAlignment.CENTER));
         tableListProducts.addCell(new Cell().add(new Paragraph("Thanh tien")).setTextAlignment(TextAlignment.CENTER));
-        //1-n
+
         getProductList();
-        if(productList==null||productList.size()==0) {
+        if(receivedDocket.receivedDocketDetails==null) { //||productList.size()==0
             CustomToast.makeText(context,"PDF: productList is empty!"
                     ,CustomToast.LENGTH_SHORT,CustomToast.WARNING).show();
-            return;
         }
-        int stt = 1;
-        for(ReceivedDocketDetail item : receivedDocket.receivedDocketDetails) {
-            Product product = getProduct(item.getProductId());
-            if(product==null) {
-                CustomToast.makeText(context,"PDF: 1 product is null!"
-                        ,CustomToast.LENGTH_SHORT,CustomToast.WARNING).show();
-                break;
+        else {
+            //1-n
+            int stt = 1;
+            for(ReceivedDocketDetail item : receivedDocket.receivedDocketDetails) {
+                Product product = getProduct(item.getProductId());
+                if(product==null) {
+                    CustomToast.makeText(context,"PDF: 1 product is null!"
+                            ,CustomToast.LENGTH_SHORT,CustomToast.WARNING).show();
+                    break;
+                }
+
+                Bitmap bitmap;
+                Drawable drawable = context.getDrawable(R.drawable.ic_product);
+                bitmap = ((BitmapDrawable)drawable).getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
+                byte[] bitmapData = stream.toByteArray();
+                ImageData imageData = ImageDataFactory.create(bitmapData);
+                Image image = new Image(imageData);
+                image.setWidth(80).setHeight(80);
+
+                tableListProducts.addCell(new Cell().add(new Paragraph(stt + "")).setTextAlignment(TextAlignment.CENTER));
+                tableListProducts.addCell(new Cell().add(image));
+                tableListProducts.addCell(new Cell().add(new Paragraph(product.getName()+"")));
+                tableListProducts.addCell(new Cell().add(new Paragraph(item.getPrice()+"")).setTextAlignment(TextAlignment.CENTER));
+                tableListProducts.addCell(new Cell().add(new Paragraph(item.getQuantity()+"")).setTextAlignment(TextAlignment.CENTER));
+                tableListProducts.addCell(new Cell().add(new Paragraph((item.getPrice()*item.getQuantity())+"")).setTextAlignment(TextAlignment.CENTER));
+
+                stt++;
             }
-
-            Bitmap bitmap;
-            Drawable drawable = context.getDrawable(R.drawable.ic_product);
-            bitmap = ((BitmapDrawable)drawable).getBitmap();
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
-            byte[] bitmapData = stream.toByteArray();
-            ImageData imageData = ImageDataFactory.create(bitmapData);
-            Image image = new Image(imageData);
-            image.setWidth(80).setHeight(80);
-
-            tableListProducts.addCell(new Cell().add(new Paragraph(stt + "")).setTextAlignment(TextAlignment.CENTER));
-            tableListProducts.addCell(new Cell().add(image));
-            tableListProducts.addCell(new Cell().add(new Paragraph(product.getName()+"")));
-            tableListProducts.addCell(new Cell().add(new Paragraph(item.getPrice()+"")).setTextAlignment(TextAlignment.CENTER));
-            tableListProducts.addCell(new Cell().add(new Paragraph(item.getQuantity()+"")).setTextAlignment(TextAlignment.CENTER));
-            tableListProducts.addCell(new Cell().add(new Paragraph((item.getPrice()*item.getQuantity())+"")).setTextAlignment(TextAlignment.CENTER));
-
-            stt++;
         }
         document.add(tableListProducts);
         //
@@ -282,6 +296,7 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
         document.add(new Paragraph().add(tongCong).add(tongTien).setTextAlignment(TextAlignment.RIGHT));
         //
         mPDFPath = file.getPath();
+        Log.e("mPDFPath",mPDFPath);
         document.close();
     }
 
@@ -293,6 +308,7 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
             public void onResponse(Call<ArrayList<Product>> call, Response<ArrayList<Product>> response) {
                 if(response.isSuccessful()) {
                     productList = response.body();
+                    notifyDataSetChanged();
                 }
             }
 
@@ -304,11 +320,97 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
     }
 
     private Product getProduct(int productId) {
-        for(Product item : productList) {
-            if(item.getId()==productId) {
-                return item;
+        if(productList!=null) {
+            for(Product item : productList) {
+                if(item.getId()==productId) {
+                    return item;
+                }
             }
         }
         return null;
+    }
+
+    private Dialog getDialogSendMail() {
+        Dialog dialog = new Dialog(context);
+        dialog.setCancelable(false);
+
+        dialog.setContentView(R.layout.dialog_send_mail);
+        etMail_dialogSendMail = dialog.findViewById(R.id.etMail_dialogSendMail);
+        btnHuy_dialogSendMail = dialog.findViewById(R.id.btnHuy_dialogSendMail);
+        btnOK_dialogSendMail = dialog.findViewById(R.id.btnOK_dialogSendMail);
+
+        return dialog;
+    }
+
+    private void sendMail(ReceivedDocket receivedDocket) {
+        Dialog dialog = getDialogSendMail();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+
+        btnHuy_dialogSendMail.setOnClickListener(view -> {
+            dialog.cancel();
+        });
+
+        btnOK_dialogSendMail.setOnClickListener(view -> {
+            String toMail = etMail_dialogSendMail.getText().toString();
+            if(toMail.isEmpty()) {
+                CustomToast.makeText(context,"Vui lòng nhập địa chỉ mail"
+                        ,CustomToast.LENGTH_SHORT,CustomToast.WARNING).show();
+            }
+            else {
+                Properties properties = new Properties();
+                properties.put("mail.smtp.auth","true");
+                properties.put("mail.smtp.starttls.enable","true");
+                properties.put("mail.smtp.host","smtp.gmail.com");
+                properties.put("mail.smtp.port","587");
+
+                Session session = Session.getInstance(properties,
+                        new Authenticator() {
+                            @Override
+                            protected PasswordAuthentication getPasswordAuthentication() {
+                                return new PasswordAuthentication(Constants.emailName,Constants.emailPws);
+                            }
+                        });
+
+                try {
+                    Message message = new MimeMessage(session);
+                    message.setFrom(new InternetAddress(Constants.emailName));
+                    message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(toMail));
+                    message.setSubject("Gửi chi tiết phiếu nhập hàng qua mail");
+
+                    Multipart emailContent = new MimeMultipart();
+
+                    MimeBodyPart textBodyPart = new MimeBodyPart();
+                    textBodyPart.setText(" Mã phiếu nhập: " + receivedDocket.getId()
+                            + "\n Mã nhân viên tạo: " + receivedDocket.getEmployee_id()
+                            + "\n Ngày tạo: " + receivedDocket.getCreatedAt()
+                            + "\n Nhà cung cấp: " + receivedDocket.getSupplier_name()
+                            + "\n Tổng giá trị đơn hàng: " + getTotalList() + " VND");
+
+                    MimeBodyPart pdfAttachment = new MimeBodyPart();
+                    pdfAttachment.attachFile(mPDFPath);
+
+                    emailContent.addBodyPart(textBodyPart);
+                    emailContent.addBodyPart(pdfAttachment);
+
+                    message.setContent(emailContent);
+
+                    //
+                    Transport.send(message);
+                    CustomToast.makeText(context,"Gửi mail thành công!"
+                            ,CustomToast.LENGTH_SHORT,CustomToast.SUCCESS).show();
+                }
+                catch (MessagingException | IOException e) {
+                    CustomToast.makeText(context,"Gửi mail thất bại!"
+                            ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+                    Log.e("e.message",e.getMessage());
+                    throw new RuntimeException();
+                }
+            }
+            dialog.cancel();
+        });
+
+        StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(threadPolicy);
     }
 }

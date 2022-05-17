@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.quanlynhapxuat.R;
+import com.example.quanlynhapxuat.activity.main.LoginActivity;
 import com.example.quanlynhapxuat.adapter.ReceivedDocketDetailAdapter;
 import com.example.quanlynhapxuat.api.ApiUtils;
 import com.example.quanlynhapxuat.model.Product;
@@ -85,7 +86,7 @@ public class ReceivedDocketDetailActivity extends AppCompatActivity {
         }
         else if(maPN==0){
             // --  tạo phiếu nhập
-            int maNV = 1;
+            int maNV = LoginActivity.idLogin;
             tvMaPN.setText(maPN+"");
             tvMaNV.setText(maNV+"");
             tvTongGiaTri.setText(NumberFormat.getNumberInstance(Locale.US).format(rddAdapter.getTotalList())+"VND");
@@ -157,7 +158,7 @@ public class ReceivedDocketDetailActivity extends AppCompatActivity {
 
                 ReceivedDocketDetail rdd = new ReceivedDocketDetail();
 
-                rdd.setId(-1);
+                rdd.setId(0);
                 rdd.setProductId(product.getId());
                 rdd.setReceivedDocketId(maPN);
                 rdd.setQuantity(Integer.parseInt(rddAdapter.etSL_dialogThemSP.getText().toString()));
@@ -196,7 +197,9 @@ public class ReceivedDocketDetailActivity extends AppCompatActivity {
                     if(response.isSuccessful()) {
                         Log.e("postRD: ","Thêm phiếu nhập thành công!");
                         for(ReceivedDocketDetail item : rddAdapter.getRddList()) {
-                            if(item.getId()==-1) {
+                            item.setReceivedDocketId(response.body().getId());
+                            Log.e("item.setReceivedDocketId: ",item.getReceivedDocketId()+"");
+                            if(item.getId()==0) {
                                 postReceivedDocketDetail(item);
                             }
                             else {
@@ -227,7 +230,7 @@ public class ReceivedDocketDetailActivity extends AppCompatActivity {
         }
         else {
             for(ReceivedDocketDetail item : rddAdapter.getRddList()) {
-                if(item.getId()==-1) {
+                if(item.getId()==0) {
                     postReceivedDocketDetail(item);
                 }
                 else {
@@ -351,10 +354,12 @@ public class ReceivedDocketDetailActivity extends AppCompatActivity {
                         RestErrorResponse errorResponse = g.fromJson(response.errorBody().string(),RestErrorResponse.class);
                         CustomToast.makeText(ReceivedDocketDetailActivity.this,"TRY: " + errorResponse.getMessage()
                                 ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+                        Log.e("error",errorResponse.getMessage());
                     }
                     catch (Exception e) {
                         CustomToast.makeText(ReceivedDocketDetailActivity.this,"CATCH: " + e.getMessage()
                                 ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+                        Log.e("error", e.getMessage());
                     }
                 }
             }
@@ -380,10 +385,13 @@ public class ReceivedDocketDetailActivity extends AppCompatActivity {
                         RestErrorResponse errorResponse = g.fromJson(response.errorBody().string(),RestErrorResponse.class);
                         CustomToast.makeText(ReceivedDocketDetailActivity.this,"TRY: " + errorResponse.getMessage()
                                 ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+                        errorResponse.getMessage();
+
                     }
                     catch (Exception e) {
                         CustomToast.makeText(ReceivedDocketDetailActivity.this,"CATCH: " + e.getMessage()
                                 ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+                        e.getMessage();
                     }
                 }
             }
