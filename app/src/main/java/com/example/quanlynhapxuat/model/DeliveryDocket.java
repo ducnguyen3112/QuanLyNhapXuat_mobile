@@ -1,6 +1,9 @@
 package com.example.quanlynhapxuat.model;
 
 import java.io.Serializable;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -56,6 +59,14 @@ public class DeliveryDocket implements Serializable {
 
     public int getCustomerId() {
         return customerId;
+    }
+
+    public float getTotal () {
+        float sum = 0;
+        for (DeliveryDocketDetail item : deliveryDocketDetails) {
+            sum = sum + item.getPrice();
+        }
+        return sum;
     }
 
     public void setCustomerId(int customerId) {

@@ -1,11 +1,8 @@
 package com.example.quanlynhapxuat.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
-public class DeliveryDocketDetail  implements Serializable {
+public class DeliveryDocketDetail implements Serializable {
 
     private int id;
     private int quantity;
@@ -68,8 +65,14 @@ public class DeliveryDocketDetail  implements Serializable {
         this.productId = productId;
     }
 
-
-
-
-
+    @Override
+    public String toString() {
+        return "DeliveryDocketDetail{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                ", deliveryDocketId=" + deliveryDocketId +
+                ", productId=" + productId +
+                '}';
+    }
 }
