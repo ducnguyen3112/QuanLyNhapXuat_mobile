@@ -39,9 +39,10 @@
             android:id="@+id/tv_statusDD"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_dateDD"
-            android:layout_marginStart="20dp"
-            android:text="01/01/2022"
+            android:layout_below="@+id/tv_totalDD"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:text="Hoàn thành"
             android:textColor="@color/black"
             android:textSize="16dp" />
 
@@ -56,16 +57,6 @@
             android:textColor="@color/black"
             android:textSize="16dp" />
 
-        <TextView
-            android:id="@+id/tv_nameKH"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_totalDD"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:text="A"
-            android:textColor="@color/black"
-            android:textSize="16dp" />
 
     </RelativeLayout>
 

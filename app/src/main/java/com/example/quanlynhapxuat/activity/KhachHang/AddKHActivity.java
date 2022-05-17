@@ -137,13 +137,11 @@ public class AddKHActivity extends AppCompatActivity {
                     File file = new File(strReadPath);
                     RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                     MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
-
                     ApiUtils.getUploadService().uploadImage(body).enqueue(new Callback<Message>() {
                         @Override
                         public void onResponse(Call<Message> call, Response<Message> response) {
                             Message message = response.body();
                             kh.setAvatar(message.getMessage());
-
                             ApiUtils.getKhachHangService().createKH(kh).enqueue(new Callback<KhachHang>() {
                                 @Override
                                 public void onResponse(Call<KhachHang> call, Response<KhachHang> response) {
@@ -152,7 +150,6 @@ public class AddKHActivity extends AppCompatActivity {
                                                 CustomToast.LENGTH_LONG, CustomToast.SUCCESS).show();
                                     }
                                 }
-
                                 @Override
                                 public void onFailure(Call<KhachHang> call, Throwable t) {
                                     CustomToast.makeText(AddKHActivity.this, "Thêm khách hàng thất bại",

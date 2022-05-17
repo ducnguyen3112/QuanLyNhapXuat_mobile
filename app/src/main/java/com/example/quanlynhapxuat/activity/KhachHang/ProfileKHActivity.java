@@ -40,7 +40,7 @@ public class ProfileKHActivity extends AppCompatActivity {
         new TabLayoutMediator(mTableLayout, mViewPager, (tab, position) -> {
             switch (position) {
                 case 0:
-                    tab.setText("Thông tin");
+                    tab.setText("Thông Tin");
                     break;
                 case 1:
                     tab.setText("Lịch sử");

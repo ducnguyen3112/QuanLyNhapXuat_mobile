@@ -53,10 +53,6 @@ public class LichSuAdapter extends RecyclerView.Adapter<LichSuAdapter.LichSuView
             return;
         }
         holder.tv_idDD.setText(dto.getId() + "");
-        //String pattern = "dd/MM/yyyy HH:mm";
-        //SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        //String date = simpleDateFormat.format(dto.getCreatedAt());
-
         holder.tv_dateDD.setText(dto.getCreatedAt());
         if(dto.getStatus() == 1) {
             holder.tv_statusDD.setText("Hoàn thành");
@@ -65,7 +61,6 @@ public class LichSuAdapter extends RecyclerView.Adapter<LichSuAdapter.LichSuView
         }
 
         holder.tv_totalDD.setText(dto.getTotal() + "");
-        //holder.tv_nameKH.setText(kh.getFullName() + "");
         holder.lichSuLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +90,6 @@ public class LichSuAdapter extends RecyclerView.Adapter<LichSuAdapter.LichSuView
             tv_dateDD = itemView.findViewById(R.id.tv_dateDD);
             tv_statusDD = itemView.findViewById(R.id.tv_statusDD);
             tv_totalDD = itemView.findViewById(R.id.tv_totalDD);
-            tv_nameKH = itemView.findViewById(R.id.tv_nameKH);
             lichSuLayout = itemView.findViewById(R.id.lichSuLayout);
         }
     }
