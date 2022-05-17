@@ -33,10 +33,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ImportFragment extends Fragment {
-    private final MainActivity mainActivity = (MainActivity) getActivity();;
     private ReceivedDocketAdapter receivedDocketAdapter;
     private ArrayList<ReceivedDocket> receivedDocketList;
-    private ArrayList<ReceivedDocketDetail> receivedDocketDetailList;
 
     private RecyclerView rcvListPhieuNhap;
     private TextView tvSLPhieuNhap;
@@ -63,7 +61,6 @@ public class ImportFragment extends Fragment {
 
         //setEvent
         flbThemPhieuNhap.setOnClickListener(view1 -> {
-            //Log.e("where am i?","flbThemPhieuNhap");
             Intent intent = new Intent(getActivity(),ReceivedDocketDetailActivity.class);
             intent.putExtra("maPN", 0); //mã phiếu nhập 0 là thêm mới
             startActivity(intent);
@@ -77,6 +74,7 @@ public class ImportFragment extends Fragment {
     private void capNhatDuLieu() {
         getReceivedDocketList();
         receivedDocketAdapter.setReceivedDocketList(receivedDocketList);
+        receivedDocketAdapter.notifyDataSetChanged();
 
         tvSLPhieuNhap.setText(receivedDocketAdapter.getItemCount()+"");
         tvTotal.setText(receivedDocketAdapter.getTotalList()+"");
@@ -97,12 +95,10 @@ public class ImportFragment extends Fragment {
                     try {
                         Gson g = new Gson();
                         RestErrorResponse errorResponse = g.fromJson(response.errorBody().string(),RestErrorResponse.class);
-                        //Log.e("errorResponseGetMessage",errorResponse.getMessage());
                         CustomToast.makeText(getContext(),"TRY: " + errorResponse.getMessage()
                                 ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
                     }
                     catch (Exception e) {
-                        //Log.e("e.getMessage()","CATCH" + e.getMessage());
                         CustomToast.makeText(getContext(),"CATCH: " + e.getMessage()
                                 ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
                     }
@@ -117,31 +113,31 @@ public class ImportFragment extends Fragment {
         });
     }
 
-    private void getReceivedDocketDetailList() {
-        ApiUtils.getReceivedDocketService().getReceivedDocketDetailList().enqueue(new Callback<ArrayList<ReceivedDocketDetail>>() {
-            @Override
-            public void onResponse(Call<ArrayList<ReceivedDocketDetail>> call, Response<ArrayList<ReceivedDocketDetail>> response) {
-                if(response.isSuccessful()) {
-                    receivedDocketDetailList = response.body();
-                    Log.e("response.body()",response.toString());
-                    CustomToast.makeText(getContext(),"Call API Success!!!",CustomToast.LENGTH_SHORT,CustomToast.SUCCESS).show();
-                }
-                else {
-                    try {
-                        Gson g = new Gson();
-                        RestErrorResponse errorResponse = g.fromJson(response.errorBody().string(),RestErrorResponse.class);
-                        Log.e("errorResponseGetMessage",errorResponse.getMessage());
-                    }
-                    catch (Exception e) {
-                        Log.e("e.getMessage()",e.getMessage());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<ReceivedDocketDetail>> call, Throwable t) {
-                Toast.makeText(getContext(),"Unknown Error!!!",Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    private void getReceivedDocketDetailList() {
+//        ApiUtils.getReceivedDocketService().getReceivedDocketDetailList().enqueue(new Callback<ArrayList<ReceivedDocketDetail>>() {
+//            @Override
+//            public void onResponse(Call<ArrayList<ReceivedDocketDetail>> call, Response<ArrayList<ReceivedDocketDetail>> response) {
+//                if(response.isSuccessful()) {
+//                    receivedDocketDetailList = response.body();
+//                    Log.e("response.body()",response.toString());
+//                    CustomToast.makeText(getContext(),"Call API Success!!!",CustomToast.LENGTH_SHORT,CustomToast.SUCCESS).show();
+//                }
+//                else {
+//                    try {
+//                        Gson g = new Gson();
+//                        RestErrorResponse errorResponse = g.fromJson(response.errorBody().string(),RestErrorResponse.class);
+//                        Log.e("errorResponseGetMessage",errorResponse.getMessage());
+//                    }
+//                    catch (Exception e) {
+//                        Log.e("e.getMessage()",e.getMessage());
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ArrayList<ReceivedDocketDetail>> call, Throwable t) {
+//                Toast.makeText(getContext(),"Unknown Error!!!",Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 }

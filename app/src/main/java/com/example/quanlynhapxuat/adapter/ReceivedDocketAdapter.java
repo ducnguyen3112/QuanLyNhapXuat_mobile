@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quanlynhapxuat.R;
 import com.example.quanlynhapxuat.activity.ReceivedDocket.ReceivedDocketDetailActivity;
-import com.example.quanlynhapxuat.activity.main.MainActivity;
 import com.example.quanlynhapxuat.model.ReceivedDocket;
 import com.example.quanlynhapxuat.model.ReceivedDocketDetail;
 import com.example.quanlynhapxuat.utils.CustomToast;
@@ -29,7 +28,6 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
 
     public void setReceivedDocketList(ArrayList<ReceivedDocket> receivedDocketList) {
         this.receivedDocketList = receivedDocketList;
-        //notifyDataSetChanged();
     }
 
     @NonNull

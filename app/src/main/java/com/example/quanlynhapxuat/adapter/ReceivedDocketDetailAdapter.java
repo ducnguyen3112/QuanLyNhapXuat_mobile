@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quanlynhapxuat.R;
-import com.example.quanlynhapxuat.model.ReceivedDocket;
 import com.example.quanlynhapxuat.model.ReceivedDocketDetail;
 
 import java.util.ArrayList;

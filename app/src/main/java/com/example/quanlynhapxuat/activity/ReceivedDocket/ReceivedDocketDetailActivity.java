@@ -33,7 +33,6 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -43,7 +42,6 @@ import retrofit2.Response;
 
 public class ReceivedDocketDetailActivity extends AppCompatActivity {
     private ReceivedDocket receivedDocket;
-    private ArrayList<ReceivedDocketDetail> rddList;
     private ReceivedDocketDetailAdapter rddAdapter;
 
     private TextView tvTittle, tvMaPN, tvMaNV, tvTongGiaTri;
@@ -134,18 +132,13 @@ public class ReceivedDocketDetailActivity extends AppCompatActivity {
             return;
         }
 
-        if(receivedDocket.receivedDocketDetails==null) {
+        if(rddAdapter.getItemCount()==0) {
             CustomToast.makeText(this,"Phiếu nhập chưa có sản phẩm!"
                     ,CustomToast.LENGTH_SHORT,CustomToast.WARNING).show();
-            //return;
+            return;
         }
 
         receivedDocket = new ReceivedDocket(maPN,ngayDat,Integer.parseInt(tvMaNV.getText().toString()),1,nhaCungCap,null);
-//        receivedDocket.setId(maPN);
-//        receivedDocket.setCreatedAt(ngayDat);
-//        receivedDocket.setEmployee_id(Integer.parseInt(tvMaNV.getText().toString()));
-//        receivedDocket.setStatus(1);
-//        receivedDocket.setSupplier_name(nhaCungCap);
 
         ApiUtils.getReceivedDocketService().postReceivedDocket(receivedDocket).enqueue(new Callback<ReceivedDocket>() {
 
@@ -181,7 +174,7 @@ public class ReceivedDocketDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void huy() {
+    private void  huy() {
         CustomAlertDialog alertDialog = new CustomAlertDialog(this);
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         DisplayMetrics metrics=getResources().getDisplayMetrics();
@@ -278,7 +271,7 @@ public class ReceivedDocketDetailActivity extends AppCompatActivity {
     }
 
     private void capNhatDuLieu() {
-        rddAdapter.setRddList(receivedDocket.receivedDocketDetails);
+        rddAdapter.notifyDataSetChanged();
         tvTongGiaTri.setText(NumberFormat.getNumberInstance(Locale.US).format(rddAdapter.getTotalList())+"VND");
     }
 }
