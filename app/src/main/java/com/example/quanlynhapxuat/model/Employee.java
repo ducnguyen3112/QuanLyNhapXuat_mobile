@@ -39,6 +39,16 @@ public class Employee implements Serializable {
         this.avatar = avatar;
     }
 
+    public Employee(String fullName, String address, String dateOfBirth, String phoneNumber, int role, String password, int status) {
+        this.fullName = fullName;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+        this.password = password;
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }
