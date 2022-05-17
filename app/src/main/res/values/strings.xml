@@ -16,4 +16,5 @@
     <string name="employee_pass">Mật khẩu</string>
     <string name="employee_status">Trạng thái</string>
     <string name="employee_avatar">Avatar</string>
+    <string name="search">Search</string>
 </resources>

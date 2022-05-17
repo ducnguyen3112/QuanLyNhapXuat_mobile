@@ -4,6 +4,7 @@ package com.example.quanlynhapxuat.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class KhachHang implements Serializable {
     @SerializedName("id")
@@ -18,6 +19,8 @@ public class KhachHang implements Serializable {
     private String email;
     @SerializedName("avatar")
     private String avatar;
+    @SerializedName("deliveryDockets")
+    List<DeliveryDocket> deliveryDockets;
 
     public KhachHang(int id, String fullName, String phoneNumber, String address, String email) {
         this.id = id;
@@ -99,6 +102,14 @@ public class KhachHang implements Serializable {
         this.avatar = avatar;
     }
 
+    public List<DeliveryDocket> getDeliveryDockets() {
+        return deliveryDockets;
+    }
+
+    public void setDeliveryDockets(List<DeliveryDocket> deliveryDockets) {
+        this.deliveryDockets = deliveryDockets;
+    }
+
     @Override
     public String toString() {
         return "KhachHang{" +
@@ -108,6 +119,7 @@ public class KhachHang implements Serializable {
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", avatar='" + avatar + '\'' +
+                ", deliveryDockets=" + deliveryDockets +
                 '}';
     }
 }

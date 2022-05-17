@@ -1,12 +1,18 @@
 package com.example.quanlynhapxuat.activity.KhachHang;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +34,7 @@ public class ListKHActivity extends AppCompatActivity {
     private FloatingActionButton fabAddKh;
     private RecyclerView rcvKH;
     private KhachHangAdapter khachHangAdapter;
+    private SearchView searchView;
     public static int width;
 
 
@@ -44,12 +51,6 @@ public class ListKHActivity extends AppCompatActivity {
         khachHangAdapter = new KhachHangAdapter(ListKHActivity.this, ListKHActivity.this);
         rcvKH.setAdapter(khachHangAdapter);
         getAllKH();
-    }
-
-    private void setControl() {
-        rcvKH = findViewById(R.id.rcv_kh);
-        fabAddKh = findViewById(R.id.fabAddKh);
-
     }
 
     public void getAllKH() {
@@ -69,6 +70,13 @@ public class ListKHActivity extends AppCompatActivity {
         });
     }
 
+    private void setControl() {
+        rcvKH = findViewById(R.id.rcv_kh);
+        fabAddKh = findViewById(R.id.fabAddKh);
+    }
+
+
+
     private void setEvent() {
         fabAddKh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,9 +88,36 @@ public class ListKHActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(ListKHActivity.this, MainActivity.class);
-        startActivity(intent);
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                khachHangAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                khachHangAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 }
