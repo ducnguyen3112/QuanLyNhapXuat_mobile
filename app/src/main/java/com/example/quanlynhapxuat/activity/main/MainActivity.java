@@ -9,6 +9,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.quanlynhapxuat.R;
+import com.example.quanlynhapxuat.fragment.HomeFragment;
+import com.example.quanlynhapxuat.fragment.ImportFragment;
+import com.example.quanlynhapxuat.fragment.ProductFragment;
 import com.example.quanlynhapxuat.fragment.phieuxuat.AddExportFragment;
 import com.example.quanlynhapxuat.fragment.phieuxuat.ExportDetailFragment;
 import com.example.quanlynhapxuat.fragment.phieuxuat.ExportFragment;

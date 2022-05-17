@@ -43,6 +43,9 @@ public class ImportFragment extends Fragment {
     private TextView tvTotal;
     private FloatingActionButton flbThemPhieuNhap;
 
+    public ImportFragment() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_import, container, false);
