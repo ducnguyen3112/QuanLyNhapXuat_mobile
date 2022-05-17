@@ -5,6 +5,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:requestLegacyExternalStorage="true"
@@ -29,10 +31,15 @@
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
         <activity
+            android:name=".activity.KhachHang.ChiTietActivity"
+            android:label="Chi Tiết Lịch Sử"
+            android:parentActivityName=".activity.KhachHang.ProfileKHActivity" />
+        <activity
             android:name=".activity.ReceivedDocket.ReceivedDocketDetailActivity"
             android:exported="false"
             android:label="PHIẾU NHẬP" />
         <activity
+            android:label="Thông Tin Khách Hàng"
             android:name=".activity.KhachHang.ProfileKHActivity"
             android:exported="false"
             android:parentActivityName=".activity.KhachHang.ListKHActivity" />

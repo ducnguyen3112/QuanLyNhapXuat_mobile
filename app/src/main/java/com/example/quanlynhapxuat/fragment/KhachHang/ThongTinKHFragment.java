@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 
+import com.bumptech.glide.Glide;
 import com.example.quanlynhapxuat.R;
 import com.example.quanlynhapxuat.activity.KhachHang.AddKHActivity;
 import com.example.quanlynhapxuat.activity.KhachHang.ListKHActivity;
@@ -28,8 +29,7 @@ public class ThongTinKHFragment extends Fragment {
 
     private ImageView ivTTAvatar;
     private EditText edtTTName, edtTTAdress, edtTTPhone, edtTTEmail;
-    private RadioButton rdoTTMale, rdoTTFemale;
-    private Button btnEditKH, btnDeleteKH;
+    private Button btnCancelTT;
     private KhachHang dto;
 
     @Override
@@ -51,6 +51,12 @@ public class ThongTinKHFragment extends Fragment {
         Bundle args = getArguments();
         dto = (KhachHang) args.getSerializable("KH");
         setControl(view);
+        if (dto.getAvatar() != null) {
+            Glide.with(getContext())
+                    .load(dto.getAvatar())
+                    .circleCrop()
+                    .into(ivTTAvatar);
+        }
         edtTTName.setText(dto.getFullName());
         edtTTAdress.setText(dto.getAddress());
         edtTTPhone.setText(dto.getPhoneNumber());
@@ -64,17 +70,15 @@ public class ThongTinKHFragment extends Fragment {
         edtTTAdress = view.findViewById(R.id.edtTTAdress);
         edtTTPhone = view.findViewById(R.id.edtTTPhone);
         edtTTEmail = view.findViewById(R.id.edtTTEmail);
-        btnEditKH = view.findViewById(R.id.btnEditKH);
-        btnDeleteKH = view.findViewById(R.id.btnDeleteKH);
+        btnCancelTT = view.findViewById(R.id.btnCancelTT);
     }
 
-    private void  setEvent() {
-        btnEditKH.setOnClickListener(new View.OnClickListener() {
+    private void setEvent() {
+        btnCancelTT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), UpdateKHActivity.class);
-                intent.putExtra("KH", dto);
-                getActivity().startActivityForResult(intent, 1);
+                Intent intent = new Intent(getActivity(), ListKHActivity.class);
+                startActivity(intent);
             }
         });
     }

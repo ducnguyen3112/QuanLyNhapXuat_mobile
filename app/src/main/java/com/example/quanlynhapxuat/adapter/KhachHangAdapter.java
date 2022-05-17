@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
@@ -11,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.quanlynhapxuat.R;
 
 import com.example.quanlynhapxuat.activity.KhachHang.AddKHActivity;
@@ -29,6 +34,7 @@ import com.example.quanlynhapxuat.model.KhachHang;
 import com.example.quanlynhapxuat.utils.CustomAlertDialog;
 import com.example.quanlynhapxuat.utils.CustomToast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,11 +42,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.KhachHangViewHolder> {
+public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.KhachHangViewHolder> implements Filterable {
 
     private Activity activity;
     private Context context;
     private List<KhachHang> list;
+    private List<KhachHang> listOld;
 
     public KhachHangAdapter(Activity activity, Context context) {
         this.activity = activity;
@@ -49,6 +56,7 @@ public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.Khac
 
     public void setDate(List<KhachHang> list) {
         this.list = list;
+        this.listOld = list;
         notifyDataSetChanged();
     }
 
@@ -66,6 +74,12 @@ public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.Khac
             return;
         }
 
+        if (kh.getAvatar() != null) {
+            Glide.with(context)
+                    .load(kh.getAvatar())
+                    .circleCrop()
+                    .into(holder.iv_KH);
+        }
         holder.tv_tenKH.setText(kh.getFullName());
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,13 +119,10 @@ public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.Khac
                 ApiUtils.getKhachHangService().deleteKHById(id).enqueue(new Callback<KhachHang>() {
                     @Override
                     public void onResponse(Call<KhachHang> call, Response<KhachHang> response) {
-                        Log.e("message", response.code() + "");
                         CustomToast.makeText(context, "Xoá thành công",
                                 CustomToast.LENGTH_SHORT, CustomToast.SUCCESS).show();
 
-
                     }
-
                     @Override
                     public void onFailure(Call<KhachHang> call, Throwable t) {
                         CustomToast.makeText(context, "Xoá thất bại",
@@ -119,14 +130,12 @@ public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.Khac
                         Log.e("error", t.getMessage());
                     }
                 });
-
                 ApiUtils.getKhachHangService().getAllKH().enqueue(new Callback<List<KhachHang>>() {
                     @Override
                     public void onResponse(Call<List<KhachHang>> call, Response<List<KhachHang>> response) {
                         Log.e("H", response.body().toString());
                         setDate(response.body());
                     }
-
                     @Override
                     public void onFailure(Call<List<KhachHang>> call, Throwable t) {
 
@@ -153,6 +162,39 @@ public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.Khac
             return list.size();
         }
         return 0;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String str =  charSequence.toString();
+                if(str.isEmpty()) {
+                    list = listOld;
+                }else {
+                    List<KhachHang> listSearch = new ArrayList<>();
+                    for(KhachHang item: listOld) {
+                        if(item.getFullName().toLowerCase().contains(str.toLowerCase())) {
+                            listSearch.add(item);
+                        }
+                    }
+
+                    list = listSearch;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = list;
+
+                return  filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                list = (List<KhachHang>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class KhachHangViewHolder extends RecyclerView.ViewHolder {

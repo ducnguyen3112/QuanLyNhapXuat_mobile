@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/ls"
-    tools:context=".fragment.KhachHang.LichSuKHFragment">
+    tools:context=".activity.KhachHang.ChiTietActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_ls"
+        android:id="@+id/rcv_ctls"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

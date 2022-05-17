@@ -46,6 +46,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     TextInputEditText etName,etPhoneSignup;
     ProgressBar progressBar;
 EditText etPassword,etPassword2;
+Employee employee;
 
     FirebaseAuth mAuth;
     @Override
@@ -118,7 +119,8 @@ EditText etPassword,etPassword2;
                             public void onVerificationFailed(@NonNull FirebaseException e) {
                                 progressBar.setVisibility(View.GONE);
                                 btnSignup.setVisibility(View.VISIBLE);
-                                Toast.makeText(SignupActivity.this,"Xác thực không thành công",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity.this,"Xác thực không thành công"+e.getMessage(),Toast.LENGTH_SHORT).show();
+                                Log.e("otp", e.getMessage() );
                             }
 
                             @Override
@@ -126,7 +128,7 @@ EditText etPassword,etPassword2;
                                 progressBar.setVisibility(View.GONE);
                                 btnSignup.setVisibility(View.VISIBLE);
                                 super.onCodeSent(s, forceResendingToken);
-                                gotoEnterOTPActivity(phoneNumber,s);
+                                gotoEnterOTPActivity(phoneNumber,s,employee);
                             }
                         })          // OnVerificationStateChangedCallbacks
                         .build();
@@ -141,7 +143,6 @@ EditText etPassword,etPassword2;
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = task.getResult().getUser();
                             // Update UI
                             gotoMainActivity(user.getPhoneNumber());
@@ -163,48 +164,23 @@ EditText etPassword,etPassword2;
         startActivity(intent);
     }
 
-    private void gotoEnterOTPActivity(String phoneNumber, String s) {
+    private void gotoEnterOTPActivity(String phoneNumber, String s,Employee employee) {
         Intent intent=new Intent(SignupActivity.this,VerifyOTPActivity.class);
         intent.putExtra("phone_num",phoneNumber);
         intent.putExtra("verification_id",s);
+        Bundle bundle=new Bundle();
+        bundle.putSerializable("employeeSignin",employee);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
-    private  void registrationClick(String phoneNumber){
+    private  void registrationClick(String phoneNumber) {
 
-        Employee employee=new Employee();
+        employee = new Employee();
         employee.setFullName(etName.getText().toString().trim());
         employee.setRole(1);
         employee.setStatus(1);
         employee.setPhoneNumber(etPhoneSignup.getText().toString());
         employee.setPassword(etPassword.getText().toString());
-        EmployeeService.employeeService.registrationEmployee(employee)
-                .enqueue(new Callback<Employee>() {
-                    @Override
-                    public void onResponse(Call<Employee> call, Response<Employee> response) {
-                        progressBar.setVisibility(View.VISIBLE);
-                       btnSignup.setVisibility(View.INVISIBLE);
-                        if (response.isSuccessful()){
-                            Toast.makeText(SignupActivity.this,"Đăng ký tài khoản thành công!" ,
-                                    Toast.LENGTH_SHORT).show();
-                        }else{
-                            try {
-                                Gson g = new Gson();
-                                RestErrorResponse errorResponse = g.fromJson(response.errorBody().string(), RestErrorResponse.class);
-                                Toast.makeText(SignupActivity.this,errorResponse.getMessage(),
-                                        Toast.LENGTH_SHORT).show();
-                            } catch (Exception e) {
-                                Toast.makeText(SignupActivity.this,e.getMessage(),
-                                        Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<Employee> call, Throwable t) {
-                        Toast.makeText(SignupActivity.this,"Lỗi! Không thể tạo tài khoản. Hãy" +
-                                        " thử lại.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+        verifyPhoneNumber("+84" + etPhoneSignup.getText().toString().substring(1));
     }
 }

@@ -1,6 +1,8 @@
 package com.example.quanlynhapxuat.model;
 
-public class Employee{
+import java.io.Serializable;
+
+public class Employee implements Serializable {
     private int id;
     private String fullName;
     private String address;
@@ -35,6 +37,16 @@ public class Employee{
         this.password = password;
         this.status = status;
         this.avatar = avatar;
+    }
+
+    public Employee(String fullName, String address, String dateOfBirth, String phoneNumber, int role, String password, int status) {
+        this.fullName = fullName;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+        this.password = password;
+        this.status = status;
     }
 
     public int getId() {

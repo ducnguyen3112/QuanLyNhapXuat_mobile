@@ -5,12 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.quanlynhapxuat.R;
+import com.example.quanlynhapxuat.model.Employee;
+import com.example.quanlynhapxuat.model.RestErrorResponse;
+import com.example.quanlynhapxuat.service.EmployeeService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -22,8 +26,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.gson.Gson;
 
 import java.util.concurrent.TimeUnit;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class VerifyOTPActivity extends AppCompatActivity implements View.OnClickListener {
     TextInputEditText etOTPCode;
@@ -32,7 +41,7 @@ public class VerifyOTPActivity extends AppCompatActivity implements View.OnClick
 
     private String mPhoneNumber;
     private String mVerificationId;
-
+    Employee employee;
     private FirebaseAuth mAuth;
     private PhoneAuthProvider.ForceResendingToken mForceResendingToken;
 
@@ -46,6 +55,8 @@ public class VerifyOTPActivity extends AppCompatActivity implements View.OnClick
         btnVerify.setOnClickListener(this);
         tvResend.setOnClickListener(this);
         getDataIntent();
+        Toast.makeText(VerifyOTPActivity.this,employee.getFullName(),Toast.LENGTH_SHORT).show();
+
     }
     private void initViews(){
         etOTPCode=findViewById(R.id.et_otpcode);
@@ -69,6 +80,7 @@ public class VerifyOTPActivity extends AppCompatActivity implements View.OnClick
     private void getDataIntent(){
         mPhoneNumber=getIntent().getStringExtra("phone_num");
         mVerificationId=getIntent().getStringExtra("verification_id");
+        employee= (Employee) getIntent().getExtras().get("employeeSignin");
     }
     private void verifyOTPCode(String otpCode){
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, otpCode);
@@ -83,7 +95,36 @@ public class VerifyOTPActivity extends AppCompatActivity implements View.OnClick
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = task.getResult().getUser();
                             // Update UI
-                            gotoMainActivity(user.getPhoneNumber());
+                            //gotoMainActivity(user.getPhoneNumber());
+                            EmployeeService.employeeService.registrationEmployee(employee)
+                                    .enqueue(new Callback<Employee>() {
+                                        @Override
+                                        public void onResponse(Call<Employee> call, Response<Employee> response) {
+
+                                            if (response.isSuccessful()){
+                                                Toast.makeText(VerifyOTPActivity.this,"Tạo tài khoản thành công!" ,Toast.LENGTH_SHORT).show();
+                                                Intent intent=new Intent(VerifyOTPActivity.this,LoginActivity.class);
+                                                startActivity(intent);
+                                            }else{
+                                                try {
+                                                    Gson g = new Gson();
+                                                    RestErrorResponse errorResponse = g.fromJson(response.errorBody().string(), RestErrorResponse.class);
+                                                    Toast.makeText(VerifyOTPActivity.this,errorResponse.getMessage(),
+                                                            Toast.LENGTH_SHORT).show();
+                                                } catch (Exception e) {
+                                                    Log.e("opt", e.getMessage() );
+                                                }
+
+                                            }
+                                        }
+                                        @Override
+                                        public void onFailure(Call<Employee> call, Throwable t) {
+                                            Toast.makeText(VerifyOTPActivity.this,"Lỗi! Không thể tạo tài khoản. Hãy" +
+                                                            " thử lại.",
+                                                    Toast.LENGTH_SHORT).show();
+                                            Log.e("opt", t.getMessage() );
+                                        }
+                                    });
                         } else {
                             // Sign in failed, display a message and update the UI
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {

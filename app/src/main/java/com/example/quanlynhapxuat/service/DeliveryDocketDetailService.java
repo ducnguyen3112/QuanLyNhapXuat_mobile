@@ -2,7 +2,6 @@ package com.example.quanlynhapxuat.service;
 
 import com.example.quanlynhapxuat.model.DeliveryDocket;
 import com.example.quanlynhapxuat.model.DeliveryDocketDetail;
-import com.example.quanlynhapxuat.model.Employee;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -12,28 +11,28 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
-public interface DeliveryDocketService {
+public interface DeliveryDocketDetailService {
     Gson gson=new GsonBuilder().setDateFormat("dd-MM-yyyy HH:mm:ss").create();
 
-    DeliveryDocketService deliveryDocketService=new Retrofit.Builder()
+    DeliveryDocketDetailService deliveryDocketService=new Retrofit.Builder()
             //http://192.168.0.6:8080/api//
             //https://shoesstation.herokuapp.com/api/
             .baseUrl("https://shoesstation.herokuapp.com/api/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
-            .create(DeliveryDocketService.class);
-    @GET("deliveryDockets")
-    Call<List<DeliveryDocket>> getAllDeliveryDocket();
-    @GET("deliveryDockets/{id}/deliveryDocketDetails")
-    Call<List<DeliveryDocketDetail>> getAllDeliveryDetailsInDelivery(@Path("id") int id);
-    @POST("deliveryDockets")
-    Call<DeliveryDocket> addDeliveryDocket(@Body DeliveryDocket deliveryDocket);
-    @PUT("deliveryDockets/{id}")
-    Call<DeliveryDocket> upDateDeliveryDocket(@Body DeliveryDocket deliveryDocket,@Path("id") int id);
+            .create(DeliveryDocketDetailService.class);
+    @GET("deliveryDocketDetails")
+    Call<List<DeliveryDocketDetail>> getAllDeliveryDocketDetail();
+    @POST("deliveryDocketDetails")
+    Call<DeliveryDocketDetail> addDeliveryDocketDetail(@Body DeliveryDocketDetail deliveryDocketDetail);
+    @PUT("deliveryDocketDetails/{id}")
+    Call<DeliveryDocketDetail> upDateDeliveryDocketDetail(@Body DeliveryDocketDetail deliveryDocketDetail,@Path("id") int id);
+    @DELETE("deliveryDocketDetails/{id}")
+    Call<DeliveryDocketDetail> deleteDeliveryDocketDetail(@Path("id") int id);
 }

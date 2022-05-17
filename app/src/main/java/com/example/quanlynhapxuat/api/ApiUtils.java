@@ -3,7 +3,10 @@ package com.example.quanlynhapxuat.api;
 import com.example.quanlynhapxuat.service.EmployeeRetrofit;
 import com.example.quanlynhapxuat.service.KhachHangService;
 import com.example.quanlynhapxuat.service.ProductRetrofit;
+import com.example.quanlynhapxuat.service.ProductService;
 import com.example.quanlynhapxuat.service.ReceivedDocketService;
+import com.example.quanlynhapxuat.service.UploadFileRetrofit;
+import com.example.quanlynhapxuat.service.UploadService;
 
 public class ApiUtils {
 
@@ -24,4 +27,15 @@ public class ApiUtils {
     public static EmployeeRetrofit employeeRetrofit() {
         return RetrofitClient.getClient(baseURL).create(EmployeeRetrofit.class);
     }
+
+
+    public static ProductService getProductService() {
+        return RetrofitClient.getClient(baseURL).create(ProductService.class);
+    }
+
+    public static UploadService getUploadService() {
+        return RetrofitClient.getClient(baseURL).create(UploadService.class);
+    }
+
 }
+

@@ -52,5 +52,5 @@ public class KHSpinnerAdapter extends BaseAdapter {
             ivAvatar.setImageResource(R.drawable.custom_person_icon);
         }
         return rootView;
-    }
+        }
     }

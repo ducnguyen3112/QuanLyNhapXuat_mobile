@@ -5,16 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.quanlynhapxuat.R;
-import com.example.quanlynhapxuat.model.KhachHang;
 import com.example.quanlynhapxuat.model.Product;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SPSpinnerAdapter extends BaseAdapter {
     private Context context;

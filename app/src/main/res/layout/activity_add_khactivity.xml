@@ -29,76 +29,47 @@
     </LinearLayout>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:text="Tên Khách Hàng"
-        android:textSize="16sp" />
+        style="@style/custom_text_view"
+        android:text="Tên Khách Hàng" />
 
     <EditText
         android:id="@+id/edtAddNameKH"
         style="@style/custom_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:background="@drawable/custom_edit_text"
         android:drawableStart="@drawable/custom_person_icon"
-        android:drawablePadding="8dp"
         android:hint="Nhập Khách Hàng" />
 
-
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:text="Địa chỉ"
-        android:textSize="16sp" />
+        style="@style/custom_text_view"
+        android:text="Địa chỉ" />
 
     <EditText
         android:id="@+id/edtAddAddressKH"
         style="@style/custom_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:background="@drawable/custom_edit_text"
         android:drawableStart="@drawable/custom_location_on_icon"
-        android:drawablePadding="8dp"
         android:hint="Nhập Địa Chỉ" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:text="Số điện thoại"
-        android:textSize="16sp" />
+        style="@style/custom_text_view"
+        android:text="Số điện thoại" />
 
     <EditText
         android:id="@+id/edtAddPhoneKH"
         style="@style/custom_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:background="@drawable/custom_edit_text"
         android:drawableStart="@drawable/custom_local_phone_icon"
-        android:drawablePadding="8dp"
         android:hint="Nhập Điện Thoại" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:text="Email"
-        android:textSize="16sp" />
+        style="@style/custom_text_view"
+        android:text="Email" />
 
     <EditText
         android:id="@+id/edtAddEmailKH"
         style="@style/custom_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:background="@drawable/custom_edit_text"
         android:drawableStart="@drawable/custom_email_icon"
-        android:drawablePadding="8dp"
         android:hint="Nhập Email" />
 
     <LinearLayout

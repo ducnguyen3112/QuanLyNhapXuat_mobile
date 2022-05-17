@@ -19,14 +19,14 @@ public interface EmployeeService {
     EmployeeService employeeService=new Retrofit.Builder()
             //http://192.168.0.6:8080/api/employees/
             //https://shoesstation.herokuapp.com/api/employees/
-            .baseUrl("https://shoesstation.herokuapp.com/api/employees/")
+            .baseUrl("https://shoesstation.herokuapp.com/api/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(EmployeeService.class);
-   @POST("registration")
+   @POST("employees")
     Call<Employee> registrationEmployee(@Body Employee employee);
 
-   @GET("login")
+   @GET("employees/login")
     Call<Employee> authenticationEmployee(@Query("phoneNumber") String phoneNumber,@Query("password") String password);
 
 }
