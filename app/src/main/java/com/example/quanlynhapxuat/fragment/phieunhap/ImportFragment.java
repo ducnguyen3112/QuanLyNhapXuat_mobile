@@ -1,10 +1,8 @@
-package com.example.quanlynhapxuat.fragment;
+package com.example.quanlynhapxuat.fragment.phieunhap;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +22,7 @@ import com.example.quanlynhapxuat.api.ApiUtils;
 import com.example.quanlynhapxuat.model.ReceivedDocket;
 import com.example.quanlynhapxuat.model.ReceivedDocketDetail;
 import com.example.quanlynhapxuat.model.RestErrorResponse;
+import com.example.quanlynhapxuat.utils.CustomToast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
@@ -45,41 +44,31 @@ public class ImportFragment extends Fragment {
     private FloatingActionButton flbThemPhieuNhap;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_import, container, false);
-        setControl(view);
-        return view;
-    }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        //setControl
+        tvSLPhieuNhap = view.findViewById(R.id.tvSLPhieuNhap_fragmentImport);
+        tvTotal = view.findViewById(R.id.tvTotal_fragmentImport );
+        flbThemPhieuNhap = view.findViewById(R.id.flbThemPhieuNhap_fragmentImport);
+        rcvListPhieuNhap = view.findViewById(R.id.rcvListPhieuNhap_fragmentImport);
 
-        capNhatDuLieu();
+        //get&showList
+        receivedDocketAdapter = new ReceivedDocketAdapter(getActivity());
+        rcvListPhieuNhap.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rcvListPhieuNhap.setAdapter(receivedDocketAdapter);
 
+        //setEvent
         flbThemPhieuNhap.setOnClickListener(view1 -> {
-            Log.e("where am i?","flbThemPhieuNhap");
+            //Log.e("where am i?","flbThemPhieuNhap");
             Intent intent = new Intent(getActivity(),ReceivedDocketDetailActivity.class);
             intent.putExtra("maPN", 0); //mã phiếu nhập 0 là thêm mới
             startActivity(intent);
         });
-    }
 
-    private void setControl(View view) {
-        tvSLPhieuNhap = view.findViewById(R.id.tvSLPhieuNhap_fragmentImport);
-        tvTotal = view.findViewById(R.id.tvTotal_fragmentImport );
-        flbThemPhieuNhap = view.findViewById(R.id.flbThemPhieuNhap_fragmentImport);
+        capNhatDuLieu();
 
-        getReceivedDocketList();
-        receivedDocketAdapter = new ReceivedDocketAdapter(mainActivity,receivedDocketList);
-        rcvListPhieuNhap = view.findViewById(R.id.rcvListPhieuNhap_fragmentImport);
-        rcvListPhieuNhap.setLayoutManager(new LinearLayoutManager(mainActivity));
-        rcvListPhieuNhap.setAdapter(receivedDocketAdapter);
+        return view;
     }
 
     private void capNhatDuLieu() {
@@ -95,25 +84,32 @@ public class ImportFragment extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<ReceivedDocket>> call, Response<ArrayList<ReceivedDocket>> response) {
                 if(response.isSuccessful()) {
-                    //Toast.makeText(getContext(),"Call API Success!!!",Toast.LENGTH_SHORT).show();
                     receivedDocketList = response.body();
-                    Log.e("receivedDocketList.size",receivedDocketList.size()+"");
+                    if(receivedDocketList==null) {
+                        CustomToast.makeText(getContext(),"Danh sách phiếu nhập rỗng!"
+                                ,CustomToast.LENGTH_SHORT,CustomToast.SUCCESS).show();
+                    }
                 }
                 else {
                     try {
                         Gson g = new Gson();
                         RestErrorResponse errorResponse = g.fromJson(response.errorBody().string(),RestErrorResponse.class);
-                        Log.e("errorResponseGetMessage",errorResponse.getMessage());
+                        //Log.e("errorResponseGetMessage",errorResponse.getMessage());
+                        CustomToast.makeText(getContext(),"TRY: " + errorResponse.getMessage()
+                                ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
                     }
                     catch (Exception e) {
-                        Log.e("e.getMessage()",e.getMessage());
+                        //Log.e("e.getMessage()","CATCH" + e.getMessage());
+                        CustomToast.makeText(getContext(),"CATCH: " + e.getMessage()
+                                ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<ReceivedDocket>> call, Throwable t) {
-                Toast.makeText(getContext(),"Unknown Error!!!",Toast.LENGTH_SHORT).show();
+                CustomToast.makeText(getContext(),"CALL API FAIL!!!"
+                        ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
             }
         });
     }
@@ -123,9 +119,9 @@ public class ImportFragment extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<ReceivedDocketDetail>> call, Response<ArrayList<ReceivedDocketDetail>> response) {
                 if(response.isSuccessful()) {
-                    Toast.makeText(getContext(),"Call API Success!!!",Toast.LENGTH_SHORT).show();
                     receivedDocketDetailList = response.body();
                     Log.e("response.body()",response.toString());
+                    CustomToast.makeText(getContext(),"Call API Success!!!",CustomToast.LENGTH_SHORT,CustomToast.SUCCESS).show();
                 }
                 else {
                     try {

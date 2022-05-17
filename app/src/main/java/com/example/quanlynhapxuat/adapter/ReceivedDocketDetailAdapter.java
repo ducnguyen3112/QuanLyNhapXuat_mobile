@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quanlynhapxuat.R;
+import com.example.quanlynhapxuat.model.ReceivedDocket;
 import com.example.quanlynhapxuat.model.ReceivedDocketDetail;
 
 import java.util.ArrayList;
@@ -20,9 +21,13 @@ public class ReceivedDocketDetailAdapter extends RecyclerView.Adapter<ReceivedDo
     private Context context;
     private ArrayList<ReceivedDocketDetail> rddList;
 
-    public ReceivedDocketDetailAdapter(Context context, ArrayList<ReceivedDocketDetail> rddList) {
+    public ReceivedDocketDetailAdapter(Context context) {
         this.context = context;
+    }
+
+    public void setRddList(ArrayList<ReceivedDocketDetail> rddList) {
         this.rddList = rddList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -44,11 +49,11 @@ public class ReceivedDocketDetailAdapter extends RecyclerView.Adapter<ReceivedDo
         holder.tvDonGia.setText("1.200.000");
 
         holder.ibEditQuantity.setOnClickListener(view -> {
-            //TODO--
+            //TODO -- sửa số lượng
         });
 
         holder.ibDelete.setOnClickListener(view -> {
-            //TODO--
+            //TODO -- xóa sản phẩm
         });
     }
 
@@ -75,5 +80,15 @@ public class ReceivedDocketDetailAdapter extends RecyclerView.Adapter<ReceivedDo
             ibEditQuantity = itemView.findViewById(R.id.ibEditQuantity_itemRDD);
             ibDelete = itemView.findViewById(R.id.ibDelete_itemRDD);
         }
+    }
+
+    public int getTotalList() {
+        int sum = 0;
+        if(rddList!=null) {
+            for(ReceivedDocketDetail rdd : rddList) {
+                sum += rdd.getQuantity()*rdd.getPrice();
+            }
+        }
+        return sum;
     }
 }

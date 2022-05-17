@@ -22,6 +22,21 @@ public class ReceivedDocket {
         this.receivedDocketDetails = receivedDocketDetails;
     }
 
+    public ReceivedDocket(int id, String createdAt, int employeeId, int status, String supplierName) {
+        this.id = id;
+        this.createdAt = createdAt;
+        this.employeeId = employeeId;
+        this.status = status;
+        this.supplierName = supplierName;
+    }
+
+    public ReceivedDocket(String createdAt, int employeeId, int status, String supplierName) {
+        this.createdAt = createdAt;
+        this.employeeId = employeeId;
+        this.status = status;
+        this.supplierName = supplierName;
+    }
+
     @Override
     public String toString() {
         return "ReceivedDocket{" +

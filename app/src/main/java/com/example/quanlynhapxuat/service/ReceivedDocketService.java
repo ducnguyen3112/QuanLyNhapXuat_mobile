@@ -13,6 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ReceivedDocketService {
 
@@ -32,4 +33,7 @@ public interface ReceivedDocketService {
 
     @POST("receivedDockets/")
     Call<ReceivedDocket> postReceivedDocket(@Body ReceivedDocket receivedDocket);
+
+    @GET("receivedDockets/{id}/")
+    Call<ReceivedDocket> getReceivedDocket(@Path("id") int maPN);
 }

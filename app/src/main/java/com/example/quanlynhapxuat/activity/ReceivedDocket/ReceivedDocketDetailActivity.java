@@ -1,6 +1,8 @@
 package com.example.quanlynhapxuat.activity.ReceivedDocket;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -21,13 +23,17 @@ import com.example.quanlynhapxuat.R;
 import com.example.quanlynhapxuat.adapter.ReceivedDocketDetailAdapter;
 import com.example.quanlynhapxuat.api.ApiUtils;
 import com.example.quanlynhapxuat.model.ReceivedDocket;
+import com.example.quanlynhapxuat.model.ReceivedDocketDetail;
+import com.example.quanlynhapxuat.model.RestErrorResponse;
 import com.example.quanlynhapxuat.utils.CustomAlertDialog;
 import com.example.quanlynhapxuat.utils.CustomToast;
+import com.google.gson.Gson;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -37,56 +43,21 @@ import retrofit2.Response;
 
 public class ReceivedDocketDetailActivity extends AppCompatActivity {
     private ReceivedDocket receivedDocket;
+    private ArrayList<ReceivedDocketDetail> rddList;
     private ReceivedDocketDetailAdapter rddAdapter;
 
     private TextView tvTittle, tvMaPN, tvMaNV, tvTongGiaTri;
     private EditText etNgayDat, etNhaCungCap;
     private ImageView ivDatePicker;
     private Button btnThemSP, btnTaoPhieuNhap, btnHuy;
+    private RecyclerView rcvListChiTietPN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_received_docket_detail);
 
-        setControl();
-
-        Intent intent = getIntent();
-        int maPN = intent.getIntExtra("maPN",-99);
-        if(maPN<0) {
-            CustomToast.makeText(this,"maPN = " + maPN,CustomToast.LENGTH_LONG,CustomToast.CONFUSING).show();
-        }
-        else if(maPN==0){
-            int maNV = 999;
-            tvMaPN.setText("<none>");
-            tvMaNV.setText(maNV+"");
-            tvTongGiaTri.setText(NumberFormat.getNumberInstance(Locale.US).format(0)+"VND");
-
-            receivedDocket = new ReceivedDocket();
-        }
-        else {
-            //TODO
-        }
-
-        ivDatePicker.setOnClickListener(view -> {
-            dateTimePicker();
-        });
-
-        btnThemSP.setOnClickListener(view -> {
-            themSP();
-        });
-
-        btnTaoPhieuNhap.setOnClickListener(view -> {
-            Log.e("Linh đẹp trai", "Linh đẹp trai");
-            taoPhieuNhap();
-        });
-
-        btnHuy.setOnClickListener(view -> {
-            huy();
-        });
-    }
-
-    private void setControl() {
+        //setControl
         tvTittle = findViewById(R.id.tvTittle_activityRDD);
         tvMaPN = findViewById(R.id.tvMaPN_activityRDD);
         tvMaNV = findViewById(R.id.tvMaNV_activityRDD);
@@ -97,53 +68,117 @@ public class ReceivedDocketDetailActivity extends AppCompatActivity {
         btnThemSP = findViewById(R.id.btnThemSanPham_activityRDD);
         btnHuy = findViewById(R.id.btnHuy_activityRDD);
         btnTaoPhieuNhap = findViewById(R.id.btnTaoPhieuNhap_activityRDD);
+        rcvListChiTietPN = findViewById(R.id.rcvListChiTietPN_activityRDD);
+
+        //get&showList
+        rddAdapter = new ReceivedDocketDetailAdapter(ReceivedDocketDetailActivity.this);
+        rcvListChiTietPN.setLayoutManager(new LinearLayoutManager(ReceivedDocketDetailActivity.this));
+        rcvListChiTietPN.setAdapter(rddAdapter);
+
+
+
+        //
+        Intent intent = getIntent();
+        int maPN = intent.getIntExtra("maPN",-99);
+        if(maPN<0) {
+            CustomToast.makeText(this,"maPN = " + maPN,CustomToast.LENGTH_LONG,CustomToast.CONFUSING).show();
+        }
+        else if(maPN==0){
+            // --  tạo phiếu nhập
+            int maNV = 1;
+            tvMaPN.setText(maPN+"");
+            tvMaNV.setText(maNV+"");
+            tvTongGiaTri.setText(NumberFormat.getNumberInstance(Locale.US).format(rddAdapter.getTotalList())+"VND");
+
+            receivedDocket = new ReceivedDocket();
+        }
+        else {
+            // -- sửa phiếu nhập
+            getReceivedDocket(maPN);
+        }
+
+        //setEvent
+        ivDatePicker.setOnClickListener(view -> {
+            dateTimePicker();
+        });
+
+        btnThemSP.setOnClickListener(view -> {
+            themSP();
+        });
+
+        btnTaoPhieuNhap.setOnClickListener(view -> {
+            taoPhieuNhap(maPN);
+        });
+
+        btnHuy.setOnClickListener(view -> {
+            huy();
+        });
     }
 
     private void themSP() {
-        //TODO
-        Log.e("vnl","Vũ Ngọc Linh");
+        //TODO -- thêm sản phẩm vào phiếu nhập
     }
 
-    private void taoPhieuNhap() {
+    private void taoPhieuNhap(int maPN) {
         String ngayDat = etNgayDat.getText().toString();
         if(ngayDat.equals("")) {
             CustomToast.makeText(this,"Không được để trống ngày đặt!"
                     ,CustomToast.LENGTH_SHORT,CustomToast.WARNING).show();
             return;
         }
+
         String nhaCungCap = etNhaCungCap.getText().toString();
         if(nhaCungCap.equals("")) {
-            CustomToast.makeText(this,"Không được để trống nhà cung cấp!",CustomToast.LENGTH_SHORT,CustomToast.WARNING).show();
+            CustomToast.makeText(this,"Không được để trống nhà cung cấp!"
+                    ,CustomToast.LENGTH_SHORT,CustomToast.WARNING).show();
             return;
         }
 
-        receivedDocket.setId(69);
-        receivedDocket.setCreatedAt(ngayDat);
-        receivedDocket.setEmployee_id(Integer.parseInt(tvMaNV.getText().toString()));
-        receivedDocket.setStatus(1);
-        receivedDocket.setSupplier_name(nhaCungCap);
+        if(receivedDocket.receivedDocketDetails==null) {
+            CustomToast.makeText(this,"Phiếu nhập chưa có sản phẩm!"
+                    ,CustomToast.LENGTH_SHORT,CustomToast.WARNING).show();
+            //return;
+        }
 
-        Log.e("receivedDocket",receivedDocket.toString());
+        receivedDocket = new ReceivedDocket(maPN,ngayDat,Integer.parseInt(tvMaNV.getText().toString()),1,nhaCungCap,null);
+//        receivedDocket.setId(maPN);
+//        receivedDocket.setCreatedAt(ngayDat);
+//        receivedDocket.setEmployee_id(Integer.parseInt(tvMaNV.getText().toString()));
+//        receivedDocket.setStatus(1);
+//        receivedDocket.setSupplier_name(nhaCungCap);
 
         ApiUtils.getReceivedDocketService().postReceivedDocket(receivedDocket).enqueue(new Callback<ReceivedDocket>() {
 
             @Override
             public void onResponse(Call<ReceivedDocket> call, Response<ReceivedDocket> response) {
                 if(response.isSuccessful()) {
-                    CustomToast.makeText(ReceivedDocketDetailActivity.this,"Thêm phiếu nhập thành công!",CustomToast.LENGTH_SHORT,CustomToast.SUCCESS).show();
+                    CustomToast.makeText(ReceivedDocketDetailActivity.this,"Thêm phiếu nhập thành công!"
+                            ,CustomToast.LENGTH_SHORT,CustomToast.SUCCESS).show();
                     finish();
                 }
                 else {
-                    CustomToast.makeText(ReceivedDocketDetailActivity.this,response.body().toString(),CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+                    try {
+                        Gson g = new Gson();
+                        RestErrorResponse errorResponse = g.fromJson(response.errorBody().string(),RestErrorResponse.class);
+                        Log.e("errorResponseGetMessage",errorResponse.getMessage());
+                        CustomToast.makeText(ReceivedDocketDetailActivity.this,errorResponse.getMessage()
+                                ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+                    }
+                    catch (Exception e) {
+                        Log.e("e.getMessage()",e.getMessage());
+                        CustomToast.makeText(ReceivedDocketDetailActivity.this,e.getMessage()
+                                ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<ReceivedDocket> call, Throwable t) {
-                CustomToast.makeText(ReceivedDocketDetailActivity.this,"Thêm phiếu nhập thất bại!",CustomToast.LENGTH_SHORT,CustomToast.ERROR).show();
+                CustomToast.makeText(ReceivedDocketDetailActivity.this,"CALL API FAIL!!!"
+                        ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
                 finish();
             }
-        } );
+        });
     }
 
     private void huy() {
@@ -183,7 +218,7 @@ public class ReceivedDocketDetailActivity extends AppCompatActivity {
                 calendar.set(Calendar.HOUR_OF_DAY, i4);
                 calendar.set(Calendar.MINUTE, i5);
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
                 etNgayDat.setText(simpleDateFormat.format(calendar.getTime()));
             };
@@ -196,5 +231,54 @@ public class ReceivedDocketDetailActivity extends AppCompatActivity {
         new DatePickerDialog(this,onDateSetListener
                 ,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH))
                 .show();
+    }
+
+    private void getReceivedDocket(int maPN) {
+        ApiUtils.getReceivedDocketService().getReceivedDocket(maPN).enqueue(new Callback<ReceivedDocket>() {
+            @Override
+            public void onResponse(Call<ReceivedDocket> call, Response<ReceivedDocket> response) {
+                if(response.isSuccessful()) {
+                    ReceivedDocket rd = response.body();
+                    if(rd==null) {
+                        CustomToast.makeText(ReceivedDocketDetailActivity.this,"rd==null"
+                                ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+                        finish();
+                    }
+                    else {
+                        rddAdapter.setRddList(rd.getReceivedDocketDetails());
+                        tvTittle.setText("SỬA PHIẾU NHẬP");
+                        tvMaPN.setText(rd.getId()+"");
+                        tvMaNV.setText(rd.getEmployee_id()+"");
+                        etNgayDat.setText(rd.getCreatedAt());
+                        etNhaCungCap.setText(rd.getSupplier_name());
+                        tvTongGiaTri.setText(NumberFormat.getNumberInstance(Locale.US).format(rddAdapter.getTotalList())+"VND");
+                        btnTaoPhieuNhap.setText("CẬP NHẬT");
+                    }
+                }
+                else {
+                    try {
+                        Gson g = new Gson();
+                        RestErrorResponse errorResponse = g.fromJson(response.errorBody().string(),RestErrorResponse.class);
+                        CustomToast.makeText(ReceivedDocketDetailActivity.this,"TRY: " + errorResponse.getMessage()
+                                ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+                    }
+                    catch (Exception e) {
+                        CustomToast.makeText(ReceivedDocketDetailActivity.this,"CATCH: " + e.getMessage()
+                                ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReceivedDocket> call, Throwable t) {
+                CustomToast.makeText(ReceivedDocketDetailActivity.this,"CALL API FAIL!!!"
+                        ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+            }
+        });
+    }
+
+    private void capNhatDuLieu() {
+        rddAdapter.setRddList(receivedDocket.receivedDocketDetails);
+        tvTongGiaTri.setText(NumberFormat.getNumberInstance(Locale.US).format(rddAdapter.getTotalList())+"VND");
     }
 }

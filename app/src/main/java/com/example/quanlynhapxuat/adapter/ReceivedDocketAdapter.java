@@ -1,6 +1,7 @@
 package com.example.quanlynhapxuat.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quanlynhapxuat.R;
+import com.example.quanlynhapxuat.activity.ReceivedDocket.ReceivedDocketDetailActivity;
+import com.example.quanlynhapxuat.activity.main.MainActivity;
 import com.example.quanlynhapxuat.model.ReceivedDocket;
 import com.example.quanlynhapxuat.model.ReceivedDocketDetail;
+import com.example.quanlynhapxuat.utils.CustomToast;
 
 import java.util.ArrayList;
 
@@ -19,15 +23,13 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
     private Context context;
     private ArrayList<ReceivedDocket> receivedDocketList;
 
-    public ReceivedDocketAdapter(Context context, ArrayList<ReceivedDocket> receivedDocketList) {
+    public ReceivedDocketAdapter(Context context) {
         this.context = context;
-        this.receivedDocketList = receivedDocketList;
-        notifyDataSetChanged();
     }
 
     public void setReceivedDocketList(ArrayList<ReceivedDocket> receivedDocketList) {
         this.receivedDocketList = receivedDocketList;
-        notifyDataSetChanged();
+        //notifyDataSetChanged();
     }
 
     @NonNull
@@ -48,6 +50,25 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
         holder.tvCreatedAt.setText(receivedDocket.getCreatedAt());
         holder.tvSupplierName.setText(receivedDocket.getSupplier_name());
         holder.tvTotalDocket.setText(getTotalDocket(receivedDocket.receivedDocketDetails)+"");
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO -- sửa phiếu nhập
+                Intent intent = new Intent(context, ReceivedDocketDetailActivity.class);
+                intent.putExtra("maPN", receivedDocket.getId());
+                context.startActivity(intent);
+            }
+        });
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                //TODO -- xóa phiếu nhập
+                CustomToast.makeText(context,"LONG CLICK",CustomToast.LENGTH_SHORT,CustomToast.WARNING).show();
+                return true;
+            }
+        });
     }
 
     @Override

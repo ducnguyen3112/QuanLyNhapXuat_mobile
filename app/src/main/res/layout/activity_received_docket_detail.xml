@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_margin="10dp"
-                    android:text="THÊM PHIẾU NHẬP"
+                    android:text="TẠO PHIẾU NHẬP"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
@@ -180,9 +180,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvListChiTietPN_activityRDD"
         android:layout_width="match_parent"
-        android:layout_height="330dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_max="250dp"
         android:layout_marginTop="10dp"
-        android:maxHeight="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cvDocketInfo_activityReceivedDocketDetail"
         app:layout_constraintVertical_bias="0.0"
@@ -191,32 +191,34 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
-        android:layout_marginTop="280dp"
-        app:layout_constraintTop_toBottomOf="@+id/cvDocketInfo_activityReceivedDocketDetail">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/btnHuy_activityRDD"
-            android:layout_width="115dp"
+            android:layout_width="110dp"
             android:layout_height="70dp"
             android:layout_marginEnd="10dp"
             android:text="hủy"
             android:textSize="16sp" />
 
         <Button
-            android:id="@+id/btnTaoPhieuNhap_activityRDD"
+            android:id="@+id/btnThemSanPham_activityRDD"
             android:layout_width="140dp"
             android:layout_height="70dp"
             android:layout_marginEnd="10dp"
-            android:text="tạo\nphiếu nhập"
+            android:text="thêm\nsản phẩm"
             android:textSize="16sp" />
 
         <Button
-            android:id="@+id/btnThemSanPham_activityRDD"
-            android:layout_width="125dp"
+            android:id="@+id/btnTaoPhieuNhap_activityRDD"
+            android:layout_width="110dp"
             android:layout_height="70dp"
-            android:text="thêm sản phẩm"
+            android:text="tạo"
             android:textSize="16sp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -99,7 +99,7 @@ public class AddExportFragment extends Fragment {
         btnLuu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DeliveryDocketService.deliveryDocketService.addDeliveryDocket(new DeliveryDocket(LoginActivity.idLogin,maSKH,1,Convert.dateToString(new Date())))
+                DeliveryDocketService.deliveryDocketService.addDeliveryDocket(new DeliveryDocket(1,maSKH,1,Convert.dateToString(new Date())))
                         .enqueue(new Callback<DeliveryDocket>() {
                     @Override
                     public void onResponse(Call<DeliveryDocket> call, Response<DeliveryDocket> response) {
