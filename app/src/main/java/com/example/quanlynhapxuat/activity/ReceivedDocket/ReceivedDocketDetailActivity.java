@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import com.example.quanlynhapxuat.R;
 import com.example.quanlynhapxuat.adapter.ReceivedDocketDetailAdapter;
 import com.example.quanlynhapxuat.api.ApiUtils;
+import com.example.quanlynhapxuat.model.Product;
 import com.example.quanlynhapxuat.model.ReceivedDocket;
 import com.example.quanlynhapxuat.model.ReceivedDocketDetail;
 import com.example.quanlynhapxuat.model.RestErrorResponse;
@@ -92,6 +94,9 @@ public class ReceivedDocketDetailActivity extends AppCompatActivity {
         }
         else {
             // -- sửa phiếu nhập
+            etNgayDat.setEnabled(false);
+            etNhaCungCap.setEnabled(false);
+            ivDatePicker.setVisibility(View.GONE);
             getReceivedDocket(maPN);
         }
 
@@ -101,11 +106,26 @@ public class ReceivedDocketDetailActivity extends AppCompatActivity {
         });
 
         btnThemSP.setOnClickListener(view -> {
-            themSP();
+            themSP(maPN);
         });
 
         btnTaoPhieuNhap.setOnClickListener(view -> {
+            if(rddAdapter.getItemCount()==0) {
+                CustomToast.makeText(this,"Phiếu nhập chưa có sản phẩm!"
+                        ,CustomToast.LENGTH_SHORT,CustomToast.WARNING).show();
+                return;
+            }
+
             taoPhieuNhap(maPN);
+            if(maPN==0) {
+                CustomToast.makeText(ReceivedDocketDetailActivity.this,"Thêm phiếu nhập thành công!"
+                        ,CustomToast.LENGTH_SHORT,CustomToast.SUCCESS).show();
+            }
+            else {
+                CustomToast.makeText(ReceivedDocketDetailActivity.this,"Cập nhật phiếu nhập thành công!"
+                        ,CustomToast.LENGTH_SHORT,CustomToast.SUCCESS).show();
+            }
+            finish();
         });
 
         btnHuy.setOnClickListener(view -> {
@@ -113,8 +133,42 @@ public class ReceivedDocketDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void themSP() {
-        //TODO -- thêm sản phẩm vào phiếu nhập
+    private void themSP(int maPN) {
+        Dialog dialog = rddAdapter.getDialogThemSP(ReceivedDocketDetailActivity.this);
+
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        rddAdapter.btnHuy_dialogThemSP.setOnClickListener(view -> {
+            dialog.cancel();
+        });
+
+        rddAdapter.btnThem_dialogThemSP.setOnClickListener(view -> {
+            if(rddAdapter.etSL_dialogThemSP.getText().toString().isEmpty()) {
+                CustomToast.makeText(ReceivedDocketDetailActivity.this,"Vui lòng nhập số lượng!"
+                        ,CustomToast.LENGTH_LONG,CustomToast.WARNING).show();
+            }
+            else if(rddAdapter.etDonGia_dialogThemSP.getText().toString().isEmpty()) {
+                CustomToast.makeText(ReceivedDocketDetailActivity.this,"Vui lòng nhập đơn giá!"
+                        ,CustomToast.LENGTH_LONG,CustomToast.WARNING).show();
+            }
+            else {
+                Product product = rddAdapter.getProduct(rddAdapter.getSelectedProductID());
+
+                ReceivedDocketDetail rdd = new ReceivedDocketDetail();
+
+                rdd.setId(-1);
+                rdd.setProductId(product.getId());
+                rdd.setReceivedDocketId(maPN);
+                rdd.setQuantity(Integer.parseInt(rddAdapter.etSL_dialogThemSP.getText().toString()));
+                rdd.setPrice(Integer.parseInt(rddAdapter.etDonGia_dialogThemSP.getText().toString()));
+
+                rddAdapter.addRDDList(rdd);
+
+                capNhatDuLieu();
+                dialog.cancel();
+            }
+        });
     }
 
     private void taoPhieuNhap(int maPN) {
@@ -132,46 +186,55 @@ public class ReceivedDocketDetailActivity extends AppCompatActivity {
             return;
         }
 
-        if(rddAdapter.getItemCount()==0) {
-            CustomToast.makeText(this,"Phiếu nhập chưa có sản phẩm!"
-                    ,CustomToast.LENGTH_SHORT,CustomToast.WARNING).show();
-            return;
-        }
-
         receivedDocket = new ReceivedDocket(maPN,ngayDat,Integer.parseInt(tvMaNV.getText().toString()),1,nhaCungCap,null);
 
-        ApiUtils.getReceivedDocketService().postReceivedDocket(receivedDocket).enqueue(new Callback<ReceivedDocket>() {
+        if(maPN==0) {
+            ApiUtils.getReceivedDocketService().postReceivedDocket(receivedDocket).enqueue(new Callback<ReceivedDocket>() {
 
-            @Override
-            public void onResponse(Call<ReceivedDocket> call, Response<ReceivedDocket> response) {
-                if(response.isSuccessful()) {
-                    CustomToast.makeText(ReceivedDocketDetailActivity.this,"Thêm phiếu nhập thành công!"
-                            ,CustomToast.LENGTH_SHORT,CustomToast.SUCCESS).show();
-                    finish();
+                @Override
+                public void onResponse(Call<ReceivedDocket> call, Response<ReceivedDocket> response) {
+                    if(response.isSuccessful()) {
+                        Log.e("postRD: ","Thêm phiếu nhập thành công!");
+                        for(ReceivedDocketDetail item : rddAdapter.getRddList()) {
+                            if(item.getId()==-1) {
+                                postReceivedDocketDetail(item);
+                            }
+                            else {
+                                putReceivedDocketDetail(item);
+                            }
+                        }
+                    }
+                    else {
+                        try {
+                            Gson g = new Gson();
+                            RestErrorResponse errorResponse = g.fromJson(response.errorBody().string(),RestErrorResponse.class);
+                            CustomToast.makeText(ReceivedDocketDetailActivity.this,"TRY: " + errorResponse.getMessage()
+                                    ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+                        }
+                        catch (Exception e) {
+                            CustomToast.makeText(ReceivedDocketDetailActivity.this,"CATCH: " + e.getMessage()
+                                    ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ReceivedDocket> call, Throwable t) {
+                    CustomToast.makeText(ReceivedDocketDetailActivity.this,"CALL API FAIL!!!"
+                            ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+                }
+            });
+        }
+        else {
+            for(ReceivedDocketDetail item : rddAdapter.getRddList()) {
+                if(item.getId()==-1) {
+                    postReceivedDocketDetail(item);
                 }
                 else {
-                    try {
-                        Gson g = new Gson();
-                        RestErrorResponse errorResponse = g.fromJson(response.errorBody().string(),RestErrorResponse.class);
-                        Log.e("errorResponseGetMessage",errorResponse.getMessage());
-                        CustomToast.makeText(ReceivedDocketDetailActivity.this,errorResponse.getMessage()
-                                ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
-                    }
-                    catch (Exception e) {
-                        Log.e("e.getMessage()",e.getMessage());
-                        CustomToast.makeText(ReceivedDocketDetailActivity.this,e.getMessage()
-                                ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
-                    }
+                    putReceivedDocketDetail(item);
                 }
             }
-
-            @Override
-            public void onFailure(Call<ReceivedDocket> call, Throwable t) {
-                CustomToast.makeText(ReceivedDocketDetailActivity.this,"CALL API FAIL!!!"
-                        ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
-                finish();
-            }
-        });
+        }
     }
 
     private void  huy() {
@@ -181,8 +244,8 @@ public class ReceivedDocketDetailActivity extends AppCompatActivity {
         alertDialog.getWindow().setLayout((7*metrics.widthPixels)/8, WindowManager.LayoutParams.WRAP_CONTENT);
         alertDialog.show();
 
-        alertDialog.setMessage("Những Thay đổi/Thêm mới\nsẽ không được lưu?");
-        alertDialog.setBtnPositive("Hủy và Thoát");
+        alertDialog.setMessage("Nếu thoát những Thay đổi/Thêm mới sẽ không được lưu!\nVẫn thoát?");
+        alertDialog.setBtnPositive("Thoát");
         alertDialog.setBtnNegative("Không");
 
         alertDialog.btnPositive.setOnClickListener(new View.OnClickListener() {
@@ -273,5 +336,69 @@ public class ReceivedDocketDetailActivity extends AppCompatActivity {
     private void capNhatDuLieu() {
         rddAdapter.notifyDataSetChanged();
         tvTongGiaTri.setText(NumberFormat.getNumberInstance(Locale.US).format(rddAdapter.getTotalList())+"VND");
+    }
+
+    private void postReceivedDocketDetail(ReceivedDocketDetail item) {
+        ApiUtils.getReceivedDocketService().postReceivedDocketDetail(item).enqueue(new Callback<ReceivedDocketDetail>() {
+            @Override
+            public void onResponse(Call<ReceivedDocketDetail> call, Response<ReceivedDocketDetail> response) {
+                if(response.isSuccessful()) {
+                    Log.e("postRDD","SUCCESSFUL");
+                }
+                else {
+                    try {
+                        Gson g = new Gson();
+                        RestErrorResponse errorResponse = g.fromJson(response.errorBody().string(),RestErrorResponse.class);
+                        CustomToast.makeText(ReceivedDocketDetailActivity.this,"TRY: " + errorResponse.getMessage()
+                                ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+                    }
+                    catch (Exception e) {
+                        CustomToast.makeText(ReceivedDocketDetailActivity.this,"CATCH: " + e.getMessage()
+                                ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReceivedDocketDetail> call, Throwable t) {
+                CustomToast.makeText(ReceivedDocketDetailActivity.this,"CALL API FAIL!!!"
+                        ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+            }
+        });
+    }
+
+    private void putReceivedDocketDetail(ReceivedDocketDetail item) {
+        ApiUtils.getReceivedDocketService().putReceivedDocketDetail(item.getId(),item).enqueue(new Callback<ReceivedDocketDetail>() {
+            @Override
+            public void onResponse(Call<ReceivedDocketDetail> call, Response<ReceivedDocketDetail> response) {
+                if(response.isSuccessful()) {
+                    Log.e("putRDD","SUCCESSFUL");
+                }
+                else {
+                    try {
+                        Gson g = new Gson();
+                        RestErrorResponse errorResponse = g.fromJson(response.errorBody().string(),RestErrorResponse.class);
+                        CustomToast.makeText(ReceivedDocketDetailActivity.this,"TRY: " + errorResponse.getMessage()
+                                ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+                    }
+                    catch (Exception e) {
+                        CustomToast.makeText(ReceivedDocketDetailActivity.this,"CATCH: " + e.getMessage()
+                                ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReceivedDocketDetail> call, Throwable t) {
+                CustomToast.makeText(ReceivedDocketDetailActivity.this,"CALL API FAIL!!!"
+                        ,CustomToast.LENGTH_LONG,CustomToast.ERROR).show();
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        capNhatDuLieu();
     }
 }

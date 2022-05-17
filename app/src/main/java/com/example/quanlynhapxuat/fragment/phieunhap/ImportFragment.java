@@ -112,32 +112,4 @@ public class ImportFragment extends Fragment {
             }
         });
     }
-
-//    private void getReceivedDocketDetailList() {
-//        ApiUtils.getReceivedDocketService().getReceivedDocketDetailList().enqueue(new Callback<ArrayList<ReceivedDocketDetail>>() {
-//            @Override
-//            public void onResponse(Call<ArrayList<ReceivedDocketDetail>> call, Response<ArrayList<ReceivedDocketDetail>> response) {
-//                if(response.isSuccessful()) {
-//                    receivedDocketDetailList = response.body();
-//                    Log.e("response.body()",response.toString());
-//                    CustomToast.makeText(getContext(),"Call API Success!!!",CustomToast.LENGTH_SHORT,CustomToast.SUCCESS).show();
-//                }
-//                else {
-//                    try {
-//                        Gson g = new Gson();
-//                        RestErrorResponse errorResponse = g.fromJson(response.errorBody().string(),RestErrorResponse.class);
-//                        Log.e("errorResponseGetMessage",errorResponse.getMessage());
-//                    }
-//                    catch (Exception e) {
-//                        Log.e("e.getMessage()",e.getMessage());
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ArrayList<ReceivedDocketDetail>> call, Throwable t) {
-//                Toast.makeText(getContext(),"Unknown Error!!!",Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
 }

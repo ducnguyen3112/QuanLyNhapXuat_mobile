@@ -52,9 +52,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent intent=new Intent(LoginActivity.this,ForgotPasswdActivity.class);
                 startActivity(intent);
             case R.id.btn_signin:
-                //signinClick();
-                Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent1);
+                signinClick();
+//                Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
+//                startActivity(intent1);
                 break;
             case R.id.btn_go_signup:
                 intent=new Intent(LoginActivity.this,SignupActivity.class);
