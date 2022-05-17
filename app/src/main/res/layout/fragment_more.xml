@@ -10,18 +10,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="40dp">
+
         <ImageView
             android:id="@+id/ivAvatar"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:src="@drawable/ic_baseline_account_circle" />
-
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
+            android:textAlignment="center"
             android:text="Nguyen Van A"
             android:textSize="24sp" />
     </LinearLayout>
@@ -51,29 +53,9 @@
         android:text="Khách Hàng"
         android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/btn_nh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@drawable/custom_btn"
-        android:drawableLeft="@drawable/ic_download_36"
-        android:gravity="left|center"
-        android:padding="10dp"
-        android:text="Nhập Hàng"
-        android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/btn_bc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@drawable/custom_btn"
-        android:drawableLeft="@drawable/ic_bar_chart_36"
-        android:gravity="left|center"
-        android:padding="10dp"
-        android:text="Báo cáo"
-        android:textSize="20sp" />
+
+
 
     <Button
         android:id="@+id/btn_dx"

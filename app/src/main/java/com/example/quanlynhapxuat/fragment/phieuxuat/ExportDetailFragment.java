@@ -54,6 +54,7 @@ public class ExportDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        ChiTietPXAdapter.status=1;
         mView=inflater.inflate(R.layout.fragment_export_detail, container, false);
         mainActivity= (MainActivity) getActivity();
         recyclerView=mView.findViewById(R.id.rcv_ctpx);

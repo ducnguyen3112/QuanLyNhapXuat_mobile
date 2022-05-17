@@ -13,18 +13,26 @@
         <entry key="..\:/Documents/DiDong/QuanLyNhapXuat_mobile/app/src/main/res/layout/fragment_home.xml" value="0.275" />
         <entry key="..\:/Documents/DiDong/QuanLyNhapXuat_mobile/app/src/main/res/menu/menu_bottom_navigation.xml" value="0.19718309859154928" />
         <entry key="..\:/Projects/Android/app/src/main/res/drawable/bg_spinner.xml" value="0.176" />
+        <entry key="..\:/Projects/Android/app/src/main/res/drawable/ic_add_plus_svgrepo_com.xml" value="0.2595" />
         <entry key="..\:/Projects/Android/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.1945" />
+        <entry key="..\:/Projects/Android/app/src/main/res/drawable/ic_question_svgrepo_com.xml" value="0.2595" />
         <entry key="..\:/Projects/Android/app/src/main/res/drawable/rounded_corners_button_border.xml" value="0.1945" />
         <entry key="..\:/Projects/Android/app/src/main/res/layout/activity_main.xml" value="0.2164855072463768" />
+        <entry key="..\:/Projects/Android/app/src/main/res/layout/activity_verify_otp.xml" value="0.25416666666666665" />
         <entry key="..\:/Projects/Android/app/src/main/res/layout/custom_alert_dialog.xml" value="0.264" />
         <entry key="..\:/Projects/Android/app/src/main/res/layout/custom_dialog.xml" value="0.1" />
-        <entry key="..\:/Projects/Android/app/src/main/res/layout/fragment_add_export.xml" value="0.264" />
+        <entry key="..\:/Projects/Android/app/src/main/res/layout/dialog_them_product_ctpx.xml" value="0.25416666666666665" />
+        <entry key="..\:/Projects/Android/app/src/main/res/layout/fragment_add_export.xml" value="0.1" />
         <entry key="..\:/Projects/Android/app/src/main/res/layout/fragment_export.xml" value="0.264" />
         <entry key="..\:/Projects/Android/app/src/main/res/layout/fragment_export_detail.xml" value="0.25416666666666665" />
         <entry key="..\:/Projects/Android/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Projects/Android/app/src/main/res/layout/fragment_more.xml" value="0.25416666666666665" />
         <entry key="..\:/Projects/Android/app/src/main/res/layout/item_ctpx.xml" value="0.264" />
         <entry key="..\:/Projects/Android/app/src/main/res/layout/item_khachhang_spinner.xml" value="0.2259963768115942" />
         <entry key="..\:/Projects/Android/app/src/main/res/layout/item_phieuxuat.xml" value="0.1" />
+        <entry key="..\:/Projects/Android/app/src/main/res/layout/item_taoctpx.xml" value="0.165625" />
+        <entry key="..\:/Projects/Android/app/src/main/res/menu/home_menu.xml" value="0.1" />
+        <entry key="..\:/Projects/Android/app/src/main/res/menu/popup_menu_ctpx.xml" value="0.264" />
         <entry key="..\:/QuanLyNhapXuat_mobile/app/src/main/res/layout/activity_detail_employee.xml" value="0.1" />
         <entry key="..\:/QuanLyNhapXuat_mobile/app/src/main/res/layout/activity_employees.xml" value="0.1" />
         <entry key="..\:/QuanLyNhapXuat_mobile/app/src/main/res/layout/item_employee_list.xml" value="0.1" />

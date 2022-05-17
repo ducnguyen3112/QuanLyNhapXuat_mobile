@@ -14,10 +14,11 @@ import androidx.fragment.app.Fragment;
 import com.example.quanlynhapxuat.R;
 import com.example.quanlynhapxuat.activity.EmployeesActivity;
 import com.example.quanlynhapxuat.activity.KhachHang.ListKHActivity;
+import com.example.quanlynhapxuat.activity.main.MainActivity;
 
 public class MoreFragment extends Fragment {
 
-    Button btn_nv, btn_kh, btn_nh, btn_bc, btn_dx;
+    Button btn_nv, btn_kh,  btn_dx;
 
 
     @Override
@@ -39,8 +40,7 @@ public class MoreFragment extends Fragment {
     private void setControl(View view) {
         btn_nv = view.findViewById(R.id.btn_nv);
         btn_kh = view.findViewById(R.id.btn_kh);
-        btn_nh = view.findViewById(R.id.btn_nh);
-        btn_bc = view.findViewById(R.id.btn_bc);
+
         btn_dx = view.findViewById(R.id.btn_dx);
 
     }
@@ -59,6 +59,12 @@ public class MoreFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ListKHActivity.class);
                 startActivity(intent);
+            }
+        });
+        btn_dx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
             }
         });
 
