@@ -5,6 +5,7 @@ import com.example.quanlynhapxuat.service.KhachHangService;
 import com.example.quanlynhapxuat.service.ProductRetrofit;
 import com.example.quanlynhapxuat.service.ProductService;
 import com.example.quanlynhapxuat.service.ReceivedDocketService;
+import com.example.quanlynhapxuat.service.UploadFileRetrofit;
 import com.example.quanlynhapxuat.service.UploadService;
 
 public class ApiUtils {
