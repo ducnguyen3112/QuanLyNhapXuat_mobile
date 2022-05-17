@@ -13,11 +13,16 @@ public class DeliveryDocketDetail implements Serializable {
     public DeliveryDocketDetail() {
     }
 
-    public DeliveryDocketDetail(int quantity, int price, int deliveryDocketId, int productId) {
+    public DeliveryDocketDetail(int quantity, int price, int productId) {
         this.quantity = quantity;
         this.price = price;
-        this.deliveryDocketId = deliveryDocketId;
         this.productId = productId;
+    }
+    public DeliveryDocketDetail(int quantity, int price, int productId,int deliveryDocketId) {
+        this.quantity = quantity;
+        this.price = price;
+        this.productId = productId;
+        this.deliveryDocketId=deliveryDocketId;
     }
 
     public int getId() {

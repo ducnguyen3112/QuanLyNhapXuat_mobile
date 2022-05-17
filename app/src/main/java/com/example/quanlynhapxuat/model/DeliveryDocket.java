@@ -14,9 +14,9 @@ public class DeliveryDocket implements Serializable {
     private int customerId;
     private int status;
     private String createdAt;
-    List<DeliveryDocketDetail> deliveryDocketDetails=new ArrayList<>();
+    List<DeliveryDocketDetail> deliveryDocketDetails;
 
-    public DeliveryDocket( int employeeId, int customerId, int status, String createdAt) {
+    public DeliveryDocket( int employeeId, int customerId, int status, String createdAt ) {
         this.employeeId = employeeId;
         this.customerId = customerId;
         this.status = status;

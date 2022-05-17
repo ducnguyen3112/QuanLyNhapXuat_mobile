@@ -1,6 +1,8 @@
 package com.example.quanlynhapxuat.model;
 
-public class Employee{
+import java.io.Serializable;
+
+public class Employee implements Serializable {
     private int id;
     private String fullName;
     private String address;

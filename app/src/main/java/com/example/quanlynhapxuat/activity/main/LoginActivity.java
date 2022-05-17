@@ -60,7 +60,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 intent=new Intent(LoginActivity.this,SignupActivity.class);
                 startActivity(intent);
                 break;
-
         }
     }
     public void signinClick(){
@@ -99,5 +98,4 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
     }
-
 }

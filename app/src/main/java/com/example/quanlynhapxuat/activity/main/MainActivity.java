@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     MoreFragment moreFragment = new MoreFragment();
     ExportDetailFragment exportDetailFragment=new ExportDetailFragment();
     List<DeliveryDocketDetail> mDeliveryDocketDetails=new ArrayList<>();
+    public static int width;
 
     public List<DeliveryDocketDetail> getmDeliveryDocketDetails() {
         return mDeliveryDocketDetails;
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DisplayMetrics metrics=getResources().getDisplayMetrics();
+        width=metrics.widthPixels;
         setContentView(R.layout.activity_main);
         initViews();
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_main,homeFragment).commit();
