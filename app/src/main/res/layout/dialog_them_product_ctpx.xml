@@ -57,6 +57,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sp_sppx" />
 
+    <TextView
+
+        android:id="@+id/textView17"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
+        android:text="Giá tiền:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_slsanphampx" />
+
     <EditText
         android:id="@+id/et_slsanphampx"
         android:layout_width="match_parent"
@@ -68,21 +82,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
+    <EditText
+        android:id="@+id/et_giasppx"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_corners_button_border"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_slsanphampx"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/et_giasppx">
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/dialogBackColor"
-            app:layout_constraintBottom_toTopOf="@+id/btnNegative"
+            app:layout_constraintBottom_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
