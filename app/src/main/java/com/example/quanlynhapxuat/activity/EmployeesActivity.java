@@ -1,6 +1,7 @@
 package com.example.quanlynhapxuat.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,7 +28,7 @@ public class EmployeesActivity extends AppCompatActivity {
     private ArrayList<Employee> list = new ArrayList<>();
     private EmployeetRecyclerViewAdapter mAdapter;
     FloatingActionButton floatingActionButton;
-
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,11 +36,13 @@ public class EmployeesActivity extends AppCompatActivity {
         setControl();
         getEmployees();
         handleClickFloatingActionButton();
+        setActionBar();
     }
 
     private void setControl() {
         recyclerView = findViewById(R.id.recyclerView);
         floatingActionButton = findViewById(R.id.floatingActionButton);
+        toolbar = findViewById(R.id.toolbar);
     }
 
     public void getEmployees() {
@@ -70,6 +73,17 @@ public class EmployeesActivity extends AppCompatActivity {
                 Intent intent = new Intent(EmployeesActivity.this, DetailEmployeeActivity.class);
                 intent.putExtra("id", 0);
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void setActionBar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }

@@ -75,13 +75,13 @@ public class EmployeetRecyclerViewAdapter extends RecyclerView.Adapter<Employeet
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name;
-        ImageView image;
+//        ImageView image;
         Switch status;
 
         public MyViewHolder(View view) {
             super(view);
             name = view.findViewById(R.id.name);
-            image = view.findViewById(R.id.image);
+//            image = view.findViewById(R.id.image);
             status = view.findViewById(R.id.status);
         }
     }
