@@ -20,6 +20,7 @@
             android:layout_height="150dp"
             android:src="@drawable/ic_baseline_account_circle" />
         <TextView
+            android:id="@+id/tv_nameNV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
