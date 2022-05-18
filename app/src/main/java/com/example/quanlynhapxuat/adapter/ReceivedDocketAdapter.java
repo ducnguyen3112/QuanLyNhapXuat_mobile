@@ -281,7 +281,7 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
                 }
 
                 Bitmap bitmap;
-                Drawable drawable = context.getDrawable(R.drawable.ic_product);
+                Drawable drawable = context.getDrawable(R.drawable.app_logo);
                 bitmap = ((BitmapDrawable)drawable).getBitmap();
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
