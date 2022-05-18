@@ -59,6 +59,10 @@ public class ReceivedDocketDetailAdapter extends RecyclerView.Adapter<ReceivedDo
         getProductList();
     }
 
+    public ArrayList<Product> gotProductList() {
+        return productList;
+    }
+
     public void setRddList(ArrayList<ReceivedDocketDetail> rddList) {
         this.rddList = rddList;
         notifyDataSetChanged();

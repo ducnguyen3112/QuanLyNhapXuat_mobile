@@ -165,14 +165,9 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
             @Override
             public void onResponse(Call<ReceivedDocket> call, Response<ReceivedDocket> response) {
                 if(response.isSuccessful()) {
-                    try {
-                        CreatePDF(response.body());
-                        CustomToast.makeText(context,"Xuất file PDF thành công!"
-                                ,CustomToast.LENGTH_SHORT,CustomToast.SUCCESS).show();
-                    }
-                    catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                    getProductList(response.body());
+                    CustomToast.makeText(context,"Xuất file PDF thành công!"
+                            ,CustomToast.LENGTH_SHORT,CustomToast.SUCCESS).show();
                 }
                 else {
                     try {
@@ -196,7 +191,7 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
         });
     }
 
-    private void CreatePDF(ReceivedDocket receivedDocket) throws FileNotFoundException{
+    private void CreatePDF(ReceivedDocket receivedDocket, ArrayList<Product> list) throws FileNotFoundException{
         if(receivedDocket==null||receivedDocket.receivedDocketDetails==null) {
             Log.e("receivedDocket","null");
             CustomToast.makeText(context,"Đơn hàng rỗng!"
@@ -253,7 +248,12 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
         tableListProducts.addCell(new Cell().add(new Paragraph("So luong")).setTextAlignment(TextAlignment.CENTER));
         tableListProducts.addCell(new Cell().add(new Paragraph("Thanh tien")).setTextAlignment(TextAlignment.CENTER));
 
-        getProductList();
+
+//        ReceivedDocketDetailAdapter rddAdapter = new ReceivedDocketDetailAdapter(context);
+//        productList = rddAdapter.gotProductList();
+//
+//        Log.e("fff",productList.size()+"");
+    //        getProductList();
         if(receivedDocket.receivedDocketDetails==null) { //||productList.size()==0
             CustomToast.makeText(context,"PDF: productList is empty!"
                     ,CustomToast.LENGTH_SHORT,CustomToast.WARNING).show();
@@ -262,14 +262,23 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
         else {
             //1-n
             int stt = 1;
+            Product product = null;
             for(ReceivedDocketDetail item : receivedDocket.receivedDocketDetails) {
-                Product product = getProduct(item.getProductId());
-//                if(product==null) {
-//                    CustomToast.makeText(context,"PDF: 1 product is null!"
-//                            ,CustomToast.LENGTH_SHORT,CustomToast.WARNING).show();
-//                    Log.e("PDF","PDF: 1 product is null!");
-//                    break;
-//                }
+                if (list!=null) {
+                    for(Product p : list) {
+                        if(p.getId()== item.getProductId()){
+                            product = p;
+                            break;
+                        }
+                    }
+                }
+
+                if(product==null) {
+                    CustomToast.makeText(context,"PDF: 1 product is null!"
+                            ,CustomToast.LENGTH_SHORT,CustomToast.WARNING).show();
+                    Log.e("PDF","PDF: 1 product is null!");
+                    break;
+                }
 
                 Bitmap bitmap;
                 Drawable drawable = context.getDrawable(R.drawable.ic_product);
@@ -304,13 +313,20 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
 
     private ArrayList<Product> productList;
 
-    private void getProductList() {
+    private void getProductList(ReceivedDocket receivedDocket) {
         ApiUtils.productRetrofit().getProducts().enqueue(new Callback<ArrayList<Product>>() {
             @Override
             public void onResponse(Call<ArrayList<Product>> call, Response<ArrayList<Product>> response) {
                 if(response.isSuccessful()) {
                     productList = response.body();
-                    notifyDataSetChanged();
+                    Log.e("fff",productList.size()+"");
+                    try {
+                        CreatePDF(receivedDocket,productList);
+                    }
+                    catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    //
                 }
             }
 
@@ -330,8 +346,10 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
 //            }
 //        }
 //        return null;
-        if(productList!=null) {
-            for(Product item : productList) {
+        ReceivedDocketDetailAdapter rddAdapter = new ReceivedDocketDetailAdapter(context);
+        ArrayList<Product> list = rddAdapter.gotProductList();
+        if(list!=null) {
+            for(Product item : list) {
                 if(item.getId()==productId) {
                     return item;
                 }
