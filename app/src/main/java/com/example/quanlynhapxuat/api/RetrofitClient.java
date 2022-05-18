@@ -19,8 +19,7 @@ public class RetrofitClient {
                 .connectTimeout(5000, TimeUnit.MILLISECONDS)
                 .retryOnConnectionFailure(true).build();
 
-        Gson gson = new GsonBuilder()
-                .setLenient()
+        Gson gson = new GsonBuilder().setLenient()
                 .setDateFormat("dd-MM-yyyy HH:mm:ss")
                 .create();
 

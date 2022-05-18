@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText etPasswordLogin;
     public static int idLogin;
     public static String nameLogin;
+    public static String linkAvatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +54,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);
             case R.id.btn_signin:
                 signinClick();
-//                Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
-//                startActivity(intent1);
+                //Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
+                //startActivity(intent1);
                 break;
             case R.id.btn_go_signup:
                 intent=new Intent(LoginActivity.this,SignupActivity.class);
                 startActivity(intent);
                 break;
-
         }
     }
     public void signinClick(){
@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Employee employee=response.body();
                     idLogin=employee.getId();
                     nameLogin=employee.getFullName();
+                    linkAvatar=employee.getAvatar();
                     Toast.makeText(LoginActivity.this,"Đăng nhập thành công!",
                             Toast.LENGTH_SHORT).show();
                     Intent intent1=new Intent(LoginActivity.this,MainActivity.class);
@@ -99,5 +100,4 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
     }
-
 }
