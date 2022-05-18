@@ -57,4 +57,15 @@ public class ReceivedDocketDetail {
     public void setPrice(int price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "ReceivedDocketDetail{" +
+                "id=" + id +
+                ", receivedDocketId=" + receivedDocketId +
+                ", productId=" + productId +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                '}';
+    }
 }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:foregroundTint="#F44336"
     android:orientation="vertical"
-    tools:context=".fragment.ImportFragment">
+    tools:context=".fragment.phieunhap.ImportFragment">
 
     <LinearLayout
         android:id="@+id/llMain"
@@ -24,21 +24,48 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_margin="10dp"
+            android:orientation="horizontal"
             android:gravity="start|center">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-
-                app:srcCompat="@drawable/icon_calendar" />
 
             <TextView
-                android:id="@+id/tvLocPhieuNhap_fragmentImport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Toàn thời gian"
-                android:textSize="16sp"
+                android:text="PHIẾU NHẬP"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30dp"
                 android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="end|center">
+
+                <ImageButton
+                    android:id="@+id/ibFilter_fragmentImport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/actionbarOpacity"
+                    android:src="@drawable/ic_baseline_search_24" />
+
+                <ImageButton
+                    android:id="@+id/ibSort_fragmentImport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/actionbarOpacity"
+                    android:src="@drawable/ic_baseline_swap_vert_24" />
+
+                <ImageButton
+                    android:id="@+id/ibMore_fragmentImport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/actionbarOpacity"
+                    android:src="@drawable/ic_baseline_more_vert_24" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -100,15 +127,19 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvListPhieuNhap_fragmentImport"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/llMain" />
+        android:layout_height="0dp"
+        app:layout_constraintHeight_max="525dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llMain"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/flbThemPhieuNhap_fragmentImport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="25dp"
         android:layout_marginBottom="25dp"
         android:src="@drawable/ic_baseline_add"
         app:backgroundTint="#00BCD4"

@@ -25,24 +25,30 @@
         <entry key="..\:/Projects/Android/app/src/main/res/layout/item_ctpx.xml" value="0.264" />
         <entry key="..\:/Projects/Android/app/src/main/res/layout/item_khachhang_spinner.xml" value="0.2259963768115942" />
         <entry key="..\:/Projects/Android/app/src/main/res/layout/item_phieuxuat.xml" value="0.1" />
-        <entry key="..\:/QuanLyNhapXuat_mobile/app/src/main/res/layout/activity_detail_employee.xml" value="0.1" />
-        <entry key="..\:/QuanLyNhapXuat_mobile/app/src/main/res/layout/activity_employees.xml" value="0.1" />
-        <entry key="..\:/QuanLyNhapXuat_mobile/app/src/main/res/layout/item_employee_list.xml" value="0.1" />
-        <entry key="..\:/Users/DELL/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/activity_add_khactivity.xml" value="0.1" />
-        <entry key="..\:/Users/DELL/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/activity_detail_employee.xml" value="0.15729166666666666" />
-        <entry key="..\:/Users/DELL/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/activity_detail_product.xml" value="0.1" />
-        <entry key="..\:/Users/DELL/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/activity_employees.xml" value="0.1" />
-        <entry key="..\:/Users/DELL/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/fragment_product.xml" value="0.1" />
         <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/drawable/custom_button_2.xml" value="0.1" />
+        <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/drawable/custom_person_icon.xml" value="0.1565" />
         <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/activity_list_khactivity.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/activity_received_docket_detail.xml" value="0.264" />
+        <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/custom_alert_dialog.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/custom_dialog.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/dialog_send_mail.xml" value="0.253125" />
+        <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/dialog_sua_sl_sp_rdd.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/dialog_them_sp.xml" value="0.253125" />
+        <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/dialog_them_sp_rdd.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/dialog_xoa_sp.xml" value="0.253125" />
+        <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/fragment_add_export.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/fragment_export.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/fragment_import.xml" value="0.264" />
         <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/fragment_lich_su_k_h.xml" value="0.2" />
+        <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/item_kh.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/item_khachhang_spinner.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/item_received_docket.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/item_received_docket_detail.xml" value="0.253125" />
+        <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/layout/item_spinner_sp.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/menu/menu_bottom_navigation.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1685" />
         <entry key="..\:/Users/ahrix/Desktop/QuanLyNhapXuat_mobile/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1655" />
         <entry key="..\:/duc/QuanLyNhapXuat/app/src/main/res/drawable/button1_bg.xml" value="0.1" />
         <entry key="..\:/duc/QuanLyNhapXuat/app/src/main/res/drawable/ic_back.xml" value="0.1125" />

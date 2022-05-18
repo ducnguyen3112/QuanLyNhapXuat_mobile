@@ -4,11 +4,12 @@
     package="com.example.quanlynhapxuat">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -34,17 +35,17 @@
             android:label="Chi Tiết Lịch Sử"
             android:parentActivityName=".activity.KhachHang.ProfileKHActivity" />
         <activity
-            android:label="Thông Tin Khách Hàng"
             android:name=".activity.ReceivedDocket.ReceivedDocketDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="PHIẾU NHẬP" />
         <activity
+            android:label="Thông Tin Khách Hàng"
             android:name=".activity.KhachHang.ProfileKHActivity"
             android:exported="false"
             android:parentActivityName=".activity.KhachHang.ListKHActivity" />
         <activity
             android:name=".activity.KhachHang.UpdateKHActivity"
             android:exported="false"
-            android:label="Cập nhật Khách Hàng"
             android:parentActivityName=".activity.KhachHang.ListKHActivity" />
         <activity
             android:name=".activity.KhachHang.AddKHActivity"
@@ -54,7 +55,6 @@
         <activity
             android:name=".activity.KhachHang.ListKHActivity"
             android:exported="false"
-            android:label="Quản Lý Khách Hàng"
             android:parentActivityName=".activity.main.MainActivity" />
         <activity
             android:name=".activity.main.MainActivity"

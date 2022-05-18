@@ -1,7 +1,5 @@
 package com.example.quanlynhapxuat.model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 
 public class ReceivedDocket {
@@ -22,6 +20,21 @@ public class ReceivedDocket {
         this.status = status;
         this.supplierName = supplier_name;
         this.receivedDocketDetails = receivedDocketDetails;
+    }
+
+    public ReceivedDocket(int id, String createdAt, int employeeId, int status, String supplierName) {
+        this.id = id;
+        this.createdAt = createdAt;
+        this.employeeId = employeeId;
+        this.status = status;
+        this.supplierName = supplierName;
+    }
+
+    public ReceivedDocket(String createdAt, int employeeId, int status, String supplierName) {
+        this.createdAt = createdAt;
+        this.employeeId = employeeId;
+        this.status = status;
+        this.supplierName = supplierName;
     }
 
     @Override
@@ -74,5 +87,13 @@ public class ReceivedDocket {
 
     public void setSupplier_name(String supplier_name) {
         this.supplierName = supplier_name;
+    }
+
+    public ArrayList<ReceivedDocketDetail> getReceivedDocketDetails() {
+        return receivedDocketDetails;
+    }
+
+    public void setReceivedDocketDetails(ArrayList<ReceivedDocketDetail> receivedDocketDetails) {
+        this.receivedDocketDetails = receivedDocketDetails;
     }
 }
