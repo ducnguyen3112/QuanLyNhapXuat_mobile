@@ -257,17 +257,19 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
         if(receivedDocket.receivedDocketDetails==null) { //||productList.size()==0
             CustomToast.makeText(context,"PDF: productList is empty!"
                     ,CustomToast.LENGTH_SHORT,CustomToast.WARNING).show();
+            Log.e("PDF","PDF: productList is empty!");
         }
         else {
             //1-n
             int stt = 1;
             for(ReceivedDocketDetail item : receivedDocket.receivedDocketDetails) {
                 Product product = getProduct(item.getProductId());
-                if(product==null) {
-                    CustomToast.makeText(context,"PDF: 1 product is null!"
-                            ,CustomToast.LENGTH_SHORT,CustomToast.WARNING).show();
-                    break;
-                }
+//                if(product==null) {
+//                    CustomToast.makeText(context,"PDF: 1 product is null!"
+//                            ,CustomToast.LENGTH_SHORT,CustomToast.WARNING).show();
+//                    Log.e("PDF","PDF: 1 product is null!");
+//                    break;
+//                }
 
                 Bitmap bitmap;
                 Drawable drawable = context.getDrawable(R.drawable.ic_product);
@@ -320,6 +322,14 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
     }
 
     private Product getProduct(int productId) {
+//        if(productList!=null) {
+//            for(Product item : productList) {
+//                if(item.getId()==productId) {
+//                    return item;
+//                }
+//            }
+//        }
+//        return null;
         if(productList!=null) {
             for(Product item : productList) {
                 if(item.getId()==productId) {
