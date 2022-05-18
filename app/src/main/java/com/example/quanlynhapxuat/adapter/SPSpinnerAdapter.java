@@ -5,45 +5,53 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.quanlynhapxuat.R;
+import com.example.quanlynhapxuat.model.KhachHang;
 import com.example.quanlynhapxuat.model.Product;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class SPSpinnerAdapter extends BaseAdapter {
     private Context context;
-    public ArrayList<Product> productList;
+    public List<Product> products;
 
-    public SPSpinnerAdapter(Context context, ArrayList<Product> productList) {
-        this.context = context;
-        this.productList = productList;
+    public SPSpinnerAdapter(Context context,List<Product> products){
+        this.context=context;
+        this.products=products;
     }
-
     @Override
     public int getCount() {
-        return productList==null ? 0 : productList.size();
+        return products!=null ? products.size():0;
     }
 
     @Override
-    public Object getItem(int i) {
+    public Object getItem(int position) {
         return null;
     }
 
     @Override
-    public long getItemId(int i) {
+    public long getItemId(int position) {
         return 0;
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        View v = LayoutInflater.from(context).inflate(R.layout.item_spinner_sp,viewGroup,false);
-        TextView tvTenSP = v.findViewById(R.id.tvTenSP_itemSpinnerSP);
+    public View getView(int position, View convertView, ViewGroup parent) {
+        Product product=products.get(position);
+        View rootView  = LayoutInflater.from(context).inflate(R.layout.item_khachhang_spinner,
+                parent,false);
+        TextView tvTen=rootView.findViewById(R.id.tv_TenKHSpinner);
+        ImageView ivAvatar=rootView.findViewById(R.id.iv_KHSpinner);
 
-        Product product = productList.get(i);
-        tvTenSP.setText(product.getName());
-
-        return v;
+        tvTen.setText( product.getName());
+        if(products.get(position).getImage()!=null){
+            Glide.with(context).load(product.getImage()).into(ivAvatar);
+        }else {
+            ivAvatar.setImageResource(R.drawable.ic_shoes_svgrepo_com);
+        }
+        return rootView;
     }
 }
