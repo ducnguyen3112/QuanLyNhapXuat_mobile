@@ -211,7 +211,7 @@ public class ReceivedDocketAdapter extends RecyclerView.Adapter<ReceivedDocketAd
         PdfDocument pdfDocument = new PdfDocument(writer);
         Document document = new Document(pdfDocument);
 
-        Text textTittle = new Text("CHI TIET PHIEU XUAT").setFontSize(28).setBold();
+        Text textTittle = new Text("CHI TIET PHIEU NHAP").setFontSize(28).setBold();
         Paragraph paraTittle = new Paragraph();
         paraTittle.add(textTittle).setTextAlignment(TextAlignment.CENTER);
         document.add(paraTittle);
